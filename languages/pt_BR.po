@@ -1,0 +1,474 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Hemingway v1.46\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2015-06-09 10:07-0300\n"
+"Last-Translator: Cleber Santos <oclebersantos@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Poedit 1.6.10\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
+"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
+"X-Poedit-Basepath: ../\n"
+"X-Textdomain-Support: yes\n"
+"Language: sv_SE\n"
+"X-Poedit-SearchPath-0: .\n"
+
+# @ hemingway
+#: 404.php:15
+msgid "Error 404"
+msgstr "Erro 404"
+
+# @ hemingway
+#: 404.php:21
+msgid ""
+"It seems like you have tried to open a page that doesn't exist. It could "
+"have been deleted, moved, or it never existed at all. You are welcome to "
+"search for what you are looking for with the form below."
+msgstr ""
+
+# @ hemingway
+#: archive.php:12
+#, php-format
+msgid "Date: %s"
+msgstr "Data: %s"
+
+# @ hemingway
+#: archive.php:14
+#, php-format
+msgid "Month: %s"
+msgstr "Mês: %s"
+
+# @ hemingway
+#: archive.php:14
+msgctxt "F = Month, Y = Year"
+msgid "F Y"
+msgstr "F Y"
+
+# @ hemingway
+#: archive.php:16
+#, php-format
+msgid "Year: %s"
+msgstr "Year: %s"
+
+# @ hemingway
+#: archive.php:16
+msgctxt "Y = Year"
+msgid "Y"
+msgstr "Y"
+
+# @ hemingway
+#: archive.php:18
+#, php-format
+msgid "Category: %s"
+msgstr "Categoria: %s"
+
+# @ hemingway
+#: archive.php:20
+#, php-format
+msgid "Tag: %s"
+msgstr ""
+
+# @ hemingway
+#: archive.php:23
+#, php-format
+msgid "Author: %s"
+msgstr "Author: %s"
+
+# @ hemingway
+#: archive.php:25
+msgid "Archive"
+msgstr ""
+
+# @ hemingway
+#: archive.php:33 search.php:20 search.php:71
+#, php-format
+msgid "(page %s of %s)"
+msgstr "(página %s de %s)"
+
+# @ hemingway
+#: archive.php:69
+msgid "Older<span> posts</span>"
+msgstr "Older<span> posts</span>"
+
+# @ hemingway
+#: archive.php:71
+msgid "Newer<span> posts</span>"
+msgstr "Newer<span> posts</span>"
+
+# @ hemingway
+#: comments.php:14
+msgid "Comment"
+msgid_plural "Comments"
+msgstr[0] "Comentário"
+msgstr[1] "Comentários"
+
+# @ hemingway
+#: comments.php:31
+msgid "Pingback"
+msgid_plural "Pingbacks"
+msgstr[0] "Pingback"
+msgstr[1] "Pingbacks"
+
+# @ hemingway
+#: comments.php:49
+msgid "&laquo; Older<span> Comments</span>"
+msgstr "&laquo;<span>Comentários </span> mais antigos"
+
+# @ hemingway
+#: comments.php:51
+msgid "Newer<span> Comments</span> &raquo;"
+msgstr "Newer<span> Comments</span> &raquo;"
+
+# @ hemingway
+#: comments.php:65
+msgid "Comments are closed."
+msgstr "Comentários estão fechados"
+
+# @ hemingway
+#: comments.php:72
+msgid "Your email address will not be published."
+msgstr ""
+
+# @ hemingway
+#: comments.php:81
+msgid "Name"
+msgstr "Nome"
+
+# @ hemingway
+#: comments.php:84
+msgid "Email"
+msgstr "Email"
+
+# @ hemingway
+#: comments.php:87
+msgid "Website"
+msgstr "Website"
+
+# @ hemingway
+#: content-aside.php:9 content-quote.php:9 content-video.php:47 content.php:47
+msgid "Sticky"
+msgstr ""
+
+# @ hemingway
+#: content-aside.php:17 content-quote.php:17 content-video.php:55
+#: content.php:55 functions.php:295 page.php:49 single.php:83
+#: template-archives.php:127 template-fullwidth.php:55
+#: template-nosidebar.php:55
+msgid "Edit"
+msgstr "Edit"
+
+# @ hemingway
+#: content-video.php:41 content.php:41 single.php:77
+msgid "0 Comments"
+msgstr "0 Comentário"
+
+# @ hemingway
+#: content-video.php:41 content.php:41 single.php:77
+msgid "1 Comment"
+msgstr "1 Comentário"
+
+# @ hemingway
+#: content-video.php:41 content.php:41 single.php:77
+msgid "% Comments"
+msgstr "% Comentários"
+
+# @ hemingway
+#: content.php:7
+msgid "Sticky post"
+msgstr ""
+
+# @ hemingway
+#: searchform.php:2
+msgid "Search form"
+msgstr "Pesquisar por"
+
+# @ hemingway
+#: footer.php:65
+#, php-format
+msgid "Theme by <a href=\"%s\">Anders Noren</a>"
+msgstr "Theme by <a href=\"%s\">Anders Noren</a>"
+
+# @ hemingway
+#: footer.php:65
+msgid "To the top"
+msgstr "To the top"
+
+# @ hemingway
+#: footer.php:65
+msgid "Up"
+msgstr "Up"
+
+# @ hemingway
+#: functions.php:84
+msgid "Footer A"
+msgstr "Footer A"
+
+# @ hemingway
+#: functions.php:86
+msgid "Widgets in this area will be shown in the left column in the footer."
+msgstr "Widgets in this area will be shown in the left column in the footer."
+
+# @ hemingway
+#: functions.php:93
+msgid "Footer B"
+msgstr "Footer B"
+
+# @ hemingway
+#: functions.php:95
+msgid "Widgets in this area will be shown in the middle column in the footer."
+msgstr "Widgets in this area will be shown in the middle column in the footer."
+
+# @ hemingway
+#: functions.php:102
+msgid "Footer C"
+msgstr "Footer C"
+
+# @ hemingway
+#: functions.php:104
+msgid "Widgets in this area will be shown in the right column in the footer."
+msgstr "Widgets in this area will be shown in the right column in the footer."
+
+# @ hemingway
+#: functions.php:111
+msgid "Sidebar"
+msgstr "Sidebar"
+
+# @ hemingway
+#: functions.php:113
+msgid "Widgets in this area will be shown in the sidebar."
+msgstr "Widgets in this area will be shown in the sidebar."
+
+# @ hemingway
+#: functions.php:148
+#, php-format
+msgid "Page %s"
+msgstr "Página %s"
+
+# @ hemingway
+#: functions.php:195
+msgid "Continue reading"
+msgstr "Continue lendo"
+
+# @ hemingway
+#: functions.php:254
+msgid "Pingback:"
+msgstr "Pingback:"
+
+# @ hemingway
+#: functions.php:254
+msgid "(Edit)"
+msgstr "(Editar)"
+
+# @ hemingway
+#: functions.php:274
+msgid "(Post author)"
+msgstr ""
+
+# @ hemingway
+#: functions.php:287
+msgid "Awaiting moderation"
+msgstr "Awaiting moderation"
+
+# @ hemingway
+#: functions.php:297
+msgid "Reply"
+msgstr "Responder"
+
+# @ hemingway
+#: functions.php:315
+msgid "Video URL (video post format)"
+msgstr "Video URL (video post format)"
+
+# @ hemingway
+#: image.php:79
+msgid "&laquo; Previous<span> attachment</span>"
+msgstr "&laquo; Previous<span> attachment</span>"
+
+# @ hemingway
+#: image.php:80
+msgid "Next<span> attachment</span> &raquo;"
+msgstr "Next<span> attachment</span> &raquo;"
+
+# @ hemingway
+#: image.php:92 page.php:67 single.php:147 template-archives.php:143
+#: template-fullwidth.php:75 template-nosidebar.php:75
+msgid "We couldn't find any posts that matched your query. Please try again."
+msgstr "We couldn't find any posts that matched your query. Please try again."
+
+# @ hemingway
+#: index.php:21
+#, php-format
+msgid "Page %s of %s"
+msgstr "Página %s de %s"
+
+# @ hemingway
+#: index.php:47 search.php:46
+msgid "&laquo; Older<span> posts</span>"
+msgstr "&laquo; <span> Posts</span> mais antigos"
+
+# @ hemingway
+#: index.php:49 search.php:48
+msgid "Newer<span> posts</span> &raquo;"
+msgstr "<span>Posts </span> mais recentes &raquo;"
+
+# @ hemingway
+#: search.php:13 search.php:64
+msgid "Search results:"
+msgstr "Resultado da busca:"
+
+# @ hemingway
+#: search.php:87
+msgid "No results. Try again, would you kindly?"
+msgstr "No results. Try again, would you kindly?"
+
+# @ hemingway
+#: searchform.php:3
+msgid "Search"
+msgstr "Buscar"
+
+# @ hemingway
+#: single.php:115
+msgid "Previous post:"
+msgstr "Post anterior:"
+
+# @ hemingway
+#: single.php:117
+msgid "Previous post"
+msgstr "Post anterior"
+
+# @ hemingway
+#: single.php:128
+msgid "Next post:"
+msgstr "Próximo post:"
+
+# @ hemingway
+#: single.php:130
+msgid "Next post"
+msgstr "Próximo post"
+
+# @ hemingway
+#: template-archives.php:57
+msgid "Last 30 Posts"
+msgstr "Last 30 Posts"
+
+# @ hemingway
+#: template-archives.php:71
+msgid "Archives by Categories"
+msgstr "Lista por Categorias"
+
+# @ hemingway
+#: template-archives.php:77
+msgid "Archives by Tags"
+msgstr ""
+
+# @ hemingway
+#: template-archives.php:84
+#, php-format
+msgid "View all posts in %s"
+msgstr "View all posts in %s"
+
+# @ hemingway
+#: template-archives.php:95
+msgid "Contributors"
+msgstr "Contributors"
+
+# @ hemingway
+#: template-archives.php:101
+msgid "Archives by Year"
+msgstr "Archives by Year"
+
+# @ hemingway
+#: template-archives.php:107
+msgid "Archives by Month"
+msgstr "Archives by Month"
+
+# @ hemingway
+#: template-archives.php:113
+msgid "Archives by Day"
+msgstr ""
+
+# @ hemingway
+#: widgets/dribbble-widget.php:10
+msgid "Displays your latest Dribbble photos."
+msgstr "Displays your latest Dribbble photos."
+
+# @ hemingway
+#: widgets/dribbble-widget.php:52
+#, php-format
+msgid "Follow %s on Dribbble &raquo;"
+msgstr "Follow %s on Dribbble &raquo;"
+
+# @ hemingway
+#: widgets/dribbble-widget.php:79 widgets/flickr-widget.php:54
+#: widgets/video-widget.php:64
+msgid "Title"
+msgstr "Title"
+
+# @ hemingway
+#: widgets/dribbble-widget.php:85
+msgid "Dribbble username"
+msgstr ""
+
+# @ hemingway
+#: widgets/dribbble-widget.php:91 widgets/flickr-widget.php:66
+msgid "Number of images to display:"
+msgstr ""
+
+# @ hemingway
+#: widgets/flickr-widget.php:8
+msgid "Displays your latest Flickr photos."
+msgstr "Displays your latest Flickr photos."
+
+# @ hemingway
+#: widgets/flickr-widget.php:32
+msgid "More on Flickr &raquo;"
+msgstr "More on Flickr &raquo;"
+
+# @ hemingway
+#: widgets/flickr-widget.php:60
+msgid ""
+"Flickr ID (use <a target=\"_blank\" href=\"http://www.idgettr.com\">idGettr</"
+"a>):"
+msgstr ""
+
+# @ hemingway
+#: widgets/video-widget.php:8
+msgid "Displays a video of your choosing."
+msgstr "Displays a video of your choosing."
+
+# @ hemingway
+#: widgets/video-widget.php:70
+msgid "Video URL"
+msgstr "Video URL"
+
+# @ hemingway
+#: functions.php:363
+msgid "Hemingway Options"
+msgstr "Hemingway Options"
+
+# @ hemingway
+#: functions.php:366
+msgid "Allows you to customize some settings for Hemingway."
+msgstr "Allows you to customize some settings for Hemingway."
+
+# @ hemingway
+#: functions.php:371 functions.php:401
+msgid "Logo"
+msgstr "Logo"
+
+# @ hemingway
+#: functions.php:393
+msgid "Accent Color"
+msgstr ""
+
+# @ hemingway
+#: functions.php:373
+msgid ""
+"Upload a logo to replace the default site name and description in the header"
+msgstr ""

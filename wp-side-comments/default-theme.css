@@ -1,0 +1,499 @@
+
+.commentable-container {
+  -webkit-transition: all 0.22s ease;
+  transition: all 0.22s ease;
+}
+
+.comments-width {
+  -webkit-transition: all 0.22s ease;
+  transition: all 0.22s ease;
+  /*padding-bottom: 200px;*/
+}
+
+.side-comments-open {
+  /*-webkit-transform: translate(-220px, 0);
+  -ms-transform: translate(-220px, 0);
+  transform: translate(-220px, 0);*/
+}
+.commentable-section {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  /*padding-right: 30px;*/
+  border: 1px solid transparent;
+  padding: 3px;
+
+}
+
+.comment-container .commentable-section:focus,
+.comment-container .commentable-section:active,
+.comment-container .commentable-section:hover {
+  background-color: #F4F4F4;
+  border-color: #E7E7E7;
+}
+
+.side-comment {
+  padding-bottom: 20px;
+  right: -20px;
+}
+
+.side-comment .marker {
+  transition: none;
+  width: 110px;
+  height: 40px;
+  background: #ff6607;
+  border-top-right-radius: 10px;
+  border-radius: 10px;
+  text-decoration: none;
+  margin-right: -110px;
+  z-index: 10;
+  display: block;
+    opacity: 0.2;
+}
+
+.side-comment .marker:before,
+.side-comment .marker span {
+  content: "COMENTE";
+  position: absolute;
+  top: 12px;
+  left: 6px;
+  width: 0px;
+  height: 18px;
+  line-height: 16px;
+  font-size: 14px;
+  color: #fed117;
+  font-weight: bold;
+  text-align: center;
+}
+
+.side-comment .marker span {
+  line-height: 20px;
+  font-size: 15px;
+  top: 10px;
+  left: 80px;
+  color: #fff;
+}
+.side-comment .marker:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: -14px;
+  width: 0;
+  border-width: 19px 19px 19px 0px;
+  border-style: solid;
+  border-color: transparent #ff6607;
+}
+
+.side-comment .marker:hover:after,
+.side-comment.active .marker:after {
+  /*border-color: transparent #242652;*/
+}
+
+.side-comment.active .comments-wrapper {
+    z-index: 1;
+    background: #fff;
+}
+
+.post-content p.active:last-child {
+  margin-bottom: 250px; 
+}
+
+.side-comment .marker:focus,
+.side-comment .marker:active,
+.side-comment .marker:hover,
+.side-comment.active .marker {
+  display: block;
+}
+
+.side-comment.active .marker {
+  height: 32px;
+  width: 259px;
+  left: 20px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  z-index: 10;
+}
+
+.side-comment.has-comments .marker:before {
+  content: "COMENTE";
+}
+
+.side-comment.has-comments .marker span {
+  right: 0px;
+}
+
+.side-comments-open {
+  padding-bottom: 280px;
+}
+
+.side-comments-open .commentable-section.active .side-comment:not(.active) {
+  opacity: 0;
+} 
+
+.commentable-section:focus .side-comment .marker,
+.commentable-section:active .side-comment .marker,
+.commentable-section:hover .side-comment .marker {
+  opacity: 1;
+  transition: opacity .25s ease-in-out;
+   -moz-transition: opacity .25s ease-in-out;
+   -webkit-transition: opacity .25s ease-in-out;
+}
+
+.side-comments-open .commentable-section:not(.active) .comments-wrapper,
+.side-comments-open .commentable-section:not(.active) .marker {
+  display: none;
+}
+
+.side-comments-open .commentable-section:active .side-comment .marker,
+.side-comments-open .commentable-section:focus .side-comment .marker,
+.side-comments-open .commentable-section:hover .side-comment .marker,
+.side-comments-open .commentable-section.active .side-comment.active .marker {
+  opacity: 1;
+  display: block;
+}
+
+.side-comments-open:active .commentable-section.active:not(:active) .marker,
+.side-comments-open:focus .commentable-section.active:not(:focus) .marker,
+.side-comments-open:hover .commentable-section.active:not(:hover) .marker,
+.side-comments-open:active .commentable-section.active:not(:active) .comments-wrapper,
+.side-comments-open:focus .commentable-section.active:not(:focus) .comments-wrapper,
+.side-comments-open:hover .commentable-section.active:not(:hover) .comments-wrapper {
+  opacity: 0.2;
+}
+
+
+.side-comment .comments-wrapper {
+  border: 15px solid #ff6607;
+  border-top: 1px solid #ff6607;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  width: 260px;
+  padding: 10px;
+  top: 32px;
+  left: 19px;
+}
+
+.side-comment.active .comments-wrapper {
+  /*-webkit-animation: fadein 0.2s;
+  animation: fadein 0.2s;*/
+}
+
+.side-comment ul.comments {
+  max-height: 520px;
+    overflow-y: scroll;
+    border: none;
+}
+
+.side-comment ul.comments ul.comments {
+  overflow-y: visible ;
+  margin-left: 10px; 
+}
+
+.side-comment .comment-form p {
+
+  margin: 0px;
+}
+
+.side-comment.has-comments .add-comment {
+
+}
+
+.side-comment ul.comments li,
+.side-comment .comment-form {
+  border-bottom: 1px solid #F2F2F0;
+  border-left: 0;
+  border-right: 0;
+  padding: 15px 0;
+  margin-top: -1px;
+    list-style: none;
+}
+.side-comment .comment,
+.side-comment .comment-box {
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.side-comment .author-avatar {
+  float: left;
+  width: 55px;
+  height: 55px;
+  margin-right: 10px;
+  display: block;
+  margin-bottom: 5px;
+}
+.side-comment .author-avatar img {
+  width: 100%;
+  height: 100%;
+}
+.side-comment .right-of-avatar {
+  display: block;
+  clear: both;
+  margin-top: 5px;
+}
+.side-comment .author-name {
+  display: inline;
+  font-size: 15px;
+  line-height: 16px;
+  margin: 0 0 2px 0;
+  font-weight: 700;
+  text-decoration: none;
+  color: #222;
+}
+
+.side-comment a.author-name:active,
+.side-comment a.author-name:focus,
+.side-comment a.author-name:hover {
+  color: #444;
+}
+
+.side-comment .text-description {
+  font-size: 11px;
+  padding: 0px 3px 5px 3px;
+  float: left;
+}
+
+.side-comment  a.add-reply,
+.side-comment .action-link {
+  color: #B3B3B1;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.side-comment .action-link.post {
+  border: 0px;
+  color: #fff;
+  padding: 2px 15px;
+  margin-bottom: 0px;
+  margin-left: 15px;
+  background-color: #468dc8;
+  border-radius: 5px;
+  border: 1px solid #E8E7E7;
+}
+.side-comment .action-link.post.loading {
+  position: relative;
+  cursor: default;
+  background-color: #FFF!important;
+}
+
+
+.side-comment .action-link.post.loading:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  content: '';
+  background: url(../img/icons/loader-mini.gif) 50% 50% no-repeat;
+}
+
+.side-comment .action-link:hover {
+  text-decoration: none;
+}
+.side-comment .action-link.post .post {
+  color: #89C794;
+}
+.side-comment .action-link.post .post:hover {
+  color: #468c54;
+}
+.side-comment .action-link.cancel:hover,
+.side-comment .action-link.delete:hover {
+  color: #57AD68;
+}
+
+.side-comment .add-comment {
+  /*color: #B3B3B1;*/
+  color: #6B6B6B;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: bold;
+  padding: 8px 8px 12px;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #EDEDED;
+}
+.side-comment .add-comment:before {
+  content: "+";
+  border: 2px solid #6B6B6B;
+  border-radius: 100px;
+  width: 23px;
+  height: 23px;
+  /*color: #DEDEDC;*/
+  color: #6B6B6B;
+  display: block;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 18px;
+  float: left;
+  margin-right: 15px;
+  letter-spacing: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.side-comment .add-comment:hover {
+  text-decoration: none;
+}
+.side-comment .add-comment:hover {
+  color: #ff6607;
+}
+
+.side-comment .add-comment:active:before,
+.side-comment .add-comment:focus:before,
+.side-comment .add-comment:hover:before {
+  border-color: #ff6607;
+  color: #ff6607;
+}
+.side-comment .comment-box {
+  outline: none;
+  border: none;
+  padding: 5px;
+  margin-top: 5px;
+  /*padding-top: 10px;*/
+  border: 1px solid #D7D7D4;
+  min-height: 120px;
+}
+.side-comment .actions {
+  float: right;
+  text-align: right;
+  margin: 0px;
+  margin-top: 5px;
+}
+
+.side-comment .actions a {
+  float: left;
+}
+.side-comment .actions .cancel:before {
+  content: '';
+  color: #B3B3B1;
+  padding: 0 5px;
+}
+
+.message-error,
+.comment-sucess {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  border: 1px solid #004D13;
+  background-color: #B6FFC8;;
+  color: #004D13;
+  margin-left: -275px;
+  padding: 20px;
+  line-height: 1;
+  box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  z-index: 12;
+  width: 475px;
+  text-align: center;
+}
+
+.message-error {
+  border-color: #BA0303;
+  background-color: #FAD4D4;
+  color: #BA0303;
+}
+
+
+@media (max-width: 800px) {
+
+  .side-comment {
+    position: static;
+    display: block;
+  }
+
+  .side-comment.active {
+    width: 120%;
+  }
+
+  .side-comment .comments-wrapper {
+    /*width: 200px;*/
+    position: static;
+    /*display: block;*/
+    clear: both;
+  }
+  .side-comment .right-of-avatar {
+    /*width: 158px;*/
+  }
+
+  .side-comment.active .comments-wrapper {
+    width: 100%;
+  }
+
+  .side-comment .marker {
+    right: 50px;
+    bottom: 0px;
+    opacity: 1;
+    width: 40px;
+  }
+
+  .side-comment.active .marker {
+    /*position: static;*/
+    margin-top: 10px;
+    position: relative;
+    display: block;
+    left: 0px;
+    top: 0px;
+    padding-left: 10px;
+    width: 100%;
+  }
+  
+  .side-comments-open .commentable-section:not(.active) .comments-wrapper, 
+  .side-comments-open .commentable-section:not(.active) .marker {
+     display: block;
+  }
+
+  .side-comment .marker span {
+    left: 10px;
+  }
+
+  .side-comment:not(.active) .marker:before {
+    font-size: 25px;
+    content: "+";
+    font-weight: bold;
+    top: 10px;
+    left: 10px;
+  }
+
+  .side-comment.has-comments .marker:before {
+    content: "";
+  }
+
+  .side-comment.active .marker:before {
+    content: "Comente"
+  }
+
+  .side-comment.active .marker:after {
+    position: absolute;
+    top: -10px;
+    left: 3px;;
+    width: 0;
+    border-width: 0px 15px 15px 15px;
+    border-style: solid;
+    border-color: #ff6607 transparent
+  }
+
+  .side-comment.active .marker span {
+    left: 70px;
+  }
+
+
+  .side-comments-open .side-comment:not(.active) .comments-wrapper {
+    display: none;
+  }
+
+  .side-comment .text-description {
+    float: none;
+  }
+
+  .message-error,
+  .comment-sucess {
+    width: 80%;
+    top: 30%;
+    left: 0px;
+    margin: 0px 10px;
+    text-align: center;
+  }
+
+}

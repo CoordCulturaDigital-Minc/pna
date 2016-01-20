@@ -1,0 +1,666 @@
+
+/***************************************************************************************************
+   wrapper
+***************************************************************************************************/
+.wrapper {
+	margin-top: 50px;
+}
+
+.big-wrapper {
+	overflow: visible;
+}
+
+.post-title {
+  /*font-size: 1.8em;*/
+    font-size: 33px;
+
+ }
+
+ .post-content {
+ 	font-size: 17px;
+ }
+
+body a,
+.post-content a {
+ 	color: #242652;
+}
+
+/***************************************************************************************************
+   templates
+***************************************************************************************************/
+
+.comments-width {
+	width: 81.73%;
+}
+
+.page-parent {
+	margin-bottom: 30px;
+}
+
+/***************************************************************************************************
+   header
+***************************************************************************************************/
+/* fundo do header */
+.section.bg-dark-light {
+	background-color: #fff;
+}
+
+.header {
+	padding: 70px 0px;
+}
+
+.header-inner.section-inner {
+	margin: 0px auto;
+	/*width: 100%;*/
+	/*margin-left: -150px;*/
+}
+
+.header-inner .blog-logo {
+	width: 442px;
+	height: auto;
+	margin-left: -300px;
+	display: inline-block;
+}
+
+.header-inner .blog-search-topo { 
+	padding: 0px;
+	margin-top: 70px;
+	width: 300px;
+	display: inline-block;
+	border: 1px solid #acacac;
+	float: right;
+	border-radius: 5px;
+}
+	
+.header-inner .blog-search-topo .searchform { 
+	position: relative; 
+	overflow: hidden; 
+}
+
+.header-inner .blog-search-topo #s {
+	width: 97.5%;
+	padding: 18px 100px 18px 20px;
+	background: #FFF;
+	font-family: 'Lato', sans-serif;
+	font-size: 1em;
+	color: #444;
+	border: none;
+	border-radius: 2px 0 0 2px;
+	margin: 0;
+}
+
+.header-inner .blog-search-topo #s:focus { outline: none; }
+
+.header-inner .blog-search-topo #searchsubmit {
+	-webkit-appearance: none;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 85px;
+	padding: 20px 0;
+	border: none;
+	margin: 0;
+	background: #242652;
+	border: 1px solid #242652;
+	color: #FFF;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-size: 0.8rem;
+	font-family: 'Lato', sans-serif;
+	border-radius: 0 4px 4px 0;
+}
+
+.header-inner .blog-search-topo #searchsubmit:hover { 
+	cursor: pointer;
+	background-color: #ff6607;
+	border-color: #ff6607;
+}
+
+.section.bg-dark {
+	background-color: #242652;
+}
+
+.blog-menu a {
+	color: #fff;
+}
+
+.blog-menu li:hover a {
+	background-color: #ff6607;
+}
+
+.blog-menu > li:before {
+	content: "";
+}
+
+.blog-menu ul li {
+	background-color: #242652;
+}
+
+.blog-menu .children li a,
+.blog-menu ul.sub-menu li a {
+	background-color: #242652;
+	background-color: transparent !important;
+}
+
+.blog-menu ul li:hover {
+	background-color: #ff6607;
+}
+
+/***************************************************************************************************
+	post
+***************************************************************************************************/
+.post-header {
+	margin-bottom: 2%;
+}
+
+.post-meta {
+	margin-top: 30px; 
+}
+
+
+.enquetes .section-header {
+	margin-bottom: 10px;
+}
+
+.enquetes .post {
+  margin-bottom: 50px;
+  padding-bottom: 20px;
+
+}
+
+.enquetes .section-description {
+	margin-bottom: 40px;
+}
+
+.enquetes .page {
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+}
+
+/***************************************************************************************************
+	section
+***************************************************************************************************/
+
+.section-header {
+	
+	border-bottom: 3px solid #EEE;
+	margin-bottom: 30px;
+}
+
+.section-header .section-title {
+	font-size: 32px;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+/***************************************************************************************************
+	section-cycle section-cycle.slider section-body.slidesd
+***************************************************************************************************/
+.content .section-cycle {
+    position: relative;
+    padding: 0;
+    z-index: 10;
+    *height: 250px; /* hack ie7 */
+    margin-bottom: 50px;
+	padding-bottom: 4%;
+	border-bottom: 4px solid #EEE;
+	/*margin-bottom: 15%;*/
+}
+
+
+.content .section-cycle .section-body > .post {
+    position: relative;
+    max-width: 676px;
+    width: 100%;
+	padding-bottom: 0px;
+	border: none;
+	margin-bottom: 0px;
+}
+
+.content .section-cycle .post .thumb {
+	width: 47.33%;
+	display: inline-block;
+}
+
+.content .section-cycle .post img {
+    width: 100%;
+    border: 1px solid #DDD;
+    max-width: 320px;
+}
+
+.content .section-cycle .post-head {
+    display: block;
+    width: 51.67%;                   
+    float: right;
+    padding: 10px;
+}
+
+.content .section-cycle .post-head h1 a {
+    /*font-size: 1.3em;*/
+    /*font-weight: normal;*/
+    /*-webkit-font-smoothing: antialiased;*/
+}
+
+.content .section-cycle .post-head h2 a, 
+.content .section-cycle .post-head h1 a { 
+	color: #302F2F;
+}
+
+.content .section-cycle .post-head h2 a {
+	line-height: 1.5;
+}
+
+.content .section-cycle .direction-nav {
+	display: none;
+}
+
+.content .section-cycle .control-nav {
+    position: absolute;
+    bottom: 1%;
+    left: 46%;
+    list-style: none;
+    margin-left: -30px;
+}
+
+/* new */
+.content .section-cycle .control-nav li {
+  margin: 0 2px;
+  display: inline-block;
+  zoom: 1;
+  *display: inline;
+}
+
+.content .section-cycle .control-paging li a {
+  opacity: 0.5; 
+  width: 13px;
+  height: 13px;
+  display: block;
+  background: #aaa;
+  cursor: pointer;
+  text-indent: -9999px;
+  -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+  -o-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+}
+
+.content .section-cycle .control-paging li a:hover {
+  background: #242652;
+  opacity: 0.8; 
+}
+
+.content .section-cycle .control-paging li a.active {
+  cursor: default;
+  position: relative;
+  opacity: 0.5; 
+  background: #242652;
+}
+
+/***************************************************************************************************
+	PRIORIZE PAIRWISE
+***************************************************************************************************/
+.addtoany_list_container { 
+	text-align:center; 
+	position: absolute;
+	bottom: -50px;
+	left: 50%;
+	margin-left: -100px;
+	display: block !important;
+}
+
+/***************************************************************************************************
+	INDEX ARCHIVE
+***************************************************************************************************/
+
+.posts .hentry {
+	border-bottom: 2px solid #EEE;
+	margin-bottom: 20px;
+	padding-bottom: 10px;
+}
+
+.featured-media {
+	width: 50%;
+	float: left;
+	margin-right: 20px;
+	margin-bottom: 10px;
+}
+
+.wp-post-image {
+  display: block;
+  padding: 4px;
+  margin-bottom: 20px;
+  line-height: 1.42857143;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  -webkit-transition: border .2s ease-in-out;
+  -o-transition: border .2s ease-in-out;
+  transition: border .2s ease-in-out;
+}
+
+
+a.read-more {
+	position: relative;
+	padding-right: 16px;
+}
+
+a.read-more:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 6px;
+  right: 4px;
+  width: 0;
+  border-width: 8px 0px 10px 8px;
+  border-style: solid;
+  border-color: transparent inherit;
+  opacity: 1;
+}
+
+a.read-more:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  width: 0px;
+  border-width: 8px 0px 11px 8px;
+  border-style: solid;
+  border-color: transparent #FFFFFF;
+  z-index: 1;
+}
+/***************************************************************************************************
+	abas
+***************************************************************************************************/
+#menu-abas.itens {
+ 	clear: both;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    display: table-row;
+    /*padding-top: 20px;*/
+    margin-bottom: 10px;
+}
+
+#menu-abas.itens li {
+	float: left;
+    list-style: none;
+    font-size: 12px;
+    text-transform: uppercase;
+   /* max-width: 200px !important;*/
+    /*display: table-cell;*/
+    text-align: center;
+    /*vertical-align: middle;*/
+    /*background-color:  #242652;*/
+	/*padding: 5px 15px;*/
+
+	/*border-top: 5px solid red;*/
+}
+
+#menu-abas.itens li a {
+    color: #fff;
+	font-weight: bold;
+	background-color:  #242652;
+	min-height: 46px;
+	max-width: 175px;
+	padding-left: 5px;
+	padding-right: 5px;
+    display: flex;
+	justify-content: center;
+	flex-direction: column;
+	text-align: center;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+	vertical-align: center;
+	float: left;
+}
+
+#menu-abas.itens li a:hover {
+	text-decoration: none;
+}
+
+#menu-abas.itens li a:hover {
+    background-color: #ff6607;   
+    text-decoration: none;
+    -webkit-transform: translate(0px, -8px);
+    -ms-transform: translate(0px, -8px);
+    transform: translate(0px, -8px);
+    -webkit-box-shadow: 0px 8px 0px 0px rgba(255,102,7,1);
+	-moz-box-shadow: 0px 8px 0px 0px rgba(255,102,7,1);
+	box-shadow: 0px 8px 0px 0px rgba(255,102,7,1);
+	
+}
+
+#menu-abas.itens li.current a {
+	background-color: #ff6607; 
+}
+
+#menu-abas.itens li.current a:hover {
+    cursor: default;    
+}
+
+
+/***************************************************************************************************
+   comments
+***************************************************************************************************/
+
+#commentform div p small {
+	display: none;
+}
+
+/***************************************************************************************************
+   widgets
+***************************************************************************************************/
+
+.widget_search #searchsubmit {
+	background: #242652;
+	border: 1px solid #242652;
+
+}
+
+.widget_search #searchsubmit:hover {
+	background-color: #ff6607;
+	border-color: #ff6607;
+}
+
+.widget_nav_menu .widget-content ul li {
+	border-color: #fff;
+	background-color: #242652;
+}
+
+.widget_nav_menu .widget-content ul li:hover {
+	background-color: #ff6607;
+}
+
+.widget_nav_menu .widget-content ul li a {
+	font-size: 17px;
+	padding: 5px;
+	padding-left: 5px;
+	/*font-size: 1.075em;	*/
+	color: #fff;
+}
+.widget_nav_menu .widget-content ul li a:hover {
+	text-decoration: none;
+}
+
+.tagcloud a {
+	background-color: transparent;
+	color: #242652;
+	padding: 0px;
+	line-height: 1;
+	margin: 0 5px 5px 0;
+}
+
+.tagcloud a:hover {
+	background-color: #fff !important;
+	color: #2d2d2d;
+	 z-index: 1 !important;
+    -webkit-transform:scale(1.5); /* Safari and Chrome */
+    -moz-transform:scale(1.5); /* Firefox */
+    -ms-transform:scale(1.5); /* IE 9 */
+    -o-transform:scale(1.5); /* Opera */
+     transform:scale(1.5);
+}
+
+/***************************************************************************************************
+   barra-brasil ajustes
+***************************************************************************************************/
+#barra-brasil #menu-icon,
+#barra-brasil .brasil-flag {
+	box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+}
+
+#barra-brasil li {
+	line-height: 2.7;
+	font-weight: bold;
+}
+
+
+/***************************************************************************************************
+   footer-full
+***************************************************************************************************/
+.footer-full {
+	margin-top: 50px;
+	background-color: #f8f8f8;
+	padding: 30px 0px;
+	border: 1px solid #e2e2e2;
+}
+
+.footer-full ul li {
+	display: inline;
+}
+
+/***************************************************************************************************
+   footer
+***************************************************************************************************/
+.footer {
+	margin-top: 0px;
+}
+
+.credits-inner {
+	padding: 25px;
+	color: #fff;
+}
+
+.credits-inner a {
+	color: #fff;
+}
+
+.tothetop.fixed {
+	position: fixed;
+	bottom: 30px;
+	right: 30px;
+	width: 50px;
+	height: 60px;
+	border-radius: 15px;
+	padding: 40px 10px 0px; 
+	font-size: 12px;
+	text-transform: none;
+	background: #ff6607 url(img/icons/up.png) no-repeat center 10px;
+	opacity: 0.2;
+
+  transition: opacity .25s ease-in-out;
+   -moz-transition: opacity .25s ease-in-out;
+   -webkit-transition: opacity .25s ease-in-out;
+
+}
+
+.tothetop.fixed:hover {
+	color: #fff;
+	opacity: 1;
+}
+
+.tothetop.fixed:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: -7px;
+	left: 10px;
+	width: 0;
+	border-width: 0px 15px 8px 15px;
+	border-style: solid;
+	border-color: #ff6607 transparent;
+}
+/***************************************************************************************************
+   responsivo
+***************************************************************************************************/
+@media (max-width: 1200px) {
+	.header-inner .blog-logo {
+		margin-left: -100px;
+	}
+	
+}
+
+@media (max-width: 800px) {
+
+	.header-inner .blog-logo {
+		margin-left: 0px;
+		max-width: 300px;
+	}
+
+	.header-inner .blog-search-topo { 
+		display: none;
+	}
+
+	.blog-search #searchsubmit {
+		background: #242652;
+		border: 1px solid #242652;
+	}
+
+	.blog-search #searchsubmit:hover {
+		 background: #ff6607;
+		border: 1px solid #ff6607;
+	}
+
+	#menu-abas.itens {
+		padding-bottom: 30px;
+	}
+
+	#menu-abas.itens li {
+		display: block;
+	    text-align: left;
+	    border-top-right-radius: 10px;
+	    border-bottom-right-radius: 10px;
+	    border-top-left-radius: 0px;
+	    max-width: 500px !important;
+	}
+
+	#menu-abas.itens li a {
+		font-size: 15px;
+		padding: 15px 20px;
+		display: table-cell;
+	}
+
+	#menu-abas.itens li:hover {
+	    text-decoration: none;
+	    transform: none;
+		box-shadow: none;
+	}
+
+
+	.content .section-cycle .post .thumb {
+		width: 100%;
+		text-align: center;
+	}
+
+
+	.content .section-cycle .post-head {
+		display: block;
+		width: 100%;                   
+		float: right;
+		padding: 10px;
+	}
+
+	.content .section-cycle .post img {
+		max-width: 600px;
+		margin-bottom: 10px;
+	}
+
+	.sidebar {
+	   display: block; 
+	}
+}
