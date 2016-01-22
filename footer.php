@@ -44,20 +44,6 @@
 
 			<?php endif; ?> <!-- /footer-b -->
 
-			<?php if ( is_active_sidebar( 'footer-c' ) ) : ?>
-
-				<div class="column column-3 left">
-
-					<div class="widgets">
-
-						<?php dynamic_sidebar( 'footer-c' ); ?>
-
-					</div> <!-- /widgets -->
-
-				</div>
-
-			<?php endif; ?> <!-- /footer-c -->
-
 			<div class="clear"></div>
 
 		</div> <!-- /footer-inner -->
@@ -68,17 +54,32 @@
 
 		<div class="credits-inner section-inner">
 
-			<p class="credits-left">
+			<div class="credits-left">
 
-				&copy; <?php echo date("Y") ?> <a href="<?php echo home_url(); ?>" title="<?php bloginfo('name'); ?>"><?php bloginfo('name'); ?></a>
+				<?php if ( is_active_sidebar( 'footer-c' ) ) : ?>
 
-			</p>
+					<div class="credits-content">
 
-			<p class="credits-right">
+						<?php dynamic_sidebar( 'footer-c' ); ?>
 
-				<span><?php printf( __( 'Theme by <a href="%s">Cultura Digital</a></br> baseado no tema de <a href="%s">Anders Noren</a>', 'hemingway'), 'http://culturadigital.br', 'http://www.andersnoren.se' ); ?></span>  <a title="<?php _e('To the top', 'hemingway'); ?>" class="tothetop"><span> </span>topo</a>
+					</div>
 
-			</p>
+				<?php endif; ?> <!-- /footer-c -->
+
+				<!-- &copy; <?php echo date("Y") ?> <a href="<?php echo home_url(); ?>" title="<?php bloginfo('name'); ?>"><?php bloginfo('name'); ?></a> -->
+
+			</div>
+
+			<div class="credits-right">
+				<div class="culturadigital">
+					<div class="credits-title">Desenvolvimento: </div>
+
+					<div class="credits-content">
+						<a href="http://culturadigital.br" title="Plataforma Pública de Blogs e Conversas"><img class="img-responsive" src="http://cultura.gov.br/votacultura/wp-content/themes/eleicoescnpc/images/culturadigital_logo.png"></a>
+					</div>
+					<!-- <span><?php printf( __( 'Theme by <a href="%s">Cultura Digital</a></br> baseado no tema de <a href="%s">Anders Noren</a>', 'hemingway'), 'http://culturadigital.br', 'http://www.andersnoren.se' ); ?></span>  <a title="<?php _e('To the top', 'hemingway'); ?>" class="tothetop"><span> </span>topo</a> -->
+				</div>
+			</div>
 
 			<div class="clear"></div>
 
