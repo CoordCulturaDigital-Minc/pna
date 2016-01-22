@@ -565,7 +565,7 @@ a.read-more:before {
 
 .credits-left ul.menu li {
 	border: none;
-	background; none;
+	background: transparent;
 	float: left; 
 }
 
