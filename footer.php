@@ -75,7 +75,7 @@
 					<div class="credits-title">Desenvolvimento: </div>
 
 					<div class="credits-content">
-						<a href="http://culturadigital.br" title="Plataforma Pública de Blogs e Conversas"><img class="img-responsive" src="http://cultura.gov.br/votacultura/wp-content/themes/eleicoescnpc/images/culturadigital_logo.png"></a>
+						<a href="http://culturadigital.br" title="Plataforma Pública de Blogs e Conversas"><img class="img-responsive" src="<?php bloginfo( 'stylesheet_directory' ); ?>/img/culturadigital_logo.png"></a>
 					</div>
 					<!-- <span><?php printf( __( 'Theme by <a href="%s">Cultura Digital</a></br> baseado no tema de <a href="%s">Anders Noren</a>', 'hemingway'), 'http://culturadigital.br', 'http://www.andersnoren.se' ); ?></span>  <a title="<?php _e('To the top', 'hemingway'); ?>" class="tothetop"><span> </span>topo</a> -->
 				</div>
