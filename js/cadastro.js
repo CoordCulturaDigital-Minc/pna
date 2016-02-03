@@ -23,18 +23,22 @@ jQuery(document).ready(function() {
     if (jQuery('#disable_first_municipio_ajax_call').size() == 0)
         jQuery('#estado').change();
 
-    jQuery("#cpf_cnpj").keypress(function(){
-        if( jQuery(this).hasClass('cpf')) {
-            jQuery(this).mask("999.999.999-99");
-        }else {
-            jQuery(this).mask("99.999.999/9999-99");
-        }
-    });
+    // jQuery("#cpf_cnpj").keypress(function(){
+    //     if( jQuery(this).hasClass('cpf')) {
+    //         jQuery(this).mask("999.999.999-99");
+    //     }else {
+            
+    //     }
+    // });
 
-    jQuery("input[name=manifestacao]:radio").change(
+    jQuery("#user_cpf").mask("999.999.999-99");
+    jQuery("#cnpj_instituicao").mask("99.999.999/9999-99");
+
+
+    jQuery("input[name=tipo_manifestacao]:radio").change(
         function(){
 
-            if( jQuery("input[name=manifestacao]:radio:checked").val() == 'individual' )
+            if( jQuery("input[name=tipo_manifestacao]:radio:checked").val() == 'individual' )
                 jQuery("#instituicao").slideUp('fast');
             else
                 jQuery("#instituicao").hide().slideDown('fast');

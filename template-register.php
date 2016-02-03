@@ -28,19 +28,27 @@ if (!$user_ID) {
 		$register_errors = array();
 		$data 			 = array();
 
-		$user_login 			= sanitize_user($_POST['user_login']);
-		$user_name 				= $_POST['user_name'];
-		$user_email 	  		= esc_sql($_POST['user_email']);
-		$user_password 			= $_POST['user_password'];
-		$user_password_confirm  = $_POST['user_password_confirm'];
-		$estado 				= $_POST['estado'];
-		$municipio 				= $_POST['municipio'];
-		$user_cpf				= $_POST['user_cpf'];
-		$segmento 				= $_POST['segmento'];
-		$categoria 				= $_POST['categoria'];
-		$manifestacao			= $_POST['manifestacao'];
-
+		$user_login 				= sanitize_user($_POST['user_login']);
+		$user_name 					= $_POST['user_name'];
+		$user_email 	  			= esc_sql($_POST['user_email']);
+		$user_password 				= $_POST['user_password'];
+		$user_password_confirm  	= $_POST['user_password_confirm'];
+		$user_cpf					= $_POST['user_cpf'];
 		
+		$tipo_manifestacao			= $_POST['tipo_manifestacao']; //individual or institucional
+		$nome_instituicao			= isset( $_POST['nome_instituicao'] ) ? $_POST['nome_instituicao'] : '';
+		$cnpj_instituicao			= isset( $_POST['cnpj_instituicao'] ) ? $_POST['cnpj_instituicao'] : '';
+		
+		$pais 						= isset( $_POST['pais'] ) ? $_POST['pais'] : '';
+		$estado 					= isset( $_POST['estado'] ) ? $_POST['estado'] : '';
+		$municipio 					= isset( $_POST['municipio'] ) ? $_POST['municipio'] : '';
+
+		$segmento 					= $_POST['segmento'];
+		$categoria 					= $_POST['categoria'];
+
+		$accept_the_terms_of_site 	= $_POST['accept_the_terms_of_site'];
+
+
 		// user_login
 		if(empty($user_name)) {
 			$register_errors['user_name'] = "Nome de usuário não pode ser vazio.";
@@ -51,20 +59,34 @@ if (!$user_ID) {
 			$register_errors['user_name'] = "Nome completo/Razão Social não pode ser vazio.";
 		}
 
-		//tipo de manifestacao
-		if(empty($manifestacao)) {
-			$register_errors['manifestacao'] = "Tipo de manifestação é obrigatório.";
-		}
-
 		// user_cpf or cnpj
 		if(empty($user_cpf)) {
-			$register_errors['user_cpf'] = "CPF/CNPJ é obrigatório";
-		}elseif(!is_valid_cpf_or_cnpj($user_cpf)) {
-			$register_errors['user_cpf'] = "CPF/CNPJ informado é inválido";
-		}elseif( !user_user_cpf_does_not_exist($user_cpf) ) {
-			$register_errors['user_cpf'] = 'Já existe um usuário cadastrado com este CPF/CNPJ. <a href="' . wp_lostpassword_url() .'">Recuperar senha?</a>';
+			$register_errors['user_cpf'] = "CPF é obrigatório";
+		}elseif(!cdbr_is_a_valid_cpf($user_cpf)) {
+			$register_errors['user_cpf'] = "CPF informado é inválido";
+		}elseif( !cdbr_user_cpf_does_not_exist($user_cpf) ) {
+			$register_errors['user_cpf'] = 'Já existe um usuário cadastrado com este CPF. <a href="' . wp_lostpassword_url() .'">Recuperar senha?</a>';
 		}
 
+		//tipo de manifestacao
+		if( empty($tipo_manifestacao)) {
+			$register_errors['manifestacao'] = "Tipo de manifestação é obrigatório.";
+		}elseif( $tipo_manifestacao == 'institucional' ) {
+
+			// Nome instituicao / Razao social
+			if(empty($nome_instituicao)) {
+				$register_errors['nome_instituicao'] = "O nome da instituicao é obrigatório.";
+			}
+
+		}
+
+		// CNPJ instituicao - TODO: verificar se CNPJ é obrigatório
+		if(!empty($cnpj_instituicao)) {
+			if(!cdbr_is_a_valid_cnpj($cnpj_instituicao)) {
+				$register_errors['cnpj_instituicao'] = "CNPJ informado é inválido";
+			}
+		}
+		
 		// user_email
 		if(!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/", $user_email)) {
 			$register_errors['user_email'] =  "Por favor, informe um email válido.";
@@ -80,15 +102,23 @@ if (!$user_ID) {
 			$register_errors['segmento'] = "Tipo de segmento é obrigatório.";
 		}
 
+		// pais
+		if(empty($pais)) {
+			$register_errors['pais'] = "O campo país é obrigatório.";
+		}else {
+			// se for o Brasil estado e município são obrigatórios
+			if( $pais == 'Brasil') {
 
-		// estado
-		if(empty($estado)) {
-			$register_errors['estado'] = "Estado é obrigatório.";
-		}
+				// estado
+				if(empty($estado)) {
+					$register_errors['estado'] = "Estado é obrigatório.";
+				}
 
-		// município
-		if(empty($municipio)) {
-			$register_errors['municipio'] = "Município é obrigatório.";
+				// município
+				if(empty($municipio)) {
+					$register_errors['municipio'] = "Município é obrigatório.";
+				}
+			}
 		}
 
 		// password
@@ -98,6 +128,11 @@ if (!$user_ID) {
         if( $user_password != $user_password_confirm)
             $register_errors['pass_confirm'] = 'As senhas informadas não são iguais.';
 
+        // termos de uso
+		if(empty($accept_the_terms_of_site)) {
+			$register_errors['accept_the_terms_of_site'] = "Você deve concordar com os termos de uso do site.";
+		}
+        
         // check and register
 		if(!sizeof($register_errors)>0) {
 
@@ -106,7 +141,7 @@ if (!$user_ID) {
             $data['user_email'] =  $user_email;
             $data['first_name'] = $user_name;
             $data['display_name'] = $user_name; 
-            
+
             $data['role'] = 'subscriber' ;
             
             $user_id = wp_insert_user($data);
@@ -121,29 +156,37 @@ if (!$user_ID) {
 				// $user_id = $status;
 
 				// salva os metadados
-				add_user_meta($user_id, 'manifestacao', $estado);
-				add_user_meta($user_id, 'user_cpf', $user_cpf);
-				add_user_meta($user_id, 'user_name', $user_name);
-				add_user_meta($user_id, 'categoria', $categoria);
-				add_user_meta($user_id, 'segmento', $segmento);
-				add_user_meta($user_id, 'estado', $estado);
-				add_user_meta($user_id, 'cidade', $municipio);
+				update_user_meta($user_id, 'tipo_manifestacao', $tipo_manifestacao);
+				update_user_meta($user_id, 'user_cpf', $user_cpf);
+				update_user_meta($user_id, 'user_name', $user_name);
+				update_user_meta($user_id, 'categoria', $categoria);
+				update_user_meta($user_id, 'segmento', $segmento);
+
+				// razao social é opcional
+				if( !empty($razao_social))
+					update_user_meta($user_id, 'nome_instituicao', $razao_social);
+
+				// cnpj é opcional
+				if( !empty($cnpj))
+					update_user_meta($user_id, 'cnpj_instituicao', $segmento);
+
+				// salva os metados do buddypress - cidade e estado sao opcionais
+				if( !empty($municipio) )
+					cdbr_add_user_meta($user_id, 'cidade', $municipio);
+				
+				if( !empty($estado) )
+					cdbr_add_user_meta($user_id, 'estado', $estado);
+
+				// termos de uso
+				cdbr_update_user_terms_current_site($user_id);
 
 				// adiciona o usuário no blog principal
 				add_user_to_blog('1', $user_id, 'subscriber' );
 
-				// enviar um email com informações da conta
-				$from = get_option('admin_email');
-                $headers = 'From: '.$from . "\r\n";
-                $subject = "Cadastro " . get_bloginfo('name');
-                $msg = "Você foi cadastrado com sucesso na plataforma Cultura Digital."
-                 ."\nDetalhes do login"
-                 ."\nNome de usuário: $user_login"
-                 ."\nSenha: $user_password"
-                 ."\nAcesse: ". get_bloginfo('url');
-
-	            wp_mail( $user_email, $subject, $msg, $headers );
+				// enviar um email com informações da conta, TODO: verificar se envia senha apenas pelo email
+				cdbr_send_email_register( $user_email, $user_login, $user_password );
 				
+				// TODO: forçar login automático ou enviar senha para o email
 				if ( is_ssl() && force_ssl_login() && !force_ssl_admin() && ( 0 !== strpos($redirect_to, 'https') ) && ( 0 === strpos($redirect_to, 'http') ) )
 		            $secure_cookie = false;
 		        else
@@ -204,43 +247,46 @@ if (!$user_ID) {
 						<input id="user_email" type="text" required="required" name="user_email" class="text" value="<?php echo isset($user_email) ? $user_email : '';?>" /> 
 					</div>
 
+					<div class="span-4">
+						<label for="user_name">Nome completo:</label>
+						<input id="user_name" type="text" required="required" name="user_name" class="text" value="<?php echo isset($user_name) ? $user_name : '';?>" />
+					</div>
+
+					<div class="span-4">
+						<label for="user_cpf">CPF:</label>
+						<input id="user_cpf" type="text" required="required" name="user_cpf" class="text" value="<?php echo isset($user_cpf) ? $user_cpf : '';?>" />
+					</div>					
+					<br>
+					<div class="span-4">
+						Problema ao cadastrar?<br>	Envie um email para: <a href="mailto:<?php echo get_option('admin_email'); ?>?Subject=Consulta%20Publica"><?php echo get_option('admin_email'); ?></a>.
+					</div>
+					<br>
+
 					<fieldset>
 						<legend>Tipo de manifestação</legend>
 						<label>
-						  <input type="radio" name="manifestacao" value="individual" <?php if (isset($_POST['manifestacao']) && $_POST['manifestacao'] == 'individual') echo 'checked'; ?>>
+						  <input type="radio" name="tipo_manifestacao" value="individual" <?php if (isset($tipo_manifestacao) && $tipo_manifestacao == 'individual') echo 'checked'; ?>>
 						  Individual
 						</label>
 						<label>
-						  <input type="radio" name="manifestacao" value="institucional" <?php if (isset($_POST['manifestacao']) && $_POST['manifestacao'] == 'institucional') echo 'checked'; ?>>
+						  <input type="radio" name="tipo_manifestacao" value="institucional" <?php if (isset($tipo_manifestacao) && $tipo_manifestacao == 'institucional') echo 'checked'; ?>>
 						  Institucional
 						</label>
-						<div class="span-4">
-							<label for="user_name">Nome completo:</label>
-							<input id="user_name" type="text" required="required" name="user_name" class="text" value="<?php echo isset($user_name) ? $user_name : '';?>" />
-						</div>
 
-						<div class="span-4">
-							<label for="user_cpf">CPF:</label>
-							<input id="user_cpf" type="text" required="required" name="user_cpf" class="text" value="<?php echo isset($user_cpf) ? $user_cpf : '';?>" />
-						</div>
-
-						<div class="span-4">
-							Problema ao cadastrar?<br>	Envie um email para: <a href="mailto:consultadireitoautoral@cultura.gov.br?Subject=Consulta%20Publica">consultadireitoautoral@cultura.gov.br</a>.
-						</div>
-
-						<div id="instituicao" style="<?php echo !isset($razao_social) ? 'display:none': '';?>">
+						<div id="instituicao" style="<?php echo !isset($nome_instituicao) ? 'display:none': '';?>">
 							<div class="span-4">
-								<label for="razao_social">Razação Social/Instituição:</label>
-								<input id="razao_social" type="text" required="required" name="razao_social" class="text" value="<?php echo isset($razao_social) ? $razao_social : '';?>" />
+								<label for="nome_instituicao">Razão Social/Instituição:</label>
+								<input id="nome_instituicao" type="text" required="required" name="nome_instituicao" class="text" value="<?php echo isset($nome_instituicao) ? $nome_instituicao : '';?>" />
 							</div>
 
 							<div class="span-4">
-								<label for="user_cpf">CNPJ:</label>
-								<input id="user_cpf" type="text" required="required" name="user_cpf" class="text" value="<?php echo isset($user_cpf) ? $user_cpf : '';?>" />
+								<label for="cnpj_instituicao">CNPJ:</label>
+								<input id="cnpj_instituicao" type="text" name="cnpj_instituicao" class="text" value="<?php echo isset($cnpj_instituicao) ? $cnpj_instituicao : '';?>" />
 							</div>
 						</div>
+					</fieldset>
 
-						<div class="span-4">
+					<div class="span-4">
 						<label>País:</label>
 						<select required="required" name="pais" id="pais">
                             <option value=""> Selecione </option>
@@ -252,7 +298,7 @@ if (!$user_ID) {
                             <?php endforeach; ?>
                         </select>
 					</div>
-				
+			
 					<div id="endereco_nacional" style="<?php echo !isset($_POST["estado"]) ? 'display:none': '';?>">
 						<div class="span-4">
 							<label for="estado">Estado:</label>
@@ -267,7 +313,6 @@ if (!$user_ID) {
 	                        </select>
 						</div>
 					
-
 						<div class="span-4">
 							<label for="municipio">Município:</label>
 							<select id="municipio" required="required" name="municipio" id="municipio">
@@ -275,7 +320,6 @@ if (!$user_ID) {
 	                        </select> 
 						</div>
 					</div>
-					</fieldset>
 
 					<div class="span-4">
 						<label>Categoria:</label>
@@ -315,7 +359,7 @@ if (!$user_ID) {
 
 					<div class="span-4">
 						<label>
-						    <input type="checkbox" name="agreeWithTermsOfUse">
+						    <input type="checkbox" name="accept_the_terms_of_site">
 						    Li e concordo com os <a href="<?php echo site_url('/termos-de-uso/'); ?>">
 						    termos de uso</a> do site
 						 </label>

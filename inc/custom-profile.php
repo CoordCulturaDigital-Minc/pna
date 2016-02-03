@@ -397,16 +397,16 @@ function cdbr_get_countries_array() {
     return $countries;
 }
 
-function cdbr_is_valid_cpf_or_cnpj($cpf_cnpj){
+// function cdbr_is_valid_cpf_or_cnpj($cpf_cnpj){
 
-    if( empty($cpf_cnpj))
-        return false;
+//     if( empty($cpf_cnpj))
+//         return false;
 
-    if( sizeof($cpf_cnpj ) < 11 )
-        return is_a_valid_cpf($cpf_cnpj);
-    else
-        return is_a_valid_cnpj($cpf_cnpj);
-}
+//     if( sizeof($cpf_cnpj ) < 11 )
+//         return is_a_valid_cpf($cpf_cnpj);
+//     else
+//         return is_a_valid_cnpj($cpf_cnpj);
+// }
 
 function cdbr_is_a_valid_cpf($cpf) {
     $error = __("O CPF fornecido é inválido.");
@@ -492,43 +492,71 @@ function cdbr_user_cpf_does_not_exist($c) {
     return true;
 }
 
-function cdbr_get_user_municipio( $user_id) {
+function cdbr_get_user_meta($user_id, $field_id, $single=true) {
 
     if( function_exists('bp_is_active') )
-        $cidade = xprofile_get_field_data( 'cidade', $user_id );
-    else 
-        $cidade = get_user_meta($user_id, 'cidade', true);
-
-    return $cidade; 
-}
-
-function cdbr_set_user_municipio( $user_id, $cidade) {
-
-    if( function_exists('bp_is_active') )
-        $cidade = xprofile_set_field_data( 'cidade', $user_id );
+        $meta= xprofile_get_field_data( $field_id, $user_id );
     else
-        $cidade = add_user_meta($user_id, 'cidade');
+        $meta = get_user_meta($user_id, $field_id, $single);
 
-    return $cidade; 
+    return $meta; 
 }
 
-function cdbr_get_user_estado($user_id) {
+function cdbr_add_user_meta( $user_id, $field_id, $current_field) {
+    if( empty( $user_id ) )
+        return false;
+
+    if( empty( $field_id ))
+        return false;
 
     if( function_exists('bp_is_active') )
-        $estado = xprofile_get_field_data( 'estado', $user_id );
-    else
-        $estado = get_user_meta($user_id, 'estado', true);
-
-    return $estado; 
-}
-
-function cdbr_set_user_estado( $user_id, $estado ) {
-
-    if( function_exists('bp_is_active') )
-        $estado = xprofile_set_field_data( 'estado', $user_id );
+        $meta = xprofile_set_field_data( $field_id, $user_id, $current_field);
     else 
-        $estado = add_user_meta($user_id, 'estado');
+        $meta = add_user_meta($user_id, $field_id,$current_field);
 
-    return $estado;
+    return $meta;
 }
+
+function cdbr_update_user_terms_current_site( $user_id ) {
     
+    if( empty( $user_id ) )
+        return false;
+
+   global $wpdb;
+
+   $user_id = get_current_user_id();   
+
+   $today = gmdate('Y-m-d H:i:s' );
+
+   return update_user_meta( $user_id, $wpdb->prefix . 'accept_the_terms_of_site', $today);  
+}
+
+function cdbr_get_user_terms_current_site( $user_id ) {
+
+    if( empty( $user_id ) )
+        return false;
+
+    if( get_user_meta( $user_id, $wpdb->prefix . 'accept_the_terms_of_site', true ) )
+        return true;
+    else
+        return false;
+}
+
+function cdbr_send_email_register( $user_email, $user_login, $user_password ) {
+
+    if( empty( $user_email ) )
+        return false;
+
+    $from = get_option('admin_email');
+    $headers = 'From: '.$from . "\r\n";
+    $subject = "Cadastro " . get_bloginfo('name');
+    $msg = "Você foi cadastrado com sucesso no site " . get_bloginfo('name')
+     ."\nDetalhes para acesso"
+     ."\nNome de usuário: $user_login"
+     ."\nSenha: $user_password"
+     ."\nAcesse: ". get_bloginfo('url');
+
+    wp_mail( $user_email, $subject, $msg, $headers );
+}
+
+
