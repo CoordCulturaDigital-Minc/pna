@@ -31,26 +31,23 @@ jQuery(document).ready(function() {
         }
     });
 
-    jQuery("input[name=manifestacao]:radio").blur();
-
     jQuery("input[name=manifestacao]:radio").change(
         function(){
+
             if( jQuery("input[name=manifestacao]:radio:checked").val() == 'individual' )
-            {
-                jQuery("label[for=user_name]").text("Nome Completo");
-                jQuery("label[for=cpf_cnpj]").text("CPF");
-                jQuery("#cpf_cnpj").removeClass('cnpj').addClass('cpf');
-                jQuery("#cpf_cnpj").parent().hide().slideDown('fast');
-                jQuery("#user_name").parent().hide().slideDown('fast');
-            }
+                jQuery("#instituicao").slideUp('fast');
             else
-            {   
-                jQuery("label[for=user_name]").text("Instituição");
-                jQuery("label[for=cpf_cnpj]").text("CNPJ");
-                jQuery("#cpf_cnpj").removeClass('cpf').addClass('cnpj');
-                jQuery("#cpf_cnpj").parent().hide().slideDown('fast');
-                jQuery("#user_name").parent().hide().slideDown('fast');
-            }
+                jQuery("#instituicao").hide().slideDown('fast');
+        }   
+    );
+
+    jQuery("select#country").change(
+        function(){
+
+            if( jQuery(this).val() == 'Brasil' )
+                jQuery("#instituicao").slideUp('fast');
+            else
+                jQuery("#instituicao").hide().slideDown('fast');
         }   
     );
    

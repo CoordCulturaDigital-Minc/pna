@@ -35,7 +35,7 @@ if (!$user_ID) {
 		$user_password_confirm  = $_POST['user_password_confirm'];
 		$estado 				= $_POST['estado'];
 		$municipio 				= $_POST['municipio'];
-		$cpf_cnpj				= $_POST['cpf_cnpj'];
+		$user_cpf				= $_POST['user_cpf'];
 		$segmento 				= $_POST['segmento'];
 		$categoria 				= $_POST['categoria'];
 		$manifestacao			= $_POST['manifestacao'];
@@ -57,12 +57,12 @@ if (!$user_ID) {
 		}
 
 		// user_cpf or cnpj
-		if(empty($cpf_cnpj)) {
-			$register_errors['cpf_cnpj'] = "CPF/CNPJ é obrigatório";
-		}elseif(!is_valid_cpf_or_cnpj($cpf_cnpj)) {
-			$register_errors['cpf_cnpj'] = "CPF/CNPJ informado é inválido";
-		}elseif( !user_cpf_cnpj_does_not_exist($cpf_cnpj) ) {
-			$register_errors['cpf_cnpj'] = 'Já existe um usuário cadastrado com este CPF/CNPJ. <a href="' . wp_lostpassword_url() .'">Recuperar senha?</a>';
+		if(empty($user_cpf)) {
+			$register_errors['user_cpf'] = "CPF/CNPJ é obrigatório";
+		}elseif(!is_valid_cpf_or_cnpj($user_cpf)) {
+			$register_errors['user_cpf'] = "CPF/CNPJ informado é inválido";
+		}elseif( !user_user_cpf_does_not_exist($user_cpf) ) {
+			$register_errors['user_cpf'] = 'Já existe um usuário cadastrado com este CPF/CNPJ. <a href="' . wp_lostpassword_url() .'">Recuperar senha?</a>';
 		}
 
 		// user_email
@@ -122,7 +122,7 @@ if (!$user_ID) {
 
 				// salva os metadados
 				add_user_meta($user_id, 'manifestacao', $estado);
-				add_user_meta($user_id, 'cpf_cnpj', $cpf_cnpj);
+				add_user_meta($user_id, 'user_cpf', $user_cpf);
 				add_user_meta($user_id, 'user_name', $user_name);
 				add_user_meta($user_id, 'categoria', $categoria);
 				add_user_meta($user_id, 'segmento', $segmento);
@@ -199,6 +199,11 @@ if (!$user_ID) {
 						<input id="user_login" type="text" required="required" name="user_login" class="text" value="<?php echo isset($user_login) ? $user_login : '';?>" />
 					</div>
 
+					<div class="span-4">
+						<label for="user_email">Email:</label>
+						<input id="user_email" type="text" required="required" name="user_email" class="text" value="<?php echo isset($user_email) ? $user_email : '';?>" /> 
+					</div>
+
 					<fieldset>
 						<legend>Tipo de manifestação</legend>
 						<label>
@@ -210,22 +215,61 @@ if (!$user_ID) {
 						  Institucional
 						</label>
 						<div class="span-4">
-							<label for="user_name">Nome completo/Razão Social:</label>
+							<label for="user_name">Nome completo:</label>
 							<input id="user_name" type="text" required="required" name="user_name" class="text" value="<?php echo isset($user_name) ? $user_name : '';?>" />
 						</div>
 
 						<div class="span-4">
-							<label for="cpf_cnpj">CPF/CNPJ:</label>
-							<input id="cpf_cnpj" type="text" required="required" name="cpf_cnpj" class="text" value="<?php echo isset($cpf_cnpj) ? $cpf_cnpj : '';?>" />
+							<label for="user_cpf">CPF:</label>
+							<input id="user_cpf" type="text" required="required" name="user_cpf" class="text" value="<?php echo isset($user_cpf) ? $user_cpf : '';?>" />
 						</div>
 
-					</fieldset>
+						<div id="instituicao" style="<?php echo !isset($razao_social) ? 'display:none': '';?>">
+							<div class="span-4">
+								<label for="razao_social">Razação Social/Instituição:</label>
+								<input id="razao_social" type="text" required="required" name="razao_social" class="text" value="<?php echo isset($razao_social) ? $razao_social : '';?>" />
+							</div>
 
+							<div class="span-4">
+								<label for="user_cpf">CNPJ:</label>
+								<input id="user_cpf" type="text" required="required" name="user_cpf" class="text" value="<?php echo isset($user_cpf) ? $user_cpf : '';?>" />
+							</div>
+						</div>
+
+						<div class="span-4">
+						<label>País:</label>
+						<select required="required" name="pais" id="pais">
+                            <option value=""> Selecione </option>
+                            <?php $countries = get_countries_array(); ?>
+                            <?php foreach ($countries as $key => $country ): ?>
+                                <option value="<?php echo $key; ?>"  <?php if (isset($_POST['pais']) && $_POST['pais'] == $key) echo 'selected'; ?>>
+                                    <?php echo $country; ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+					</div>
+				
 
 					<div class="span-4">
-						<label for="user_email">Email:</label>
-						<input id="user_email" type="text" required="required" name="user_email" class="text" value="<?php echo isset($user_email) ? $user_email : '';?>" /> 
+						<label for="estado">Estado:</label>
+						<select id="estado" required="required" name="estado" id="estado">
+                            <option value=""> Selecione </option>
+                            <?php $states = consulta_get_states(); ?>
+                            <?php foreach ($states as $s): ?>
+                                <option value="<?php echo $s->sigla; ?>"  <?php if (isset($_POST['estado']) && $_POST['estado'] == $s->sigla) echo 'selected'; ?>  >
+                                    <?php echo $s->nome; ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
 					</div>
+
+					<div class="span-4">
+						<label for="municipio">Município:</label>
+						<select id="municipio" required="required" name="municipio" id="municipio">
+                            <option value="">Selecione</option>
+                        </select> 
+					</div>
+					</fieldset>
 
 					<div class="span-4">
 						<label>Categoria:</label>
@@ -254,26 +298,6 @@ if (!$user_ID) {
 					</div>
 
 					<div class="span-4">
-						<label for="estado">Estado:</label>
-						<select id="estado" required="required" name="estado" id="estado">
-                            <option value=""> Selecione </option>
-                            <?php $states = consulta_get_states(); ?>
-                            <?php foreach ($states as $s): ?>
-                                <option value="<?php echo $s->sigla; ?>"  <?php if (isset($_POST['estado']) && $_POST['estado'] == $s->sigla) echo 'selected'; ?>  >
-                                    <?php echo $s->nome; ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-					</div>
-
-					<div class="span-4">
-						<label for="municipio">Município:</label>
-						<select id="municipio" required="required" name="municipio" id="municipio">
-                            <option value="">Selecione</option>
-                        </select> 
-					</div>
-
-					<div class="span-4">
 						<label for="user_password">Senha:</label>
 						<input id="user_password" required="required" type="password" name="user_password" />
 					</div>
@@ -283,13 +307,13 @@ if (!$user_ID) {
 						<input id="user_password_confirm" required="required" type="password" name="user_password_confirm" />
 					</div>
 
-<!-- 					<div class="span-4">
+					<div class="span-4">
 						<label>
 						    <input type="checkbox" name="agreeWithTermsOfUse">
 						    Li e concordo com os <a href="<?php echo site_url('/termos-de-uso/'); ?>">
 						    termos de uso</a> do site
 						 </label>
-					</div> -->
+					</div>
 
 					<div class="textright">
 						<input type="submit" id="submitbtn" class="blue-button"  name="submit" value="Registrar" />
@@ -300,7 +324,6 @@ if (!$user_ID) {
 			
 		</div> <!-- /content left -->
 	</div>
-
 	
 	<?php  
 	}
