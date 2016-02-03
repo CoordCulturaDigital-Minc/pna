@@ -5,6 +5,7 @@ define( 'CHILD_URI', get_stylesheet_directory_uri() );
 
 
 // include( STYLESHEETPATH . '/inc/shortcode-menu-paginas.php' );
+include dirname(__FILE__).'/inc/custom-profile.php';
 
 /**
  *  Scripts and styles
@@ -24,7 +25,7 @@ function theme_enqueue_styles() {
     $var_pna['signup_url'] = wp_registration_url();
     $var_pna['login_url'] = wp_login_url( get_permalink() );
 
-     wp_localize_script( 'scripts', 'pna', $var_pna );
+    wp_localize_script( 'scripts', 'pna', $var_pna );
 }
 add_action( 'wp_enqueue_scripts', 'theme_enqueue_styles' );
 
@@ -85,8 +86,8 @@ function pda_init() {
         'has_archive'        => true,
         'hierarchical'       => false,
         'menu_position'      => 6,
-        'supports'         => array( 'title', 'editor', 'excerpt', 'comments', 'thumbnail', 'custom-fields', 'revisions' ),
-        'taxonomies' => array('post_tag', 'category')
+        'supports'           => array( 'title', 'editor', 'excerpt', 'comments', 'thumbnail', 'custom-fields', 'revisions' ),
+        'taxonomies'         => array('post_tag', 'category')
     );
 
     register_post_type( 'destaque',  $args);
@@ -101,10 +102,10 @@ register_sidebar( array(
     'name'          => __( 'Footer Full' ),
     'id'            => 'footer-full',
     'description'   => 'Este espaço está localizado acima do footer e ocupa todo o container',
-    'before_title' => '<h3 class="widget-title">',
-    'after_title' => '</h3>',
+    'before_title'  => '<h3 class="widget-title">',
+    'after_title'   => '</h3>',
     'before_widget' => '<div class="widget %2$s"><div class="widget-content">',
-    'after_widget' => '</div><div class="clear"></div></div>'
+    'after_widget'  => '</div><div class="clear"></div></div>'
 ) );
 
 
