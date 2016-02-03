@@ -101,12 +101,12 @@ function consulta_print_cities_options() {
 add_action('wp_ajax_nopriv_consulta_get_cities_options', 'consulta_print_cities_options');
 add_action('wp_ajax_consulta_get_cities_options', 'consulta_print_cities_options');
 
-function consulta_get_states() {
+function cdbr_get_states() {
     global $wpdb;
     return $wpdb->get_results("SELECT * from uf ORDER BY sigla");
 }
 
-function da_get_categorias() {
+function cdbr_get_categorias() {
 
     // Empresa, Associação, Coletivo, Players, Editores, Usuário...?
     $categorias = array('empresa' => 'Empresa',
@@ -119,9 +119,7 @@ function da_get_categorias() {
 
 }
 
-
-
-function da_get_segmentos() {
+function cdbr_get_segmentos() {
     
     // Área de atuação - Peguei da consulta anterior, verifcar se vai continuar
     $segmentos = array( 'advocacia'                         => 'Advocacia',
@@ -142,7 +140,7 @@ function da_get_segmentos() {
     return $segmentos;
 }
 
-function get_countries_array() {
+function cdbr_get_countries_array() {
 
     $countries = array(
         "Brasil"                                    => "Brasil",
@@ -399,7 +397,7 @@ function get_countries_array() {
     return $countries;
 }
 
-function is_valid_cpf_or_cnpj($cpf_cnpj){
+function cdbr_is_valid_cpf_or_cnpj($cpf_cnpj){
 
     if( empty($cpf_cnpj))
         return false;
@@ -410,7 +408,7 @@ function is_valid_cpf_or_cnpj($cpf_cnpj){
         return is_a_valid_cnpj($cpf_cnpj);
 }
 
-function is_a_valid_cpf($cpf) {
+function cdbr_is_a_valid_cpf($cpf) {
     $error = __("O CPF fornecido é inválido.");
     $cpf = preg_replace('/[^0-9]/','',$cpf);
 
@@ -439,7 +437,7 @@ function is_a_valid_cpf($cpf) {
     }
 }
 
-function is_a_valid_cnpj($cnpj) {
+function cdbr_is_a_valid_cnpj($cnpj) {
     $error = __("O CNPJ fornecido é inválido.");
     $cnpj = preg_replace('/[^0-9]/', '', $cnpj);
 
@@ -481,7 +479,7 @@ function is_a_valid_cnpj($cnpj) {
     return false;
 }
 
-function user_cpf_does_not_exist($c) {
+function cdbr_user_cpf_does_not_exist($c) {
     global $wpdb;
 
     $result = $wpdb->get_var($wpdb->prepare("SELECT count(1) FROM {$wpdb->usermeta} WHERE"
@@ -493,3 +491,44 @@ function user_cpf_does_not_exist($c) {
 
     return true;
 }
+
+function cdbr_get_user_municipio( $user_id) {
+
+    if( function_exists('bp_is_active') )
+        $cidade = xprofile_get_field_data( 'cidade', $user_id );
+    else 
+        $cidade = get_user_meta($user_id, 'cidade', true);
+
+    return $cidade; 
+}
+
+function cdbr_set_user_municipio( $user_id, $cidade) {
+
+    if( function_exists('bp_is_active') )
+        $cidade = xprofile_set_field_data( 'cidade', $user_id );
+    else
+        $cidade = add_user_meta($user_id, 'cidade');
+
+    return $cidade; 
+}
+
+function cdbr_get_user_estado($user_id) {
+
+    if( function_exists('bp_is_active') )
+        $estado = xprofile_get_field_data( 'estado', $user_id );
+    else
+        $estado = get_user_meta($user_id, 'estado', true);
+
+    return $estado; 
+}
+
+function cdbr_set_user_estado( $user_id, $estado ) {
+
+    if( function_exists('bp_is_active') )
+        $estado = xprofile_set_field_data( 'estado', $user_id );
+    else 
+        $estado = add_user_meta($user_id, 'estado');
+
+    return $estado;
+}
+    

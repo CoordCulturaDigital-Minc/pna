@@ -127,7 +127,7 @@ if (!$user_ID) {
 				add_user_meta($user_id, 'categoria', $categoria);
 				add_user_meta($user_id, 'segmento', $segmento);
 				add_user_meta($user_id, 'estado', $estado);
-				add_user_meta($user_id, 'municipio', $municipio);
+				add_user_meta($user_id, 'cidade', $municipio);
 
 				// adiciona o usuário no blog principal
 				add_user_to_blog('1', $user_id, 'subscriber' );
@@ -224,6 +224,10 @@ if (!$user_ID) {
 							<input id="user_cpf" type="text" required="required" name="user_cpf" class="text" value="<?php echo isset($user_cpf) ? $user_cpf : '';?>" />
 						</div>
 
+						<div class="span-4">
+							Problema ao cadastrar?<br>	Envie um email para: <a href="mailto:consultadireitoautoral@cultura.gov.br?Subject=Consulta%20Publica">consultadireitoautoral@cultura.gov.br</a>.
+						</div>
+
 						<div id="instituicao" style="<?php echo !isset($razao_social) ? 'display:none': '';?>">
 							<div class="span-4">
 								<label for="razao_social">Razação Social/Instituição:</label>
@@ -240,7 +244,7 @@ if (!$user_ID) {
 						<label>País:</label>
 						<select required="required" name="pais" id="pais">
                             <option value=""> Selecione </option>
-                            <?php $countries = get_countries_array(); ?>
+                            <?php $countries = cdbr_get_countries_array(); ?>
                             <?php foreach ($countries as $key => $country ): ?>
                                 <option value="<?php echo $key; ?>"  <?php if (isset($_POST['pais']) && $_POST['pais'] == $key) echo 'selected'; ?>>
                                     <?php echo $country; ?>
@@ -249,25 +253,27 @@ if (!$user_ID) {
                         </select>
 					</div>
 				
+					<div id="endereco_nacional" style="<?php echo !isset($_POST["estado"]) ? 'display:none': '';?>">
+						<div class="span-4">
+							<label for="estado">Estado:</label>
+							<select id="estado" required="required" name="estado" id="estado">
+	                            <option value=""> Selecione </option>
+	                            <?php $states = cdbr_get_states(); ?>
+	                            <?php foreach ($states as $s): ?>
+	                                <option value="<?php echo $s->sigla; ?>"  <?php if (isset($_POST['estado']) && $_POST['estado'] == $s->sigla) echo 'selected'; ?>  >
+	                                    <?php echo $s->nome; ?>
+	                                </option>
+	                            <?php endforeach; ?>
+	                        </select>
+						</div>
+					
 
-					<div class="span-4">
-						<label for="estado">Estado:</label>
-						<select id="estado" required="required" name="estado" id="estado">
-                            <option value=""> Selecione </option>
-                            <?php $states = consulta_get_states(); ?>
-                            <?php foreach ($states as $s): ?>
-                                <option value="<?php echo $s->sigla; ?>"  <?php if (isset($_POST['estado']) && $_POST['estado'] == $s->sigla) echo 'selected'; ?>  >
-                                    <?php echo $s->nome; ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-					</div>
-
-					<div class="span-4">
-						<label for="municipio">Município:</label>
-						<select id="municipio" required="required" name="municipio" id="municipio">
-                            <option value="">Selecione</option>
-                        </select> 
+						<div class="span-4">
+							<label for="municipio">Município:</label>
+							<select id="municipio" required="required" name="municipio" id="municipio">
+	                            <option value="">Selecione</option>
+	                        </select> 
+						</div>
 					</div>
 					</fieldset>
 
@@ -275,7 +281,7 @@ if (!$user_ID) {
 						<label>Categoria:</label>
 						<select required="required" name="categoria" id="categoria">
                             <option value=""> Selecione </option>
-                            <?php $categorias = da_get_categorias(); ?>
+                            <?php $categorias = cdbr_get_categorias(); ?>
                             <?php foreach ($categorias as $key => $c ): ?>
                                 <option value="<?php echo $key; ?>"  <?php if (isset($_POST['categoria']) && $_POST['categoria'] == $key) echo 'selected'; ?>>
                                     <?php echo $c; ?>
@@ -288,7 +294,7 @@ if (!$user_ID) {
 						<label>Segmento ou setor de atuação:</label>
 						<select required="required" name="segmento" id="segmento">
                             <option value=""> Selecione </option>
-                            <?php $segmentos = da_get_segmentos(); ?>
+                            <?php $segmentos = cdbr_get_segmentos(); ?>
                             <?php foreach ($segmentos as $key => $s ): ?>
                                 <option value="<?php echo $key; ?>"  <?php if (isset($_POST['segmento']) && $_POST['segmento'] == $key) echo 'selected'; ?>>
                                     <?php echo $s; ?>

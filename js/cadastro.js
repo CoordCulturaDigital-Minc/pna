@@ -41,13 +41,13 @@ jQuery(document).ready(function() {
         }   
     );
 
-    jQuery("select#country").change(
+    jQuery("select#pais").change(
         function(){
 
             if( jQuery(this).val() == 'Brasil' )
-                jQuery("#instituicao").slideUp('fast');
+                jQuery("#endereco_nacional").hide().slideDown('fast');
             else
-                jQuery("#instituicao").hide().slideDown('fast');
+                jQuery("#endereco_nacional").slideUp('fast');
         }   
     );
    
