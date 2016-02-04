@@ -20,7 +20,7 @@ function consulta_edit_user_details($user) {
                 <?php $states = consulta_get_states(); ?>
                 <?php foreach ($states as $s): ?>
                 
-                    <option value="<?php echo $s->sigla; ?>"  <?php if(get_user_meta($user->ID, 'estado', true) == $s->sigla) echo 'selected'; ?>  >
+                    <option value="<?php echo $s->nome; ?>"  <?php if(get_user_meta($user->ID, 'estado', true) == $s->nome) echo 'selected'; ?>  >
                         <?php echo $s->nome; ?>
                     </option>
                 
@@ -69,7 +69,7 @@ function consulta_get_cities_options($uf, $selected = '') {
 
 // var_dump($selected);
 
-    $uf_id = $wpdb->get_var($wpdb->prepare("SELECT id FROM uf WHERE sigla LIKE %s", $uf));
+    $uf_id = $wpdb->get_var($wpdb->prepare("SELECT id FROM uf WHERE nome LIKE %s", $uf));
 
     if (!$uf_id) {
         return "<option value=''>Selecione um estado...</option>";
@@ -412,6 +412,9 @@ function cdbr_is_a_valid_cpf($cpf) {
     $error = __("O CPF fornecido é inválido.");
     $cpf = preg_replace('/[^0-9]/','',$cpf);
 
+    if( !is_numeric( $cpf ) or $cpf == '00000000000' or $cpf == '11111111111' or $cpf == '22222222222' or $cpf == '33333333333' or $cpf == '44444444444' or $cpf == '55555555555' or $cpf == '66666666666' or $cpf == '77777777777' or $cpf == '88888888888' or $cpf == '99999999999' )
+        return $error;
+
     if(strlen($cpf) !=  11 || preg_match('/^([0-9])\1+$/', $cpf)) {
         return $error;
     }
@@ -440,6 +443,9 @@ function cdbr_is_a_valid_cpf($cpf) {
 function cdbr_is_a_valid_cnpj($cnpj) {
     $error = __("O CNPJ fornecido é inválido.");
     $cnpj = preg_replace('/[^0-9]/', '', $cnpj);
+
+    if( !is_numeric( $cnpj ) or $cnpj == '00000000000000' or $cnpj == '11111111111111' or $cnpj == '22222222222222' or $cnpj == '33333333333333' or $cnpj == '44444444444444' or $cnpj == '55555555555555' or $cnpj == '66666666666666' or $cnpj == '77777777777777' or $cnpj == '88888888888888' or $cnpj == '99999999999999' )
+        return $error;
 
     if(strlen($cnpj) != 14) {
         return $error;
@@ -494,10 +500,10 @@ function cdbr_user_cpf_does_not_exist($c) {
 
 function cdbr_get_user_meta($user_id, $field_id, $single=true) {
 
-    if( function_exists('bp_is_active') )
-        $meta= xprofile_get_field_data( $field_id, $user_id );
-    else
-        $meta = get_user_meta($user_id, $field_id, $single);
+    // if( function_exists('bp_is_active') )
+    //     $meta= xprofile_get_field_data( $field_id, $user_id );
+    // else
+    $meta = get_user_meta($user_id, $field_id, $single);
 
     return $meta; 
 }
@@ -510,9 +516,9 @@ function cdbr_add_user_meta( $user_id, $field_id, $current_field) {
         return false;
 
     if( function_exists('bp_is_active') )
-        $meta = xprofile_set_field_data( $field_id, $user_id, $current_field);
-    else 
-        $meta = add_user_meta($user_id, $field_id,$current_field);
+        xprofile_set_field_data( $field_id, $user_id, $current_field);
+    
+    $meta = add_user_meta($user_id, $field_id,$current_field);
 
     return $meta;
 }

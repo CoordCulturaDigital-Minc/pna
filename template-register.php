@@ -48,7 +48,7 @@ if (!$user_ID) {
 
 		$accept_the_terms_of_site 	= $_POST['accept_the_terms_of_site'];
 
-
+	
 		// user_login
 		if(empty($user_name)) {
 			$register_errors['user_name'] = "Nome de usuário não pode ser vazio.";
@@ -62,7 +62,7 @@ if (!$user_ID) {
 		// user_cpf or cnpj
 		if(empty($user_cpf)) {
 			$register_errors['user_cpf'] = "CPF é obrigatório";
-		}elseif(!cdbr_is_a_valid_cpf($user_cpf)) {
+		}elseif(cdbr_is_a_valid_cpf($user_cpf)!==true) {
 			$register_errors['user_cpf'] = "CPF informado é inválido";
 		}elseif( !cdbr_user_cpf_does_not_exist($user_cpf) ) {
 			$register_errors['user_cpf'] = 'Já existe um usuário cadastrado com este CPF. <a href="' . wp_lostpassword_url() .'">Recuperar senha?</a>';
@@ -78,14 +78,14 @@ if (!$user_ID) {
 				$register_errors['nome_instituicao'] = "O nome da instituicao é obrigatório.";
 			}
 
-		}
-
-		// CNPJ instituicao - TODO: verificar se CNPJ é obrigatório
-		if(!empty($cnpj_instituicao)) {
-			if(!cdbr_is_a_valid_cnpj($cnpj_instituicao)) {
+			// CNPJ instituicao - TODO: verificar se CNPJ é obrigatório
+			if( empty($cnpj_instituicao )) {
+				$register_errors['cnpj_instituicao'] = "O CNPJ da instituicao é obrigatório.";
+			}
+			else if(!cdbr_is_a_valid_cnpj($cnpj_instituicao)) {
 				$register_errors['cnpj_instituicao'] = "CNPJ informado é inválido";
 			}
-		}
+		}	
 		
 		// user_email
 		if(!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/", $user_email)) {
@@ -147,8 +147,8 @@ if (!$user_ID) {
             $user_id = wp_insert_user($data);
 
             // $status = wp_create_user( $user_name, $user_password, $user_email );
-
-			if ( is_wp_error($status) ) {
+            var_dump($user_id);
+			if ( is_wp_error($user_id) ) {
 				$register_errors['create'] = $user_id->get_error_message();
 			} else {
 
@@ -163,12 +163,12 @@ if (!$user_ID) {
 				update_user_meta($user_id, 'segmento', $segmento);
 
 				// razao social é opcional
-				if( !empty($razao_social))
-					update_user_meta($user_id, 'nome_instituicao', $razao_social);
+				if( !empty($nome_instituicao))
+					update_user_meta($user_id, 'nome_instituicao', $nome_instituicao);
 
 				// cnpj é opcional
-				if( !empty($cnpj))
-					update_user_meta($user_id, 'cnpj_instituicao', $segmento);
+				if( !empty($cnpj_instituicao))
+					update_user_meta($user_id, 'cnpj_instituicao', $cnpj_instituicao);
 
 				// salva os metados do buddypress - cidade e estado sao opcionais
 				if( !empty($municipio) )
@@ -202,11 +202,11 @@ if (!$user_ID) {
 		        }
 			}
 		}
-	}
+	} // end if($_POST)
 
 
 	get_header();
- ?>
+	 ?>
 
 	<div class="wrapper section-inner">						
 
@@ -256,12 +256,7 @@ if (!$user_ID) {
 						<label for="user_cpf">CPF:</label>
 						<input id="user_cpf" type="text" required="required" name="user_cpf" class="text" value="<?php echo isset($user_cpf) ? $user_cpf : '';?>" />
 					</div>					
-					<br>
-					<div class="span-4">
-						Problema ao cadastrar?<br>	Envie um email para: <a href="mailto:<?php echo get_option('admin_email'); ?>?Subject=Consulta%20Publica"><?php echo get_option('admin_email'); ?></a>.
-					</div>
-					<br>
-
+					
 					<fieldset>
 						<legend>Tipo de manifestação</legend>
 						<label>
@@ -273,10 +268,10 @@ if (!$user_ID) {
 						  Institucional
 						</label>
 
-						<div id="instituicao" style="<?php echo !isset($nome_instituicao) ? 'display:none': '';?>">
+						<div id="instituicao" style="<?php echo empty($nome_instituicao) ? 'display:none': '';?>">
 							<div class="span-4">
 								<label for="nome_instituicao">Razão Social/Instituição:</label>
-								<input id="nome_instituicao" type="text" required="required" name="nome_instituicao" class="text" value="<?php echo isset($nome_instituicao) ? $nome_instituicao : '';?>" />
+								<input id="nome_instituicao" type="text" name="nome_instituicao" class="text" value="<?php echo isset($nome_instituicao) ? $nome_instituicao : '';?>" />
 							</div>
 
 							<div class="span-4">
@@ -298,15 +293,16 @@ if (!$user_ID) {
                             <?php endforeach; ?>
                         </select>
 					</div>
-			
-					<div id="endereco_nacional" style="<?php echo !isset($_POST["estado"]) ? 'display:none': '';?>">
+
+					<!-- <div id="disable_first_municipio_ajax_call" class="disable_first_municipio_ajax_call"></div> -->
+					<div id="endereco_nacional" style="<?php echo empty($_POST["estado"]) ? 'display:none': '';?>">
 						<div class="span-4">
 							<label for="estado">Estado:</label>
-							<select id="estado" required="required" name="estado" id="estado">
+							<select id="estado" name="estado" id="estado">
 	                            <option value=""> Selecione </option>
 	                            <?php $states = cdbr_get_states(); ?>
 	                            <?php foreach ($states as $s): ?>
-	                                <option value="<?php echo $s->sigla; ?>"  <?php if (isset($_POST['estado']) && $_POST['estado'] == $s->sigla) echo 'selected'; ?>  >
+	                                <option value="<?php echo $s->nome; ?>"  <?php if (isset($_POST['estado']) && $_POST['estado'] == $s->nome) echo 'selected'; ?>  >
 	                                    <?php echo $s->nome; ?>
 	                                </option>
 	                            <?php endforeach; ?>
@@ -315,7 +311,7 @@ if (!$user_ID) {
 					
 						<div class="span-4">
 							<label for="municipio">Município:</label>
-							<select id="municipio" required="required" name="municipio" id="municipio">
+							<select id="municipio" name="municipio" id="municipio">
 	                            <option value="">Selecione</option>
 	                        </select> 
 						</div>
@@ -359,7 +355,7 @@ if (!$user_ID) {
 
 					<div class="span-4">
 						<label>
-						    <input type="checkbox" name="accept_the_terms_of_site">
+						    <input type="checkbox" name="accept_the_terms_of_site" required="required">
 						    Li e concordo com os <a href="<?php echo site_url('/termos-de-uso/'); ?>">
 						    termos de uso</a> do site
 						 </label>
@@ -369,6 +365,12 @@ if (!$user_ID) {
 						<input type="submit" id="submitbtn" class="blue-button"  name="submit" value="Registrar" />
 					</div>
 				</form>
+
+				<br>
+				<div class="span-4">
+					Problema ao cadastrar?<br>	Envie um email para: <a href="mailto:<?php echo get_option('admin_email'); ?>?Subject=Consulta%20Publica"><?php echo get_option('admin_email'); ?></a>.
+				</div>
+				<br>
 			</div> <!-- end post -->
 			<div class="clear"></div>
 			
@@ -376,7 +378,7 @@ if (!$user_ID) {
 	</div>
 	
 	<?php  
-	}
+	} // end !$user_ID
 	else { // Verificar se já é usuário do culturadigital e pedir para preencher os dados faltantes.
 
 		get_header(); ?>
