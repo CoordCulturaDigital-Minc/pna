@@ -518,7 +518,7 @@ function cdbr_add_user_meta( $user_id, $field_id, $current_field) {
     if( function_exists('bp_is_active') )
         xprofile_set_field_data( $field_id, $user_id, $current_field);
     
-    $meta = add_user_meta($user_id, $field_id,$current_field);
+    $meta = update_user_meta($user_id, $field_id,$current_field);
 
     return $meta;
 }
@@ -541,6 +541,8 @@ function cdbr_get_user_terms_current_site( $user_id ) {
 
     if( empty( $user_id ) )
         return false;
+
+    global $wpdb;
 
     if( get_user_meta( $user_id, $wpdb->prefix . 'accept_the_terms_of_site', true ) )
         return true;
@@ -566,3 +568,13 @@ function cdbr_send_email_register( $user_email, $user_login, $user_password ) {
 }
 
 
+function cdbr_get_user_all_data($user_id) {
+
+    $user       = get_user_by( 'id', $user_id);
+    $user_meta  = array_map( function( $a ){ return $a[0]; }, get_user_meta( $user_id ) );
+
+    if( is_object( $user  ) )
+      $user = get_object_vars( $user->data);
+
+    return array_merge($user, $user_meta);
+}
