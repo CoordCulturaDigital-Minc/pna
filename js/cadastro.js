@@ -67,6 +67,31 @@ jQuery(document).ready(function() {
             } 
         }
     );
+
+    jQuery('.nao_tenho_cpf').on('click', function(){
+        jQuery('#cdbr_dialog').remove();
+
+        var widget_title = 'Ajuda';
+        var widget_text = "Se você é estrangeiro e não tem CPF, envie um email com uma cópia do <br>seu documento para <a href='mailto:" + vars.admin_email + "'>"+ vars.admin_email +".<a>";
+
+        jQuery('<div id="cdbr_dialog"></div>').appendTo( jQuery( "body" ) )
+          .html('<div id="dialog-confirm" title="'+widget_title+'"><p>'+widget_text+'</p></div');
+
+        jQuery('#dialog-confirm').dialog({
+            resizable: false,
+            draggable: false,
+            modal: true,
+            // closeOnEscape: false,
+            buttons: {
+                "Ok": function() {
+                    jQuery( this ).dialog( "close" );
+                    jQuery('#cdbr_dialog').remove();
+                }
+            }
+        });
+        
+        return false;        
+    });
    
 });
 

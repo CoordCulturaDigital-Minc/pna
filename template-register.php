@@ -17,13 +17,13 @@
 
 global $user_ID;
 
+$disabled = "";
+
+wp_enqueue_script('jquery-ui-dialog');
+// wp_enqueue_style("wp-jquery-ui-dialog");
 wp_enqueue_script('jquery-mask', get_stylesheet_directory_uri() . '/js/jquery.mask.min.js', array('jquery'));
 wp_enqueue_script('cadastro', get_stylesheet_directory_uri() . '/js/cadastro.js', array('jquery'));
-wp_localize_script('cadastro', 'vars', array( 'ajaxurl' => admin_url('admin-ajax.php') ));
-
-
-
-get_header();
+wp_localize_script('cadastro', 'vars', array( 'ajaxurl' => admin_url('admin-ajax.php'), 'admin_email' => get_option('admin_email') ) );
 
 	// se o usuário já possuir cadastro, deverá apenas atualizar os campos não cadastrados
 	if ($user_ID) {
@@ -41,10 +41,12 @@ get_header();
 		$estado 					= isset( $cdbr_user['estado'] )  	? $cdbr_user['estado'] : $_POST['estado'];
 		$municipio 					= isset( $cdbr_user['municipio'] )  ? $cdbr_user['municipio'] : $_POST['municipio'];
 
-		$categoria 					= isset( $cdbr_user['categoria'] ) ? $cdbr_user['categoria'] : $_POST['categoria'];
+		// $categoria 					= isset( $cdbr_user['categoria'] ) ? $cdbr_user['categoria'] : $_POST['categoria'];
 		$segmento 					= isset( $cdbr_user['segmento'] )  ? $cdbr_user['segmento'] : $_POST['segmento'];
 
 		$accept_the_terms_of_site 	= ( cdbr_get_user_terms_current_site($user_ID) ) ? cdbr_get_user_terms_current_site($user_ID) : $_POST['accept_the_terms_of_site'];
+		
+		$disabled = "disabled";
 	}
 
 	//Check whether the user is already logged in
@@ -70,10 +72,12 @@ get_header();
 			$municipio 					= isset( $_POST['municipio'] ) ? $_POST['municipio'] : '';
 
 			$segmento 					= $_POST['segmento'];
-			$categoria 					= $_POST['categoria'];
+			// $categoria 					= $_POST['categoria'];
 
 			$accept_the_terms_of_site 	= $_POST['accept_the_terms_of_site'];
 		}
+
+		$disabled = "";
 	}		
 		
 	if($_POST) {
@@ -132,9 +136,9 @@ get_header();
 		}	
 		
 		//tipo de categoria
-		if(empty($categoria)) {
-			$register_errors['categoria'] = "O tipo de categoria é obrigatório.";
-		}
+		// if(empty($categoria)) {
+		// 	$register_errors['categoria'] = "O tipo de categoria é obrigatório.";
+		// }
 
 		//tipo de segmento
 		if(empty($segmento)) {
@@ -160,7 +164,6 @@ get_header();
 			}
 		}
 
-
 	    // termos de uso
 		if(empty($accept_the_terms_of_site)) {
 			$register_errors['accept_the_terms_of_site'] = "Você deve concordar com os termos de uso do site.";
@@ -180,7 +183,6 @@ get_header();
 	            $data['role'] = 'subscriber' ;
 	            
 	            $user_id = wp_insert_user($data);
-	            echo "teste";
 	        }else {
 	        	$user_id = $user_ID;
 	        }
@@ -198,7 +200,7 @@ get_header();
 				update_user_meta($user_id, 'tipo_manifestacao', $tipo_manifestacao);
 				update_user_meta($user_id, 'user_cpf', $user_cpf);
 				update_user_meta($user_id, 'user_name', $user_name);
-				update_user_meta($user_id, 'categoria', $categoria);
+				// update_user_meta($user_id, 'categoria', $categoria);
 				update_user_meta($user_id, 'segmento', $segmento);
 				update_user_meta($user_id, 'pais', $pais);
 
@@ -214,7 +216,7 @@ get_header();
 				if( !empty($municipio) )
 					cdbr_add_user_meta($user_id, 'cidade', $municipio);
 				
-				if( !empty($estado) )
+				if( !empty( $estado) )
 					cdbr_add_user_meta($user_id, 'estado', $estado);
 
 				// termos de uso
@@ -239,20 +241,18 @@ get_header();
 						
 			            exit();
 			        }
-			    }else{
 			    }
 			}
 		}
+	} 
 
-    	// wp_redirect();
-    	// exit();
-	} // end if($_POST)
-
+get_header();
 /*
  * se o usuário já estiver cadastro no culturadigital e já tiver os dados neste site
  * o sistema não deve mostrar o formulário novamente.
 */
 $cpf_registered = "";
+$user_ID = get_current_user_id();
 
 if($user_ID) {
 	$cpf_registered = get_user_meta($user_ID, 'user_cpf', true);
@@ -297,17 +297,21 @@ if( $user_ID && !empty($cpf_registered) ) { ?>
 					<?php endif; ?>
 				<?php endif; ?>
 
+				<?php if($user_ID ) : ?>
+					<div class="success">Para participar desta consulta pública, você precisa atualizar o seu cadastro.</div>
+				<?php endif; ?>
+
 				<form method="post" id="register">
 
 					<div class="span-4">
 						<label for="user_login">Nome de usuário:</label>
 						<span class="description">(Não inserir caracteres especiais e nem espaço)<span>
-						<input id="user_login" type="text" required="required" name="user_login" class="text" value="<?php echo isset($user_login) ? $user_login : '';?>" />
+						<input id="user_login" type="text" required="required" name="user_login" class="text" value="<?php echo isset($user_login) ? $user_login : '';?>" <?php echo $disabled; ?> />
 					</div>
 
 					<div class="span-4">
 						<label for="user_email">Email:</label>
-						<input id="user_email" type="text" required="required" name="user_email" class="text" value="<?php echo isset($user_email) ? $user_email : '';?>" /> 
+						<input id="user_email" type="text" required="required" name="user_email" class="text" value="<?php echo isset($user_email) ? $user_email : '';?>" <?php echo $disabled; ?> /> 
 					</div>
 
 					<div class="span-4">
@@ -317,8 +321,9 @@ if( $user_ID && !empty($cpf_registered) ) { ?>
 
 					<div class="span-4">
 						<label for="user_cpf">CPF:</label>
+						<span class="description">(<a href="#" class="nao_tenho_cpf">Não tenho CPF</a>)<span>
 						<input id="user_cpf" type="text" required="required" name="user_cpf" class="text" value="<?php echo isset($user_cpf) ? $user_cpf : '';?>" />
-					</div>					
+					</div>			
 					
 					<fieldset>
 						<legend>Tipo de manifestação</legend>
@@ -381,20 +386,7 @@ if( $user_ID && !empty($cpf_registered) ) { ?>
 					</div>
 
 					<div class="span-4">
-						<label>Categoria:</label>
-						<select required="required" name="categoria" id="categoria">
-                            <option value=""> Selecione </option>
-                            <?php $categorias = cdbr_get_categorias(); ?>
-                            <?php foreach ($categorias as $key => $c ): ?>
-                                <option value="<?php echo $key; ?>"  <?php if (isset($categoria) && $categoria == $key) echo 'selected'; ?>>
-                                    <?php echo $c; ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-					</div>
-
-					<div class="span-4">
-						<label>Segmento ou setor de atuação:</label>
+						<label>Segmento:</label>
 						<select required="required" name="segmento" id="segmento">
                             <option value=""> Selecione </option>
                             <?php $segmentos = cdbr_get_segmentos(); ?>
@@ -430,11 +422,6 @@ if( $user_ID && !empty($cpf_registered) ) { ?>
 					</div>
 				</form>
 
-				<br>
-				<div class="span-4">
-					Problema ao cadastrar?<br>	Envie um email para: <a href="mailto:<?php echo get_option('admin_email'); ?>?Subject=Consulta%20Publica"><?php echo get_option('admin_email'); ?></a>.
-				</div>
-				<br>
 			</div> <!-- end post -->
 			<div class="clear"></div>
 			

@@ -120,23 +120,23 @@ function cdbr_get_categorias() {
 }
 
 function cdbr_get_segmentos() {
-    
+
     // Área de atuação - Peguei da consulta anterior, verifcar se vai continuar
-    $segmentos = array( 'advocacia'                         => 'Advocacia',
-                        'artista_conexo'                    => 'Artista conexo',
-                        'associacao_titulares'              => 'Associação de titulares',
-                        'autoria'                           => 'Autoria',
-                        'educacao_pesquisa'                 => 'Educação e Pesquisa',
-                        'edicao_musical'                    => 'Edição musical',
-                        'imprensa_escrita'                  => 'Imprensa escrita',
-                        'profissional_area_cultura'         => 'Profissional da área da Cultura',
-                        'preservacao_conservacao'           => 'Preservação e conservação',
-                        'producao_gravacao_musical'         => 'Edição musical',
-                        'radiofusao_audiovisual'            => 'Radiodifusão ou exibição audiovisual',
-                        'titular_direitos_patrimoniais'     => 'Titular de direitos patrimoniais',
-                        'usuario'                           => 'Usuário',
-                        'turismo_diversao'                  => 'Turismo e diversão',
-                        'outro_segmento'                    => 'Outro segmento');
+    $segmentos = array( 'academia'                  => 'Academia',
+                        'advocacia'                 => 'Advocacia',
+                        'agregadores_conteúdo'      => 'Agregadores de conteúdo',
+                        'artista'                   => 'Artista',
+                        'associacao_titulares'      => 'Associação de titulares',
+                        'autor'                     => 'Autor',
+                        'editoras'                  => 'Editoras',
+                        'gravadoras'                => 'Gravadoras',
+                        'outro_segmento'            => 'Outro segmento',
+                        'outros_tipos_usuario'      => 'Outros tipos de usuário',
+                        'plataformas_digitais'      => 'Plataformas digitais',
+                        'profissional_area_cultura' => 'Profissional da área de cultura',
+                        'radiodifusao'              => 'Radiodifusão',
+                        'sindicato'                 => 'Sindicato',
+                        'sociedade_civil'           => 'Sociedade civil');
     return $segmentos;
 }
 
