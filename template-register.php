@@ -262,6 +262,10 @@ if( $user_ID && !empty($cpf_registered) ) { ?>
 	<div class="wrapper section-inner">						
 		<div class="content">
 			<div id="post-<?php the_ID(); ?>" <?php post_class('post');?>>
+				<div class="post-header">							
+				    <h2 class="post-title"><?php the_title(); ?></h2>
+			    </div> <!-- /post-header -->
+			   				        			        		                
 				<div class="success">Você foi cadastrado com sucesso! <br>Para participar basta navegar nas opções no menu e deixar suas opiniões.</div>
 			</div>
 		</div>
@@ -274,156 +278,157 @@ if( $user_ID && !empty($cpf_registered) ) { ?>
 	<div class="wrapper section-inner">						
 
 		<div class="content">
+			<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+				<div id="post-<?php the_ID(); ?>" <?php post_class("post"); ?>>
 
-			<div id="post-<?php the_ID(); ?>" <?php post_class("post"); ?>>
+					<div class="post-header">							
+					    <h2 class="post-title"><?php the_title(); ?></h2>
+				    </div> <!-- /post-header -->
+				   				        			        		                
+					<div class="post-content">
+								                                        
+						<?php the_content(); ?>
 
-				<div class="post-header">							
-				    <h2 class="post-title"><?php the_title(); ?></h2>
-			    </div> <!-- /post-header -->
-			   				        			        		                
-				<div class="post-content">
-							                                        
-					<?php the_content(); ?>
+					</div> <!-- /post-content -->
 
-				</div> <!-- /post-content -->
-
-				<?php if( isset($register_errors) ) : ?>
-					<?php if (is_array($register_errors) && sizeof($register_errors) > 0): ?>
-						<div class='messages'>
-							<?php foreach ($register_errors as $e): ?>
-								<div class="error"><?php echo $e; ?></div>
-							<?php endforeach; ?>
-						</div>
+					<?php if( isset($register_errors) ) : ?>
+						<?php if (is_array($register_errors) && sizeof($register_errors) > 0): ?>
+							<div class='messages'>
+								<?php foreach ($register_errors as $e): ?>
+									<div class="error"><?php echo $e; ?></div>
+								<?php endforeach; ?>
+							</div>
+						<?php endif; ?>
 					<?php endif; ?>
-				<?php endif; ?>
 
-				<?php if($user_ID ) : ?>
-					<div class="success">Para participar desta consulta pública, você precisa atualizar o seu cadastro.</div>
-				<?php endif; ?>
+					<?php if($user_ID ) : ?>
+						<div class="success">Para participar desta consulta pública, você precisa atualizar o seu cadastro.</div>
+					<?php endif; ?>
 
-				<form method="post" id="register">
+					<form method="post" id="register">
 
-					<div class="span-4">
-						<label for="user_login">Nome de usuário:</label>
-						<span class="description">(Não inserir caracteres especiais e nem espaço)<span>
-						<input id="user_login" type="text" required="required" name="user_login" class="text" value="<?php echo isset($user_login) ? $user_login : '';?>" <?php echo $disabled; ?> />
-					</div>
-
-					<div class="span-4">
-						<label for="user_email">Email:</label>
-						<input id="user_email" type="text" required="required" name="user_email" class="text" value="<?php echo isset($user_email) ? $user_email : '';?>" <?php echo $disabled; ?> /> 
-					</div>
-
-					<div class="span-4">
-						<label for="user_name">Nome completo:</label>
-						<input id="user_name" type="text" required="required" name="user_name" class="text" value="<?php echo isset($user_name) ? $user_name : '';?>" />
-					</div>
-
-					<div class="span-4">
-						<label for="user_cpf">CPF:</label>
-						<span class="description">(<a href="#" class="nao_tenho_cpf">Não tenho CPF</a>)<span>
-						<input id="user_cpf" type="text" required="required" name="user_cpf" class="text" value="<?php echo isset($user_cpf) ? $user_cpf : '';?>" />
-					</div>			
-					
-					<fieldset>
-						<legend>Tipo de manifestação</legend>
-						<label>
-						  <input type="radio" name="tipo_manifestacao" value="individual" <?php if (isset($tipo_manifestacao) && $tipo_manifestacao == 'individual') echo 'checked'; ?>>
-						  Individual
-						</label>
-						<label>
-						  <input type="radio" name="tipo_manifestacao" value="institucional" <?php if (isset($tipo_manifestacao) && $tipo_manifestacao == 'institucional') echo 'checked'; ?>>
-						  Institucional
-						</label>
-
-						<div id="instituicao" style="<?php echo empty($nome_instituicao) ? 'display:none': '';?>">
-							<div class="span-4">
-								<label for="nome_instituicao">Razão Social/Instituição:</label>
-								<input id="nome_instituicao" type="text" name="nome_instituicao" class="text" value="<?php echo isset($nome_instituicao) ? $nome_instituicao : '';?>" />
-							</div>
-
-							<div class="span-4">
-								<label for="cnpj_instituicao">CNPJ:</label>
-								<input id="cnpj_instituicao" type="text" name="cnpj_instituicao" class="text" value="<?php echo isset($cnpj_instituicao) ? $cnpj_instituicao : '';?>" />
-							</div>
-						</div>
-					</fieldset>
-
-					<div class="span-4">
-						<label>País:</label>
-						<select required="required" name="pais" id="pais">
-                            <option value=""> Selecione </option>
-                            <?php $countries = cdbr_get_countries_array(); ?>
-                            <?php foreach ($countries as $key => $country ): ?>
-                                <option value="<?php echo $key; ?>" <?php if (isset($pais) && $pais == $key) echo 'selected'; ?>>
-                                    <?php echo $country; ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-					</div>
-
-					<!-- <div id="disable_first_municipio_ajax_call" class="disable_first_municipio_ajax_call"></div> -->
-					<div id="endereco_nacional" style="<?php echo empty($estado) ? 'display:none': '';?>">
 						<div class="span-4">
-							<label for="estado">Estado:</label>
-							<select id="estado" name="estado" id="estado">
+							<label for="user_login">Nome de usuário:</label>
+							<span class="description">(Não inserir caracteres especiais e nem espaço)<span>
+							<input id="user_login" type="text" required="required" name="user_login" class="text" value="<?php echo isset($user_login) ? $user_login : '';?>" <?php echo $disabled; ?> />
+						</div>
+
+						<div class="span-4">
+							<label for="user_email">Email:</label>
+							<input id="user_email" type="text" required="required" name="user_email" class="text" value="<?php echo isset($user_email) ? $user_email : '';?>" <?php echo $disabled; ?> /> 
+						</div>
+
+						<div class="span-4">
+							<label for="user_name">Nome completo:</label>
+							<input id="user_name" type="text" required="required" name="user_name" class="text" value="<?php echo isset($user_name) ? $user_name : '';?>" />
+						</div>
+
+						<div class="span-4">
+							<label for="user_cpf">CPF:</label>
+							<span class="description">(<a href="#" class="nao_tenho_cpf">Não tenho CPF</a>)<span>
+							<input id="user_cpf" type="text" required="required" name="user_cpf" class="text" value="<?php echo isset($user_cpf) ? $user_cpf : '';?>" />
+						</div>			
+						
+						<fieldset>
+							<legend>Tipo de manifestação</legend>
+							<label>
+							  <input type="radio" name="tipo_manifestacao" value="individual" <?php if (isset($tipo_manifestacao) && $tipo_manifestacao == 'individual') echo 'checked'; ?>>
+							  Individual
+							</label>
+							<label>
+							  <input type="radio" name="tipo_manifestacao" value="institucional" <?php if (isset($tipo_manifestacao) && $tipo_manifestacao == 'institucional') echo 'checked'; ?>>
+							  Institucional
+							</label>
+
+							<div id="instituicao" style="<?php echo empty($nome_instituicao) ? 'display:none': '';?>">
+								<div class="span-4">
+									<label for="nome_instituicao">Razão Social/Instituição:</label>
+									<input id="nome_instituicao" type="text" name="nome_instituicao" class="text" value="<?php echo isset($nome_instituicao) ? $nome_instituicao : '';?>" />
+								</div>
+
+								<div class="span-4">
+									<label for="cnpj_instituicao">CNPJ:</label>
+									<input id="cnpj_instituicao" type="text" name="cnpj_instituicao" class="text" value="<?php echo isset($cnpj_instituicao) ? $cnpj_instituicao : '';?>" />
+								</div>
+							</div>
+						</fieldset>
+
+						<div class="span-4">
+							<label>País:</label>
+							<select required="required" name="pais" id="pais">
 	                            <option value=""> Selecione </option>
-	                            <?php $states = cdbr_get_states(); ?>
-	                            <?php foreach ($states as $s): ?>
-	                                <option value="<?php echo $s->nome; ?>"  <?php if (isset($estado) && $estado == $s->nome) echo 'selected'; ?>  >
-	                                    <?php echo $s->nome; ?>
+	                            <?php $countries = cdbr_get_countries_array(); ?>
+	                            <?php foreach ($countries as $key => $country ): ?>
+	                                <option value="<?php echo $key; ?>" <?php if (isset($pais) && $pais == $key) echo 'selected'; ?>>
+	                                    <?php echo $country; ?>
 	                                </option>
 	                            <?php endforeach; ?>
 	                        </select>
 						</div>
-					
-						<div class="span-4">
-							<label for="municipio">Município:</label>
-							<select id="municipio" name="municipio" id="municipio">
-	                            <option value="">Selecione</option>
-	                        </select> 
-						</div>
-					</div>
 
-					<div class="span-4">
-						<label>Segmento:</label>
-						<select required="required" name="segmento" id="segmento">
-                            <option value=""> Selecione </option>
-                            <?php $segmentos = cdbr_get_segmentos(); ?>
-                            <?php foreach ($segmentos as $key => $s ): ?>
-                                <option value="<?php echo $key; ?>"  <?php if (isset($segmento) && $segmento == $key) echo 'selected'; ?>>
-                                    <?php echo $s; ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-					</div>
-					<?php if(!$user_ID) : ?>
-						<div class="span-4">
-							<label for="user_password">Senha:</label>
-							<input id="user_password" required="required" type="password" name="user_password" />
+						<!-- <div id="disable_first_municipio_ajax_call" class="disable_first_municipio_ajax_call"></div> -->
+						<div id="endereco_nacional" style="<?php echo empty($estado) ? 'display:none': '';?>">
+							<div class="span-4">
+								<label for="estado">Estado:</label>
+								<select id="estado" name="estado" id="estado">
+		                            <option value=""> Selecione </option>
+		                            <?php $states = cdbr_get_states(); ?>
+		                            <?php foreach ($states as $s): ?>
+		                                <option value="<?php echo $s->nome; ?>"  <?php if (isset($estado) && $estado == $s->nome) echo 'selected'; ?>  >
+		                                    <?php echo $s->nome; ?>
+		                                </option>
+		                            <?php endforeach; ?>
+		                        </select>
+							</div>
+						
+							<div class="span-4">
+								<label for="municipio">Município:</label>
+								<select id="municipio" name="municipio" id="municipio">
+		                            <option value="">Selecione</option>
+		                        </select> 
+							</div>
 						</div>
 
 						<div class="span-4">
-							<label for="user_password_confirm">Confirme a senha:</label>
-							<input id="user_password_confirm" required="required" type="password" name="user_password_confirm" />
+							<label>Segmento:</label>
+							<select required="required" name="segmento" id="segmento">
+	                            <option value=""> Selecione </option>
+	                            <?php $segmentos = cdbr_get_segmentos(); ?>
+	                            <?php foreach ($segmentos as $key => $s ): ?>
+	                                <option value="<?php echo $key; ?>"  <?php if (isset($segmento) && $segmento == $key) echo 'selected'; ?>>
+	                                    <?php echo $s; ?>
+	                                </option>
+	                            <?php endforeach; ?>
+	                        </select>
 						</div>
-					<?php endif; ?>
+						<?php if(!$user_ID) : ?>
+							<div class="span-4">
+								<label for="user_password">Senha:</label>
+								<input id="user_password" required="required" type="password" name="user_password" />
+							</div>
 
-					<div class="span-4">
-						<label>
-						    <input type="checkbox" name="accept_the_terms_of_site" required="required" <?php print !empty($accept_the_terms_of_site) ? 'checked' : ''; ?>>
-						    Li e concordo com os <a href="<?php echo site_url('/termos-de-uso/'); ?>">
-						    termos de uso</a> do site
-						 </label>
-					</div>
+							<div class="span-4">
+								<label for="user_password_confirm">Confirme a senha:</label>
+								<input id="user_password_confirm" required="required" type="password" name="user_password_confirm" />
+							</div>
+						<?php endif; ?>
 
-					<div class="textright">
-						<input type="submit" id="submitbtn" class="blue-button"  name="submit" value="Registrar" />
-					</div>
-				</form>
+						<div class="span-4">
+							<label>
+							    <input type="checkbox" name="accept_the_terms_of_site" required="required" <?php print !empty($accept_the_terms_of_site) ? 'checked' : ''; ?>>
+							    Li e concordo com os <a href="<?php echo site_url('/termos-de-uso/'); ?>">
+							    termos de uso</a> do site
+							 </label>
+						</div>
 
-			</div> <!-- end post -->
-			<div class="clear"></div>
+						<div class="textright">
+							<input type="submit" id="submitbtn" class="blue-button"  name="submit" value="Registrar" />
+						</div>
+					</form>
+
+				</div> <!-- end post -->
+				<div class="clear"></div>
+		<?php endwhile; endif; ?>
 			
 		</div> <!-- /content left -->
 	</div>
