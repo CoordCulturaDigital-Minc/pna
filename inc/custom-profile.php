@@ -558,7 +558,7 @@ function cdbr_send_email_register( $user_email, $user_login, $user_password ) {
     $from = get_option('admin_email');
     $headers = 'From: '.$from . "\r\n";
     $subject = "Cadastro " . get_bloginfo('name');
-    $redefine_pass = network_site_url(bp_get_members_slug() . $user_login . "settings");
+    $redefine_pass = network_site_url(bp_get_members_slug() ."/" . $user_login . "/settings");
 
     $msg = "Você foi cadastrado com sucesso no site " . get_bloginfo('name')
      ."\nDetalhes para acesso"
