@@ -1,18 +1,6 @@
 <?php
 /*
 	Template Name: Página de cadastro
-
-
-• Podemos fazer alteração no formulário de cadastro da pessoa no Cultura Digital? Criar ou excluir campos específicos?
- 
-• Qual o campo no formulário que representa o nome que aparecerá nos comentários de determinada pessoa? Nome de usuário,...? É preciso que apareça sempre o nome completo da pessoa e não o apelido.
- 
-• Excluir o campo APELIDO*; endereço; CEP; Telefone; Celular; Biografia.
- 
-• É possível criar no início do formulário de cadastro as opções de pessoa física ou jurídica e depois criar campos para que se digite ou o CPF ou o CNPJ?
- 
-• É possível criar categorias na hora do cadastro? Empresa, Associação, Coletivo, Players, Editores, Usuário...?
-
 */
 
 global $user_ID;
@@ -20,7 +8,6 @@ global $user_ID;
 $disabled = "";
 
 wp_enqueue_script('jquery-ui-dialog');
-// wp_enqueue_style("wp-jquery-ui-dialog");
 wp_enqueue_script('jquery-mask', get_stylesheet_directory_uri() . '/js/jquery.mask.min.js', array('jquery'));
 wp_enqueue_script('cadastro', get_stylesheet_directory_uri() . '/js/cadastro.js', array('jquery'));
 wp_localize_script('cadastro', 'vars', array( 'ajaxurl' => admin_url('admin-ajax.php'), 'admin_email' => get_option('admin_email') ) );
@@ -59,8 +46,8 @@ wp_localize_script('cadastro', 'vars', array( 'ajaxurl' => admin_url('admin-ajax
 			$user_login 				= sanitize_user($_POST['user_login']);
 			$user_name 					= $_POST['user_name'];
 			$user_email 	  			= esc_sql($_POST['user_email']);
-			$user_password 				= $_POST['user_password'];
-			$user_password_confirm  	= $_POST['user_password_confirm'];
+			// $user_password 				= $_POST['user_password'];
+			// $user_password_confirm  	= $_POST['user_password_confirm'];
 			$user_cpf					= $_POST['user_cpf'];
 			
 			$tipo_manifestacao			= $_POST['tipo_manifestacao']; //individual or institucional
@@ -100,11 +87,11 @@ wp_localize_script('cadastro', 'vars', array( 'ajaxurl' => admin_url('admin-ajax
 			}
 
 			// password
-	        if(strlen($user_password)==0 )
-	            $register_errors['pass'] = 'A senha é obrigatória para a inscrição no site.';
+	        // if(strlen($user_password)==0 )
+	            // $register_errors['pass'] = 'A senha é obrigatória para a inscrição no site.';
 	        
-	        if( $user_password != $user_password_confirm)
-	            $register_errors['pass_confirm'] = 'As senhas informadas não são iguais.';
+	        // if( $user_password != $user_password_confirm)
+	            // $register_errors['pass_confirm'] = 'As senhas informadas não são iguais.';
 		}
 
 		// user_cpf or cnpj
@@ -173,7 +160,11 @@ wp_localize_script('cadastro', 'vars', array( 'ajaxurl' => admin_url('admin-ajax
 		if(!sizeof($register_errors)>0) {
 
 			// se o usuário não tiver cadastrado, criar um novo
-			if(!$user_ID) {
+			if(!$user_ID) { 
+
+				//gera a senha para envio por email
+				$user_password = wp_generate_password( 8, false );
+
 				$data['user_login'] = $user_login;
 	            $data['user_pass'] = $user_password;
 	            $data['user_email'] =  $user_email;
@@ -191,8 +182,8 @@ wp_localize_script('cadastro', 'vars', array( 'ajaxurl' => admin_url('admin-ajax
 				$register_errors['create'] = $user_id->get_error_message();
 			} else {
 
-				if(!$user_ID) {
-					// enviar um email com informações da conta, TODO: verificar se envia senha apenas pelo email
+				if(!$user_ID) { // se for um cadastro novo
+					// enviar um email com informações da conta, envia senha por email
 					cdbr_send_email_register( $user_email, $user_login, $user_password );
 				}
 
@@ -225,71 +216,62 @@ wp_localize_script('cadastro', 'vars', array( 'ajaxurl' => admin_url('admin-ajax
 				// adiciona o usuário no blog principal
 				add_user_to_blog('1', $user_id, 'subscriber' );
 
-				if(!$user_ID) {
+				if(!$user_ID) { // mensagem para novo cadastro
+					wp_safe_redirect($_SERVER['REQUEST_URI'] . '?sussa=success_new_register');
+					 exit();
+			    }else { // mensagem para atualização do cadastro
+			    	wp_safe_redirect($_SERVER['REQUEST_URI'] . '?sussa=success_update_register');
+			    	 exit();
 
-					// TODO: forçar login automático ou enviar senha para o email
-					if ( is_ssl() && force_ssl_login() && !force_ssl_admin() && ( 0 !== strpos($redirect_to, 'https') ) && ( 0 === strpos($redirect_to, 'http') ) )
-			            $secure_cookie = false;
-			        else
-			            $secure_cookie = '';
-
-			        $user = wp_signon(array('user_login' => $user_login, 'user_password' => $user_password), $secure_cookie);
-
-			        if ( !is_wp_error($user) && !$reauth ) {
-
-						wp_safe_redirect($_SERVER['REQUEST_URI']);
-						
-			            exit();
-			        }
 			    }
 			}
 		}
 	} 
 
 get_header();
+
 /*
  * se o usuário já estiver cadastro no culturadigital e já tiver os dados neste site
  * o sistema não deve mostrar o formulário novamente.
 */
-$cpf_registered = "";
-$user_ID = get_current_user_id();
 
-if($user_ID) {
-	$cpf_registered = get_user_meta($user_ID, 'user_cpf', true);
-}
-
-if( $user_ID && !empty($cpf_registered) ) { ?>
+if( cdbr_current_user_has_updated_profile() ) { ?>
 	<div class="wrapper section-inner">						
 		<div class="content">
-			<div id="post-<?php the_ID(); ?>" <?php post_class('post');?>>
-				<div class="post-header">							
-				    <h2 class="post-title"><?php the_title(); ?></h2>
-			    </div> <!-- /post-header -->
-			   				        			        		                
-				<div class="success">Você foi cadastrado com sucesso! <br>Para participar basta navegar nas opções no menu e deixar suas opiniões.</div>
-			</div>
+		    <?php if( $_GET['sussa'] == 'success_update_register' ) :  ?>
+				<div class="success"><strong>Seu cadastro foi atualizado com sucesso! </strong><br>Para participar basta navegar nas opções no menu e deixar suas opiniões.</div>			
+			<?php else: ?>
+				<div class="success"><strong>Você já está cadastro! </strong><br>Para participar basta navegar nas opções no menu e deixar suas opiniões.</div>
+			<?php endif; ?>
 		</div>
 	</div>
-
+<?php } elseif( !$user_ID && $_GET['sussa'] == 'success_new_register') {  ?> 
+	<div class="wrapper section-inner">						
+		<div class="content">       			        		                
+			<div class="success"><strong>Você foi cadastrado com sucesso! </strong>
+			<br>Uma senha foi gerada e enviada para o email informado no seu cadastro!
+			<br>Acesse seu email e depois faça <a href="<?php echo wp_login_url( $redirect ); ?>">login</a> para participar!</div>
+		</div>
+	</div>		
 <?php	
 } else {
 	 ?>
-
 	<div class="wrapper section-inner">						
 
 		<div class="content">
 			<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+
 				<div id="post-<?php the_ID(); ?>" <?php post_class("post"); ?>>
 
 					<div class="post-header">							
 					    <h2 class="post-title"><?php the_title(); ?></h2>
-				    </div> <!-- /post-header -->
+				    </div> 
 				   				        			        		                
 					<div class="post-content">
 								                                        
 						<?php the_content(); ?>
 
-					</div> <!-- /post-content -->
+					</div>
 
 					<?php if( isset($register_errors) ) : ?>
 						<?php if (is_array($register_errors) && sizeof($register_errors) > 0): ?>
@@ -301,7 +283,7 @@ if( $user_ID && !empty($cpf_registered) ) { ?>
 						<?php endif; ?>
 					<?php endif; ?>
 
-					<?php if($user_ID ) : ?>
+					<?php if( $user_ID ) : ?>
 						<div class="success">Para participar desta consulta pública, você precisa atualizar o seu cadastro.</div>
 					<?php endif; ?>
 
@@ -366,7 +348,6 @@ if( $user_ID && !empty($cpf_registered) ) { ?>
 	                        </select>
 						</div>
 
-						<!-- <div id="disable_first_municipio_ajax_call" class="disable_first_municipio_ajax_call"></div> -->
 						<div id="endereco_nacional" style="<?php echo empty($estado) ? 'display:none': '';?>">
 							<div class="span-4">
 								<label for="estado">Estado:</label>
@@ -401,17 +382,6 @@ if( $user_ID && !empty($cpf_registered) ) { ?>
 	                            <?php endforeach; ?>
 	                        </select>
 						</div>
-						<?php if(!$user_ID) : ?>
-							<div class="span-4">
-								<label for="user_password">Senha:</label>
-								<input id="user_password" required="required" type="password" name="user_password" />
-							</div>
-
-							<div class="span-4">
-								<label for="user_password_confirm">Confirme a senha:</label>
-								<input id="user_password_confirm" required="required" type="password" name="user_password_confirm" />
-							</div>
-						<?php endif; ?>
 
 						<div class="span-4">
 							<label>
@@ -420,6 +390,7 @@ if( $user_ID && !empty($cpf_registered) ) { ?>
 							    termos de uso</a> do site
 							 </label>
 						</div>
+						<br>
 
 						<div class="textright">
 							<input type="submit" id="submitbtn" class="blue-button"  name="submit" value="Registrar" />
@@ -434,9 +405,8 @@ if( $user_ID && !empty($cpf_registered) ) { ?>
 	</div>
 	
 	<?php  
-} // end else do $user_ID && get_user_meta($user_ID, 'user_cpf', true) !== false ) 
-	 ?>
+} 
 
-<?php
 get_footer();
+
 ?>

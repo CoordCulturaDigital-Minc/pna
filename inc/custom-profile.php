@@ -558,15 +558,17 @@ function cdbr_send_email_register( $user_email, $user_login, $user_password ) {
     $from = get_option('admin_email');
     $headers = 'From: '.$from . "\r\n";
     $subject = "Cadastro " . get_bloginfo('name');
+    $redefine_pass = network_site_url(bp_get_members_slug() . $user_login . "settings");
+
     $msg = "Você foi cadastrado com sucesso no site " . get_bloginfo('name')
      ."\nDetalhes para acesso"
      ."\nNome de usuário: $user_login"
      ."\nSenha: $user_password"
-     ."\nAcesse: ". get_bloginfo('url');
+     ."\nAcesse: ". get_bloginfo('url')
+     ."\n\n Para redefinir sua senha acesse: " . $redefine_pass; 
 
     wp_mail( $user_email, $subject, $msg, $headers );
 }
-
 
 function cdbr_get_user_all_data($user_id) {
 
@@ -578,3 +580,18 @@ function cdbr_get_user_all_data($user_id) {
 
     return array_merge($user, $user_meta);
 }
+
+function cdbr_current_user_has_updated_profile()  {
+    
+    $user_ID = get_current_user_id();
+
+    if( empty($user_ID))
+        return false;
+
+    if( $user_ID ) {
+        $cpf_registered = get_user_meta($user_ID, 'user_cpf', true);
+    }
+
+    return ( !empty( $cpf_registered ) );   
+}
+
