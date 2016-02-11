@@ -57,7 +57,7 @@
 			</h2>
 
 			<ol class="commentlist">
-			    <?php wp_list_comments( array( 'type' => 'comment', 'callback' => 'hemingway_comment' ) ); ?>
+			    <?php wp_list_comments( array( 'type' => 'comment', 'callback' => 'cdbr_pna_comment' ) ); ?>
 			</ol>
 
 			<?php if (!empty($comments_by_type['pings'])) : ?>
