@@ -22,7 +22,7 @@ function theme_enqueue_styles() {
     wp_enqueue_script( 'scripts', CHILD_URI . '/js/script.js', '', '');
 
     $var_pna = array();
-    $var_pna['signup_url'] = wp_registration_url();
+    $var_pna['signup_url'] = get_bloginfo('url');
     $var_pna['login_url'] = wp_login_url( get_permalink() );
 
     wp_localize_script( 'scripts', 'pna', $var_pna );
@@ -349,3 +349,19 @@ function modify_author_link( $display_name  ) {
 
     return $display_name;                
 }
+
+//insere o nome completo nos comentários do side comments
+add_filter( 'wp_side_comments_user_details', 'modify_author_comments', 9,1);        
+function modify_author_comments( $userDetails  ) {
+
+    $user_id = get_current_user_id();
+
+    $user_name  = get_user_meta($user_id, 'user_name', true);
+    
+    if( !empty($user_name) )
+         $userDetails["name"] = $user_name; 
+
+    return $userDetails;         
+}
+
+
