@@ -21,7 +21,6 @@ function theme_enqueue_styles() {
     wp_enqueue_script( 'flexslider', CHILD_URI . '/js/flexslider-min.js', 'jquery', 2.1);
     wp_enqueue_script( 'scripts', CHILD_URI . '/js/script.js', '', '');
 
-    $var_pna = array();
     $var_pna['signup_url'] = get_bloginfo('url') . "/cadastro";
     $var_pna['login_url'] = wp_login_url( get_permalink() );
 
@@ -361,11 +360,36 @@ function modify_author_comments( $userDetails  ) {
     $user_id = get_current_user_id();
 
     $user_name  = get_user_meta($user_id, 'user_name', true);
+    $segmento   = get_user_meta($user_id, 'segmento', true);
     
     if( !empty($user_name) )
-         $userDetails["name"] = $user_name; 
+         $userDetails["name"] = $user_name;
+
+    if( !empty($segmento) )
+        $userDetails["segmento"] = $segmento;
 
     return $userDetails;         
 }
 
 
+add_filter( 'wp_side_post_comment_data', 'modify_post_comment_data', 9,1);        
+function modify_post_comment_data( $comment ) {
+
+    $user_id = $comment['authorID'];
+
+    $segmento = get_user_meta($user_id, 'segmento', true);
+    $tipo_manifestacao = get_user_meta($user_id, 'tipo_manifestacao', true);
+    $nome_instituicao = get_user_meta($user_id, 'nome_instituicao', true);
+    
+    if( !empty($segmento) )
+        $comment["authorSegmento"] = $segmento;
+
+    if( !empty($tipo_manifestacao) ) 
+        $comment["authorManifestacao"] = $tipo_manifestacao;
+
+    if( !empty($nome_instituicao) ) {
+        $comment["authorInstituicao"] = $nome_instituicao;
+    }
+
+    return $comment;         
+}

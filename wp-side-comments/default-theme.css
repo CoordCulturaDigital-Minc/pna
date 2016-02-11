@@ -231,6 +231,12 @@
   clear: both;
   margin-top: 5px;
 }
+
+.post-content .side-comment {
+  line-height: 100% !important;
+  margin-bottom: 1.1em;
+}
+
 .side-comment .author-name {
   display: inline;
   font-size: 15px;

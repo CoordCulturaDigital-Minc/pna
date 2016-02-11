@@ -116,20 +116,27 @@ jQuery(function ($) {
             '             	 </div>';
         });
 
+        
+    
         require.register("side-comments/templates/comment.html", function (exports, require, module) {
             module.exports = '<li data-comment-id="<%= comment.commentID %>" data-parent-id="<%= comment.parentID%>">\n  ' +
             '                   <div class="author-avatar">\n  ' +
             '                       <img src="<%= comment.authorAvatarUrl %>">\n  ' +
             '                   </div>\n  ' +
             '                       <p class="author-name right-of-avatar">\n    <%= comment.authorName %>\n  </p>\n  ' +
-            '                       <p class="comment right-of-avatar">\n    <%= comment.comment %>\n  </p>\n  ' + 
+            '                       <p class="text-description segmento">Área de atuação: <br> <%= comment.authorSegmento %></p>\n' +
+            '                       <p class="text-description manifestacao">Tipo de Contribuição: <br> <%= comment.authorManifestacao %></p>\n' +
+            '                       <% if( comment.authorManifestacao == "institucional") { %>\n' +
+            '                           <p class="text-description instituicao">Instituição: <br> <%= comment.authorInstituicao %></p>\n' +
+            '                        <% } %>' +
+            '                       <p class="comment right-of-avatar">\n    <%= comment.comment %>\n  </p>\n  ' +
             '                       <a href="#" class="add-reply" data-parent="<%= comment.parentID%>" data-comment="<%= comment.commentID %>">Responder</a>\n    \n  ' +
             '                           <% if (currentUser && currentUser.id != 9999){ %>\n     ' +
             '                                <div class="comment-form" data-parent="<%= comment.parentID%>" data-comment="<%= comment.commentID %>">\n        ' +
             '                           <div class="author-avatar">\n          ' +
-            '                           <img src="<%= currentUser.avatarUrl %>">\n        ' +
-            '                       </div>\n        ' +
-            '                               <p class="author-name">\n          <%= currentUser.name %>\n        </p>\n        ' +
+            '                               <img src="<%= currentUser.avatarUrl %>">\n        ' +
+            '                           </div>\n        ' +
+            '                               <p class="author-name"><%= currentUser.name %></p>\n        ' +
             '                               <div class="comment-box right-of-avatar" contenteditable="true" data-parent="<%= comment.parentID%>" data-comment="<%= comment.commentID %>" data-placeholder-content="Responder o comentário..." placeholder="Responder o comentário...">' +
             '                                   </div>\n        ' +
             '                       <div class="actions right-of-avatar">\n          ' +

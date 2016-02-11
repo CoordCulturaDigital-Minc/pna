@@ -2,8 +2,8 @@
 
 /* Campos adicionais do usuário */
 
-add_action('edit_user_profile', 'consulta_edit_user_details');
-add_action('show_user_profile', 'consulta_edit_user_details');
+// add_action('edit_user_profile', 'consulta_edit_user_details');
+// add_action('show_user_profile', 'consulta_edit_user_details');
 
 function consulta_edit_user_details($user) {
 
@@ -49,8 +49,8 @@ function consulta_edit_user_details($user) {
     
 }
 
-add_action('personal_options_update', 'consulta_save_user_details');
-add_action('edit_user_profile_update', 'consulta_save_user_details');
+// add_action('personal_options_update', 'consulta_save_user_details');
+// add_action('edit_user_profile_update', 'consulta_save_user_details');
 /**
  * Save creators custom fields add via 
  * administrative profile edit page.
@@ -124,7 +124,7 @@ function cdbr_get_segmentos() {
     // Área de atuação - Peguei da consulta anterior, verifcar se vai continuar
     $segmentos = array( 'academia'                  => 'Academia',
                         'advocacia'                 => 'Advocacia',
-                        'agregadores_conteúdo'      => 'Agregadores de conteúdo',
+                        'agregadores_conteúdo'      => 'Agregador de conteúdo',
                         'artista'                   => 'Artista',
                         'associacao_titulares'      => 'Associação de titulares',
                         'autor'                     => 'Autor',
@@ -565,7 +565,7 @@ function cdbr_send_email_register( $user_email, $user_login, $user_password ) {
      ."\nNome de usuário: $user_login"
      ."\nSenha: $user_password"
      ."\nAcesse: ". get_bloginfo('url')
-     ."\n\n Para redefinir sua senha acesse: " . $redefine_pass; 
+     ."\n\nPara redefinir sua senha acesse: " . $redefine_pass; 
 
     wp_mail( $user_email, $subject, $msg, $headers );
 }
