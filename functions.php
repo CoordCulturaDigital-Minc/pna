@@ -108,6 +108,10 @@ register_sidebar( array(
     'after_widget'  => '</div><div class="clear"></div></div>'
 ) );
 
+// Ocultando a Admin Bar
+if( !is_user_logged_in())
+    add_filter('show_admin_bar', '__return_false');
+
 
 function custom_excerpt_length( $length ) {
     return 100;
