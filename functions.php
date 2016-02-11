@@ -22,7 +22,7 @@ function theme_enqueue_styles() {
     wp_enqueue_script( 'scripts', CHILD_URI . '/js/script.js', '', '');
 
     $var_pna = array();
-    $var_pna['signup_url'] = get_bloginfo('url');
+    $var_pna['signup_url'] = get_bloginfo('url') . "/cadastro";
     $var_pna['login_url'] = wp_login_url( get_permalink() );
 
     wp_localize_script( 'scripts', 'pna', $var_pna );
