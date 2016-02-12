@@ -342,7 +342,8 @@ endif;
 
 // filtra os comentários para mostrar o nome completo
 add_filter( 'get_comment_author', 'modify_author_link', 10 );        
-function modify_author_link( $display_name  ) {     
+function modify_author_link( $display_name  ) { 
+
     $user_id = get_current_user_id();
 
     $user_name  = get_user_meta($user_id, 'user_name', true);
@@ -360,18 +361,14 @@ function modify_author_comments( $userDetails  ) {
     $user_id = get_current_user_id();
 
     $user_name  = get_user_meta($user_id, 'user_name', true);
-    $segmento   = get_user_meta($user_id, 'segmento', true);
     
     if( !empty($user_name) )
          $userDetails["name"] = $user_name;
 
-    if( !empty($segmento) )
-        $userDetails["segmento"] = $segmento;
-
     return $userDetails;         
 }
 
-
+// Acrescenta campos nos comentários por parágrafo.
 add_filter( 'wp_side_post_comment_data', 'modify_post_comment_data', 9,1);        
 function modify_post_comment_data( $comment ) {
 
@@ -382,10 +379,10 @@ function modify_post_comment_data( $comment ) {
     $nome_instituicao = get_user_meta($user_id, 'nome_instituicao', true);
     
     if( !empty($segmento) )
-        $comment["authorSegmento"] = $segmento;
+        $comment["authorSegmento"] = cdbr_get_label_segmento($segmento);
 
     if( !empty($tipo_manifestacao) ) 
-        $comment["authorManifestacao"] = $tipo_manifestacao;
+        $comment["authorManifestacao"] = ucwords($tipo_manifestacao);
 
     if( !empty($nome_instituicao) ) {
         $comment["authorInstituicao"] = $nome_instituicao;

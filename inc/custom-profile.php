@@ -124,7 +124,7 @@ function cdbr_get_segmentos() {
     // Área de atuação - Peguei da consulta anterior, verifcar se vai continuar
     $segmentos = array( 'academia'                  => 'Academia',
                         'advocacia'                 => 'Advocacia',
-                        'agregadores_conteúdo'      => 'Agregador de conteúdo',
+                        'agregador_conteudo'        => 'Agregador de conteúdo',
                         'artista'                   => 'Artista',
                         'associacao_titulares'      => 'Associação de titulares',
                         'autor'                     => 'Autor',
@@ -139,6 +139,15 @@ function cdbr_get_segmentos() {
                         'sociedade_civil'           => 'Sociedade civil');
     return $segmentos;
 }
+
+function cdbr_get_label_segmento( $segmento ) {
+
+    $segmentos = cdbr_get_segmentos();
+
+    return $segmentos[$segmento];
+
+}
+
 
 function cdbr_get_countries_array() {
 
