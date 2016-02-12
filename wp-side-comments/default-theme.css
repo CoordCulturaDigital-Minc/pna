@@ -195,6 +195,15 @@
   margin: 0px;
 }
 
+.side-comment .char-count {
+  font-size: 12px;
+}
+
+.side-comment .char-count span {
+  font-weight: bold;
+}
+
+
 .side-comment.has-comments .add-comment {
 
 }
@@ -214,6 +223,14 @@
   line-height: 18px;
 }
 
+.side-comment .comment {
+  margin: 10px 0px;
+  padding: 5px;
+  background-color: #EAEAEA;
+  border: 1px solid #CECECE;
+}
+
+
 .side-comment .author-avatar {
   float: left;
   width: 55px;
@@ -232,7 +249,8 @@
   margin-top: 5px;
 }
 
-.post-content .side-comment {
+.post-content .side-comment,
+.post-content .side-comment li {
   line-height: 100% !important;
   margin-bottom: 1.1em;
 }
@@ -257,6 +275,14 @@
   font-size: 11px;
   padding: 0px 3px 5px 3px;
   float: left;
+}
+
+.side-comment .text-description.instituicao,
+.side-comment .text-description.manifestacao,
+.side-comment .text-description.segmento {
+  padding: 0px;
+  margin: 0px;
+  clear: both;
 }
 
 .side-comment  a.add-reply,

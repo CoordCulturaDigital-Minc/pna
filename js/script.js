@@ -124,25 +124,29 @@ jQuery(function ($) {
             '                       <img src="<%= comment.authorAvatarUrl %>">\n  ' +
             '                   </div>\n  ' +
             '                       <p class="author-name right-of-avatar">\n    <%= comment.authorName %>\n  </p>\n  ' +
-            '                       <p class="text-description segmento">Área de atuação: <br> <%= comment.authorSegmento %></p>\n' +
-            '                       <p class="text-description manifestacao">Tipo de Contribuição: <br> <%= comment.authorManifestacao %></p>\n' +
-            '                       <% if( comment.authorManifestacao == "institucional") { %>\n' +
-            '                           <p class="text-description instituicao">Instituição: <br> <%= comment.authorInstituicao %></p>\n' +
+            '                       <% if( comment.authorSegmento ) { %>\n' +
+            '                           <p class="text-description segmento">Área de atuação: <%= comment.authorSegmento %></p>\n' +
+            '                        <% } %>' +
+            '                       <% if( comment.authorManifestacao ) { %>\n' +
+            '                           <p class="text-description manifestacao">Tipo de Contribuição: <%= comment.authorManifestacao %></p>\n' +
+            '                        <% } %>' +
+            '                       <% if( comment.authorManifestacao == "Institucional") { %>\n' +
+            '                           <p class="text-description instituicao">Instituição: <%= comment.authorInstituicao %></p>\n' +
             '                        <% } %>' +
             '                       <p class="comment right-of-avatar">\n    <%= comment.comment %>\n  </p>\n  ' +
             '                       <a href="#" class="add-reply" data-parent="<%= comment.parentID%>" data-comment="<%= comment.commentID %>">Responder</a>\n    \n  ' +
             '                           <% if (currentUser && currentUser.id != 9999){ %>\n     ' +
             '                                <div class="comment-form" data-parent="<%= comment.parentID%>" data-comment="<%= comment.commentID %>">\n        ' +
-            '                           <div class="author-avatar">\n          ' +
-            '                               <img src="<%= currentUser.avatarUrl %>">\n        ' +
-            '                           </div>\n        ' +
+            '                               <div class="author-avatar">\n          ' +
+            '                                    <img src="<%= currentUser.avatarUrl %>">\n        ' +
+            '                               </div>\n        ' +
             '                               <p class="author-name"><%= currentUser.name %></p>\n        ' +
             '                               <div class="comment-box right-of-avatar" contenteditable="true" data-parent="<%= comment.parentID%>" data-comment="<%= comment.commentID %>" data-placeholder-content="Responder o comentário..." placeholder="Responder o comentário...">' +
             '                                   </div>\n        ' +
-            '                       <div class="actions right-of-avatar">\n          ' +
-            '                           <a href="#" class="action-link cancel" data-parent="<%= comment.parentID %>" data-comment="<%= comment.commentID %>">Cancelar</a>\n        ' +
-            '                           <a href="#" class="action-link post" data-parent="<%= comment.parentID %>" data-comment="<%= comment.commentID %>">Enviar</a>\n          ' +
-            '                       </div>\n      ' +
+            '                               <div class="actions right-of-avatar">\n          ' +
+            '                                 <a href="#" class="action-link cancel" data-parent="<%= comment.parentID %>" data-comment="<%= comment.commentID %>">Cancelar</a>\n        ' +
+            '                                 <a href="#" class="action-link post" data-parent="<%= comment.parentID %>" data-comment="<%= comment.commentID %>">Enviar</a>\n          ' +
+            '                               </div>\n      ' +
             '                                   </div>\n    ' +
             '                           <% } else { %>\n  ' +
             '                               <div class="comment-form" data-parent="<%= comment.parentID%>" data-comment="<%= comment.commentID %>"><div class="comment-box register-login">' +
