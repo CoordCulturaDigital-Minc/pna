@@ -4,11 +4,11 @@
     $('.logged-in p.commentable-section, .logged-in textarea#comment, .logged-in #submit').on('click', function(){
         $('#cdbr_dialog').remove();
 
-        var widget_title = 'Atualizar cadastro';
-        var widget_text = 'Para participar você deve completar o seu cadastro!';
+        var msg_title = 'Atualizar cadastro';
+        var msg_text = 'Para participar você deve completar o seu cadastro!';
         
         $.post(
-            vars.ajaxurl, 
+            msg.ajaxurl, 
             {
                 action: 'current_user_updated_profile'
             },
@@ -18,7 +18,7 @@
 
 
                     $('<div id="cdbr_dialog"></div>').appendTo( $( "body" ) )
-                      .html('<div id="dialog-confirm" title="'+widget_title+'"><p>'+widget_text+'</p></div');
+                      .html('<div id="dialog-confirm" title="'+msg_title+'"><p>'+msg_text+'</p></div');
 
                     $('#dialog-confirm').dialog({
                         resizable: false,
@@ -29,7 +29,7 @@
                             "Atualizar cadastro": function() {
                                 $( this ).dialog( "close" );
                                 $('#cdbr_dialog').remove();
-                                window.location.replace(vars.cadastro_url);
+                                window.location.replace(msg.cadastro_url);
                                 return false;
                             },
                             "Depois": function() {
