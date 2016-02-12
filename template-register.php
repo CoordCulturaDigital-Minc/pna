@@ -222,7 +222,7 @@ if( cdbr_current_user_updated_profile() ) { ?>
 		    <?php if( $_GET['sussa'] == 'success_update_register' ) :  ?>
 				<div class="success"><strong>Seu cadastro foi atualizado com sucesso! </strong><br>Para participar basta navegar nas opções no menu e deixar suas opiniões.</div>			
 			<?php else: ?>
-				<div class="success"><strong>Você já está cadastro! </strong><br>Para participar basta navegar nas opções no menu e deixar suas opiniões.</div>
+				<div class="success"><strong>Você já está cadastrado! </strong><br>Para participar basta navegar nas opções no menu e deixar suas opiniões.</div>
 			<?php endif; ?>
 		</div>
 	</div>

@@ -306,23 +306,21 @@ function cdbr_get_user_all_data($user_id) {
     return array_merge($user, $user_meta);
 }
 
+//usuario atualizou o perfil?
 function cdbr_current_user_updated_profile()  { 
     
     $user_ID        = get_current_user_id();
-    $update_profile = true;
+    $update_profile = false;
 
     if( empty($user_ID))
-        return true;
-
-    if( !cdbr_admin_user_update_profile() )
-        return true;
+        return false;
 
     if( $user_ID ) {
         $cpf_registered = get_user_meta($user_ID, 'user_cpf', true);
         $is_foreign     = get_user_meta($user_ID, 'estrangeiro', true);
 
-        if( empty( $cpf_registered ) && empty($is_foreign) )
-            $update_profile = false;
+        if( !empty( $cpf_registered ) || !empty($is_foreign) )
+            $update_profile = true;
     }
 
     return $update_profile;   
@@ -332,6 +330,9 @@ function cdbr_current_user_updated_profile()  {
 function cdbr_ajax_current_user_updated_profile() {
 
     if( !is_user_logged_in() )
+        return true;
+
+    if( !cdbr_admin_user_update_profile() )
         return true;
 
     echo cdbr_current_user_updated_profile();
