@@ -338,7 +338,7 @@ function cdbr_ajax_current_user_updated_profile() {
                
     die;
 }
-add_action('wp_ajax_current_user_updated_profile', 'cdbr_ajax_current_user_updated_profile');
+add_action('wp_ajax_current_user_updated_profile', 'cdbr_ajax_current_user_updated_profile',9);
 
 //TODO: temporário, aqui ele pega as configuracoes do wp-side-comments, trocar para uma opcao do tema
 function cdbr_admin_user_update_profile() {
