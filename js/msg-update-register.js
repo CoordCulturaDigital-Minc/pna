@@ -13,14 +13,14 @@
                 action: 'current_user_updated_profile'
             },
             function(response) {
-                console.log(response);
+
                 if( response == false){
 
 
                     $('<div id="cdbr_dialog"></div>').appendTo( $( "body" ) )
-                      .html('<div id="dialog-confirm" title="'+msg_title+'"><p>'+msg_text+'</p></div');
+                      .html('<div id="dialog-confirms" title="'+msg_title+'"><p>'+msg_text+'</p></div');
 
-                    $('#dialog-confirm').dialog({
+                    $('#dialog-confirms').dialog({
                         resizable: false,
                         draggable: false,
                         modal: true,

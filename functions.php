@@ -26,9 +26,20 @@ function theme_enqueue_styles() {
     wp_localize_script( 'scripts', 'pna', $var_pna );
 
     if ( is_single() || is_page() ) {
-        wp_enqueue_script('jquery-ui-dialog');
-        wp_enqueue_script('msg-update-register', CHILD_URI . '/js/msg-update-register.js');
-        wp_localize_script('msg-update-register', 'msg', array( 'ajaxurl' => admin_url('admin-ajax.php'), 'cadastro_url' =>  get_bloginfo('url') . "/cadastro"));
+
+        //se o usuário ainda nao atualizou o cadastro
+        if( function_exists('cdbr_current_user_updated_profile')) {
+            if( !cdbr_current_user_updated_profile() ) {
+
+                wp_enqueue_script('jquery-ui-dialog');
+                wp_enqueue_script('msg-update-register', CHILD_URI . '/js/msg-update-register.js');
+                wp_localize_script('msg-update-register', 'msg', array( 'ajaxurl' => admin_url('admin-ajax.php'), 'cadastro_url' =>  get_bloginfo('url') . "/cadastro"));
+            
+                wp_deregister_script('terms-of-use');
+            }
+        }
+       
+
     }
 }
 add_action( 'wp_enqueue_scripts', 'theme_enqueue_styles' );
