@@ -24,11 +24,9 @@ wp_localize_script('cadastro', 'vars', array( 'ajaxurl' => admin_url('admin-ajax
 		$nome_instituicao			= isset( $cdbr_user['nome_instituicao'] )  ? $cdbr_user['nome_instituicao'] : $_POST['nome_instituicao'];
 		$cnpj_instituicao			= isset( $cdbr_user['cnpj_instituicao'] )  ? $cdbr_user['cnpj_instituicao'] : $_POST['cnpj_instituicao'];
 		
-		$pais 						= isset( $cdbr_user['pais'] )  		? $cdbr_user['pais'] : $_POST['pais'];
 		$estado 					= isset( $cdbr_user['estado'] )  	? $cdbr_user['estado'] : $_POST['estado'];
 		$municipio 					= isset( $cdbr_user['municipio'] )  ? $cdbr_user['municipio'] : $_POST['municipio'];
 
-		// $categoria 					= isset( $cdbr_user['categoria'] ) ? $cdbr_user['categoria'] : $_POST['categoria'];
 		$segmento 					= isset( $cdbr_user['segmento'] )  ? $cdbr_user['segmento'] : $_POST['segmento'];
 
 		$accept_the_terms_of_site 	= ( cdbr_get_user_terms_current_site($user_ID) ) ? cdbr_get_user_terms_current_site($user_ID) : $_POST['accept_the_terms_of_site'];
@@ -54,12 +52,10 @@ wp_localize_script('cadastro', 'vars', array( 'ajaxurl' => admin_url('admin-ajax
 			$nome_instituicao			= isset( $_POST['nome_instituicao'] ) ? $_POST['nome_instituicao'] : '';
 			$cnpj_instituicao			= isset( $_POST['cnpj_instituicao'] ) ? $_POST['cnpj_instituicao'] : '';
 			
-			$pais 						= isset( $_POST['pais'] ) ? $_POST['pais'] : '';
 			$estado 					= isset( $_POST['estado'] ) ? $_POST['estado'] : '';
 			$municipio 					= isset( $_POST['municipio'] ) ? $_POST['municipio'] : '';
 
 			$segmento 					= $_POST['segmento'];
-			// $categoria 					= $_POST['categoria'];
 
 			$accept_the_terms_of_site 	= $_POST['accept_the_terms_of_site'];
 		}
@@ -121,35 +117,22 @@ wp_localize_script('cadastro', 'vars', array( 'ajaxurl' => admin_url('admin-ajax
 				$register_errors['cnpj_instituicao'] = "CNPJ informado é inválido";
 			}
 		}	
-		
-		//tipo de categoria
-		// if(empty($categoria)) {
-		// 	$register_errors['categoria'] = "O tipo de categoria é obrigatório.";
-		// }
 
 		//tipo de segmento
 		if(empty($segmento)) {
 			$register_errors['segmento'] = "Tipo de segmento é obrigatório.";
 		}
 
-		// pais
-		if(empty($pais)) {
-			$register_errors['pais'] = "O campo país é obrigatório.";
-		}else {
-			// se for o Brasil estado e município são obrigatórios
-			if( $pais == 'Brasil') {
-
-				// estado
-				if(empty($estado)) {
-					$register_errors['estado'] = "Estado é obrigatório.";
-				}
-
-				// município
-				if(empty($municipio)) {
-					$register_errors['municipio'] = "Município é obrigatório.";
-				}
-			}
+		// estado
+		if(empty($estado)) {
+			$register_errors['estado'] = "Estado é obrigatório.";
 		}
+
+		// município
+		if(empty($municipio)) {
+			$register_errors['municipio'] = "Município é obrigatório.";
+		}
+
 
 	    // termos de uso
 		if(empty($accept_the_terms_of_site)) {
@@ -191,9 +174,7 @@ wp_localize_script('cadastro', 'vars', array( 'ajaxurl' => admin_url('admin-ajax
 				update_user_meta($user_id, 'tipo_manifestacao', $tipo_manifestacao);
 				update_user_meta($user_id, 'user_cpf', $user_cpf);
 				update_user_meta($user_id, 'user_name', $user_name);
-				// update_user_meta($user_id, 'categoria', $categoria);
 				update_user_meta($user_id, 'segmento', $segmento);
-				update_user_meta($user_id, 'pais', $pais);
 
 				// razao social é opcional
 				if( !empty($nome_instituicao))
@@ -336,38 +317,23 @@ if( cdbr_current_user_has_updated_profile() ) { ?>
 						</fieldset>
 
 						<div class="span-4">
-							<label>País:</label>
-							<select required="required" name="pais" id="pais">
+							<label for="estado">Estado:</label>
+							<select id="estado" name="estado" id="estado">
 	                            <option value=""> Selecione </option>
-	                            <?php $countries = cdbr_get_countries_array(); ?>
-	                            <?php foreach ($countries as $key => $country ): ?>
-	                                <option value="<?php echo $key; ?>" <?php if (isset($pais) && $pais == $key) echo 'selected'; ?>>
-	                                    <?php echo $country; ?>
+	                            <?php $states = cdbr_get_states(); ?>
+	                            <?php foreach ($states as $s): ?>
+	                                <option value="<?php echo $s->nome; ?>"  <?php if (isset($estado) && $estado == $s->nome) echo 'selected'; ?>  >
+	                                    <?php echo $s->nome; ?>
 	                                </option>
 	                            <?php endforeach; ?>
 	                        </select>
 						</div>
-
-						<div id="endereco_nacional" style="<?php echo empty($estado) ? 'display:none': '';?>">
-							<div class="span-4">
-								<label for="estado">Estado:</label>
-								<select id="estado" name="estado" id="estado">
-		                            <option value=""> Selecione </option>
-		                            <?php $states = cdbr_get_states(); ?>
-		                            <?php foreach ($states as $s): ?>
-		                                <option value="<?php echo $s->nome; ?>"  <?php if (isset($estado) && $estado == $s->nome) echo 'selected'; ?>  >
-		                                    <?php echo $s->nome; ?>
-		                                </option>
-		                            <?php endforeach; ?>
-		                        </select>
-							</div>
-						
-							<div class="span-4">
-								<label for="municipio">Município:</label>
-								<select id="municipio" name="municipio" id="municipio">
-		                            <option value="">Selecione</option>
-		                        </select> 
-							</div>
+					
+						<div class="span-4">
+							<label for="municipio">Município:</label>
+							<select id="municipio" name="municipio" id="municipio">
+	                            <option value="">Selecione</option>
+	                        </select> 
 						</div>
 
 						<div class="span-4">

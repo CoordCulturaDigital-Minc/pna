@@ -51,22 +51,22 @@ jQuery(document).ready(function() {
         }   
     );
 
-    jQuery("select#pais").change(
-        function(){
+    // jQuery("select#pais").change(
+    //     function(){
 
-            if( jQuery(this).val() == 'Brasil' ){
-                jQuery("#endereco_nacional").hide().slideDown('fast');
-                // jQuery(".disable_first_municipio_ajax_call").removeAttr( "id" );
-                jQuery("#estado").attr("required","required");
-                jQuery("#municipio").attr("required","required");
-            } else {
-                jQuery("#endereco_nacional").slideUp('fast');
-                 jQuery("#estado").removeAttr("required");
-                 jQuery("#municipio").removeAttr("required");
-                // jQuery(".disable_first_municipio_ajax_call").attr( "id", "disable_first_municipio_ajax_call");
-            } 
-        }
-    );
+    //         if( jQuery(this).val() == 'Brasil' ){
+    //             jQuery("#endereco_nacional").hide().slideDown('fast');
+    //             // jQuery(".disable_first_municipio_ajax_call").removeAttr( "id" );
+    //             jQuery("#estado").attr("required","required");
+    //             jQuery("#municipio").attr("required","required");
+    //         } else {
+    //             jQuery("#endereco_nacional").slideUp('fast');
+    //              jQuery("#estado").removeAttr("required");
+    //              jQuery("#municipio").removeAttr("required");
+    //             // jQuery(".disable_first_municipio_ajax_call").attr( "id", "disable_first_municipio_ajax_call");
+    //         } 
+    //     }
+    // );
 
     jQuery('.nao_tenho_cpf').on('click', function(){
         jQuery('#cdbr_dialog').remove();
