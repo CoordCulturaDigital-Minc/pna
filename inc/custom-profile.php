@@ -530,8 +530,6 @@ function cdbr_update_user_terms_current_site( $user_id ) {
 
    global $wpdb;
 
-   $user_id = get_current_user_id();   
-
    $today = gmdate('Y-m-d H:i:s' );
 
    return update_user_meta( $user_id, $wpdb->prefix . 'accept_the_terms_of_site', $today);  
