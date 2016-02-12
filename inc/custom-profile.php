@@ -115,11 +115,11 @@ function cdbr_get_segmentos() {
                         'artista'                   => 'Artista',
                         'associacao_titulares'      => 'Associação de titulares',
                         'autor'                     => 'Autor',
-                        'editoras'                  => 'Editoras',
-                        'gravadoras'                => 'Gravadoras',
+                        'editora'                   => 'Editora',
+                        'gravadora'                 => 'Gravadora',
                         'outro_segmento'            => 'Outro segmento',
-                        'outros_tipos_usuario'      => 'Outros tipos de usuário',
-                        'plataformas_digitais'      => 'Plataformas digitais',
+                        'outro_tipo_usuario'        => 'Outro tipo de usuário',
+                        'plataforma_digital'        => 'Plataforma digital',
                         'profissional_area_cultura' => 'Profissional da área de cultura',
                         'radiodifusao'              => 'Radiodifusão',
                         'sindicato'                 => 'Sindicato',
@@ -306,17 +306,49 @@ function cdbr_get_user_all_data($user_id) {
     return array_merge($user, $user_meta);
 }
 
-function cdbr_current_user_has_updated_profile()  {
+function cdbr_current_user_updated_profile()  { 
     
-    $user_ID = get_current_user_id();
+    $user_ID        = get_current_user_id();
+    $update_profile = true;
 
     if( empty($user_ID))
-        return false;
+        return true;
+
+    if( !cdbr_admin_user_update_profile() )
+        return true;
 
     if( $user_ID ) {
         $cpf_registered = get_user_meta($user_ID, 'user_cpf', true);
+        $is_foreign     = get_user_meta($user_ID, 'estrangeiro', true);
+
+        if( empty( $cpf_registered ) && empty($is_foreign) )
+            $update_profile = false;
     }
 
-    return ( !empty( $cpf_registered ) );   
+    return $update_profile;   
 }
 
+
+function cdbr_ajax_current_user_updated_profile() {
+
+    if( !is_user_logged_in() )
+        return true;
+
+    echo cdbr_current_user_updated_profile();
+               
+    die;
+}
+add_action('wp_ajax_current_user_updated_profile', 'cdbr_ajax_current_user_updated_profile');
+
+//TODO: temporário, aqui ele pega as configuracoes do wp-side-comments, trocar para uma opcao do tema
+function cdbr_admin_user_update_profile() {
+
+    global $WPSideCommentsAdmin;
+
+    if( isset($WPSideCommentsAdmin) ) {
+        if( $WPSideCommentsAdmin->isConfirmTermsAllowed())
+            return true;
+    }
+
+    return false;
+}

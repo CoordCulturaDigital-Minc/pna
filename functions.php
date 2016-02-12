@@ -23,8 +23,13 @@ function theme_enqueue_styles() {
 
     $var_pna['signup_url'] = get_bloginfo('url') . "/cadastro";
     $var_pna['login_url'] = wp_login_url( get_permalink() );
-
     wp_localize_script( 'scripts', 'pna', $var_pna );
+
+    if ( is_single() || is_page() ) {
+        wp_enqueue_script('jquery-ui-dialog');
+        wp_enqueue_script('msg-update-register', CHILD_URI . '/js/msg-update-register.js');
+        wp_localize_script('msg-update-register', 'vars', array( 'ajaxurl' => admin_url('admin-ajax.php'), 'cadastro_url' =>  get_bloginfo('url') . "/cadastro"));
+    }
 }
 add_action( 'wp_enqueue_scripts', 'theme_enqueue_styles' );
 

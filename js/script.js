@@ -38,9 +38,9 @@ jQuery( function(){
     });
 
 
-    jQuery(window).load(function() {
+    jQuery(window).load(function($) {
 
-        if( jQuery('#menu-abas li:not(:first)' ).hasClass('current') || $.urlParam('init') ) {
+        if( jQuery('#menu-abas li:not(:first)' ).hasClass('current') || jQuery.urlParam('init') ) {
 
             jQuery('.page-template-template_side_comment').animate({
                 scrollTop: jQuery('#menu-abas li.current').offset().top - 35
@@ -50,7 +50,7 @@ jQuery( function(){
 
      });
 
-    $.urlParam = function(name){
+    jQuery.urlParam = function(name){
         var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
         if (results==null){
            return null;

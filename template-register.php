@@ -216,7 +216,7 @@ get_header();
  * o sistema não deve mostrar o formulário novamente.
 */
 
-if( cdbr_current_user_has_updated_profile() ) { ?>
+if( cdbr_current_user_updated_profile() ) { ?>
 	<div class="wrapper section-inner">						
 		<div class="content">
 		    <?php if( $_GET['sussa'] == 'success_update_register' ) :  ?>
