@@ -151,6 +151,8 @@ add_action('pre_get_posts', 'tags_support_query');
 // plugin wp-side-comments
 add_filter( 'wp_side_comments_container_css_selector', function( ) { return '.comment-container'; } );
 
+add_filter( 'wp_side_comments_avatar_size', function( ) { return 55; } );
+
 add_filter( 'wp_side_comments_css_theme', function( ) { return CHILD_URI . '/wp-side-comments/default-theme.css'; } );
 
 // engajamento redes sociais
