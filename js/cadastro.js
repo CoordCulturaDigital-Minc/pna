@@ -51,23 +51,6 @@ jQuery(document).ready(function() {
         }   
     );
 
-    // jQuery("select#pais").change(
-    //     function(){
-
-    //         if( jQuery(this).val() == 'Brasil' ){
-    //             jQuery("#endereco_nacional").hide().slideDown('fast');
-    //             // jQuery(".disable_first_municipio_ajax_call").removeAttr( "id" );
-    //             jQuery("#estado").attr("required","required");
-    //             jQuery("#municipio").attr("required","required");
-    //         } else {
-    //             jQuery("#endereco_nacional").slideUp('fast');
-    //              jQuery("#estado").removeAttr("required");
-    //              jQuery("#municipio").removeAttr("required");
-    //             // jQuery(".disable_first_municipio_ajax_call").attr( "id", "disable_first_municipio_ajax_call");
-    //         } 
-    //     }
-    // );
-
     jQuery('.nao_tenho_cpf').on('click', function(){
         jQuery('#cdbr_dialog').remove();
 
@@ -92,6 +75,49 @@ jQuery(document).ready(function() {
         
         return false;        
     });
-   
 });
 
+(function($) {
+    $(document).ready(function(e) {
+
+    $form = $("#register");
+
+      // callback to verify field through
+    var verify_register_field = function(e) {
+
+        var $me = $(this);
+        
+        var values = {'action': 'cdbr_register_verify_field'};
+        
+        // no checkbox o ajax pega o valor mesmo sem estar selecionado  
+        if( $me.is('input[type="checkbox"]')) {
+           if( $me.prop("checked") )
+                values[this.name] = $me.val();
+        }else 
+            values[this.name] = $me.val();
+
+        // values[this.name] = $me.val();
+        $.post(vars.ajaxurl, values,
+
+            function(data) {
+                console.log(data);
+                for(var field in data) {
+
+                    if(data[field] === true && $me.val().length > 0) {
+                        $form.find('#'+field+'-error').hide().html('');
+                        
+                    } else {
+                        // $form.find('#'+field).val('');
+                        $form.find('#'+field+'-error').html(data[field]).show(); 
+                    }
+                }
+            }, 'json');
+    };
+
+    $form.find(':input').blur(verify_register_field)
+                        .keydown(function(e){ if(e.keyCode===13){ //enter
+                            $(this).trigger('blur').focus();
+                        }});
+
+    });
+})(jQuery);

@@ -7,6 +7,7 @@ define( 'CHILD_URI', get_stylesheet_directory_uri() );
 // include( STYLESHEETPATH . '/inc/shortcode-menu-paginas.php' );
 include dirname(__FILE__).'/inc/custom-profile.php';
 
+
 /**
  *  Scripts and styles
  */

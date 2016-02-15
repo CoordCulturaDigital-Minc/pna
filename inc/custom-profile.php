@@ -1,5 +1,33 @@
 <?php
 
+// classes
+require_once( dirname(__FILE__). '/validator.class.php' );
+require_once( dirname(__FILE__). '/filter.class.php' );
+
+/** save field in database, if field is valid */
+function cdbr_register_verify_field() {
+
+    $reponse = array();
+
+    $filter = new Filter();
+    $validator = new Validator();
+
+    foreach($_POST as $stepfield => $value) {
+        
+        $field = $stepfield;
+    
+        $filter->apply('register', $field, $value);
+
+        $result = $validator->validate_field('register', $field, $value, $type_user );
+
+        $response[$field] = $result;
+    }
+    print json_encode($response);
+    die; // or wordpress will print 0
+}
+add_action('wp_ajax_cdbr_register_verify_field', 'cdbr_register_verify_field');
+add_action('wp_ajax_nopriv_cdbr_register_verify_field', 'cdbr_register_verify_field');
+
 /* Campos adicionais do usuário */
 
 // add_action('edit_user_profile', 'consulta_edit_user_details');
@@ -353,3 +381,4 @@ function cdbr_admin_user_update_profile() {
 
     return false;
 }
+

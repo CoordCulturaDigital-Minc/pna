@@ -3,14 +3,15 @@
 	Template Name: Página de cadastro
 */
 
-global $user_ID;
+	global $user_ID;
+	
+	$disabled = "";
 
-$disabled = "";
+	wp_enqueue_script('jquery-ui-dialog');
+	wp_enqueue_script('jquery-mask', get_stylesheet_directory_uri() . '/js/jquery.mask.min.js', array('jquery'));
+	wp_enqueue_script('cadastro', get_stylesheet_directory_uri() . '/js/cadastro.js', array('jquery'));
+	wp_localize_script('cadastro', 'vars', array( 'ajaxurl' => admin_url('admin-ajax.php'), 'admin_email' => get_option('admin_email') ) );
 
-wp_enqueue_script('jquery-ui-dialog');
-wp_enqueue_script('jquery-mask', get_stylesheet_directory_uri() . '/js/jquery.mask.min.js', array('jquery'));
-wp_enqueue_script('cadastro', get_stylesheet_directory_uri() . '/js/cadastro.js', array('jquery'));
-wp_localize_script('cadastro', 'vars', array( 'ajaxurl' => admin_url('admin-ajax.php'), 'admin_email' => get_option('admin_email') ) );
 
 	// se o usuário já possuir cadastro, deverá apenas atualizar os campos não cadastrados
 	if ($user_ID) {
@@ -216,17 +217,19 @@ get_header();
  * o sistema não deve mostrar o formulário novamente.
 */
 
+$sussa =  isset( $_GET['sussa'] ) ? $_GET['sussa'] : "";
+
 if( cdbr_current_user_updated_profile() ) { ?>
 	<div class="wrapper section-inner">						
 		<div class="content">
-		    <?php if( $_GET['sussa'] == 'success_update_register' ) :  ?>
+		    <?php if( $sussa == 'success_update_register' ) :  ?>
 				<div class="success"><strong>Seu cadastro foi atualizado com sucesso! </strong><br>Para participar basta navegar nas opções no menu e deixar suas opiniões.</div>			
 			<?php else: ?>
 				<div class="success"><strong>Você já está cadastrado! </strong><br>Para participar basta navegar nas opções no menu e deixar suas opiniões.</div>
 			<?php endif; ?>
 		</div>
 	</div>
-<?php } elseif( !$user_ID && $_GET['sussa'] == 'success_new_register') {  ?> 
+<?php } elseif( !$user_ID && $sussa == 'success_new_register') {  ?> 
 	<div class="wrapper section-inner">						
 		<div class="content">       			        		                
 			<div class="success"><strong>Você foi cadastrado com sucesso! </strong>
@@ -270,53 +273,62 @@ if( cdbr_current_user_updated_profile() ) { ?>
 
 					<form method="post" id="register">
 
-						<div class="span-4">
+						<div class="form_item">
 							<label for="user_login">Nome de usuário:</label>
 							<span class="description">(Não inserir caracteres especiais e nem espaço)<span>
 							<input id="user_login" type="text" required="required" name="user_login" class="text" value="<?php echo isset($user_login) ? $user_login : '';?>" <?php echo $disabled; ?> />
+							<div id="user_login-error" class="field__error"></div>
 						</div>
 
-						<div class="span-4">
+						<div class="form_item">
 							<label for="user_email">Email:</label>
 							<input id="user_email" type="text" required="required" name="user_email" class="text" value="<?php echo isset($user_email) ? $user_email : '';?>" <?php echo $disabled; ?> /> 
+							<div id="user_email-error" class="field__error"></div>
 						</div>
 
-						<div class="span-4">
+						<div class="form_item">
 							<label for="user_name">Nome completo:</label>
 							<input id="user_name" type="text" required="required" name="user_name" class="text" value="<?php echo isset($user_name) ? $user_name : '';?>" />
+							<div id="user_name-error" class="field__error"></div>
 						</div>
 
-						<div class="span-4">
+						<div class="form_item">
 							<label for="user_cpf">CPF:</label>
 							<span class="description">(<a href="#" class="nao_tenho_cpf">Não tenho CPF</a>)<span>
 							<input id="user_cpf" type="text" required="required" name="user_cpf" class="text" value="<?php echo isset($user_cpf) ? $user_cpf : '';?>" />
+							<div id="user_cpf-error" class="field__error"></div>
 						</div>			
 						
 						<fieldset>
 							<legend>Tipo de manifestação</legend>
-							<label>
-							  <input type="radio" name="tipo_manifestacao" value="individual" <?php if (isset($tipo_manifestacao) && $tipo_manifestacao == 'individual') echo 'checked'; ?>>
-							  Individual
-							</label>
-							<label>
-							  <input type="radio" name="tipo_manifestacao" value="institucional" <?php if (isset($tipo_manifestacao) && $tipo_manifestacao == 'institucional') echo 'checked'; ?>>
-							  Institucional
-							</label>
+							<div class="form_item">
+								<label>
+								  <input type="radio" name="tipo_manifestacao" value="individual" <?php if (isset($tipo_manifestacao) && $tipo_manifestacao == 'individual') echo 'checked'; ?>>
+								  Individual
+								</label>
+								<label>
+								  <input type="radio" name="tipo_manifestacao" value="institucional" <?php if (isset($tipo_manifestacao) && $tipo_manifestacao == 'institucional') echo 'checked'; ?>>
+								  Institucional
+								</label>
+							<div id="tipo_manifestacao-error" class="field__error"></div>
+							</div>
 
 							<div id="instituicao" style="<?php echo empty($nome_instituicao) ? 'display:none': '';?>">
-								<div class="span-4">
+								<div class="form_item">
 									<label for="nome_instituicao">Razão Social/Instituição:</label>
 									<input id="nome_instituicao" type="text" name="nome_instituicao" class="text" value="<?php echo isset($nome_instituicao) ? $nome_instituicao : '';?>" />
+									<div id="nome_instituicao-error" class="field__error"></div>
 								</div>
 
-								<div class="span-4">
+								<div class="form_item">
 									<label for="cnpj_instituicao">CNPJ:</label>
 									<input id="cnpj_instituicao" type="text" name="cnpj_instituicao" class="text" value="<?php echo isset($cnpj_instituicao) ? $cnpj_instituicao : '';?>" />
+									<div id="cnpj_instituicao-error" class="field__error"></div>
 								</div>
 							</div>
 						</fieldset>
 
-						<div class="span-4">
+						<div class="form_item">
 							<label for="estado">Estado:</label>
 							<select id="estado" name="estado" id="estado">
 	                            <option value=""> Selecione </option>
@@ -327,16 +339,18 @@ if( cdbr_current_user_updated_profile() ) { ?>
 	                                </option>
 	                            <?php endforeach; ?>
 	                        </select>
+	                        <div id="estado-error" class="field__error"></div>
 						</div>
 					
-						<div class="span-4">
+						<div class="form_item">
 							<label for="municipio">Município:</label>
 							<select id="municipio" name="municipio" id="municipio">
 	                            <option value="">Selecione</option>
 	                        </select> 
+	                        <div id="municipio-error" class="field__error"></div>
 						</div>
 
-						<div class="span-4">
+						<div class="form_item">
 							<label>Segmento:</label>
 							<select required="required" name="segmento" id="segmento">
 	                            <option value=""> Selecione </option>
@@ -347,14 +361,16 @@ if( cdbr_current_user_updated_profile() ) { ?>
 	                                </option>
 	                            <?php endforeach; ?>
 	                        </select>
+	                        <div id="segmento-error" class="field__error"></div>
 						</div>
 
-						<div class="span-4">
+						<div class="form_item">
 							<label>
 							    <input type="checkbox" name="accept_the_terms_of_site" required="required" <?php print !empty($accept_the_terms_of_site) ? 'checked' : ''; ?>>
 							    Li e concordo com os <a href="<?php echo site_url('/termos-de-uso/'); ?>">
 							    termos de uso</a> do site
 							 </label>
+							 <div id="accept_the_terms_of_site-error" class="field__error"></div>
 						</div>
 						<br>
 
