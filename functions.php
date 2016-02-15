@@ -357,10 +357,10 @@ endif;
 
 
 // filtra os comentários para mostrar o nome completo
-add_filter( 'get_comment_author', 'modify_author_link', 10 );        
-function modify_author_link( $display_name  ) { 
+add_filter( 'get_comment_author', 'modify_author_link', 10,2 );        
+function modify_author_link( $display_name, $comment_ID  ) { 
 
-    $user_id = get_current_user_id();
+    $user_id = get_comment($comment_ID)->user_id;;
 
     $user_name  = get_user_meta($user_id, 'user_name', true);
     
