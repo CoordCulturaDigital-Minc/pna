@@ -1,18 +1,18 @@
 jQuery( function(){
 
-	// slide
-	jQuery('.section-cycle').flexslider({
-		animation: "slide",
-		controlsContainer: ".section-cycle .navigation",
-		selector: ".section-body > .post",
-		useCSS: false,
-		minItems: 1,
-		maxItems: 1,
-		namespace: ""
-	});
+    // slide
+    jQuery('.section-cycle').flexslider({
+        animation: "slide",
+        controlsContainer: ".section-cycle .navigation",
+        selector: ".section-body > .post",
+        useCSS: false,
+        minItems: 1,
+        maxItems: 1,
+        namespace: ""
+    });
 
     // hack para tirar o estilo do tema pai
-	jQuery( "div.widget_tag_cloud" ).toggleClass( "widget_tag_cloud", "widget_tag_cloud2" );
+    jQuery( "div.widget_tag_cloud" ).toggleClass( "widget_tag_cloud", "widget_tag_cloud2" );
 
     jQuery( ".actions .post" ).on( "click", function() {
         jQuery( this ).addClass("loading");
@@ -65,7 +65,7 @@ jQuery( function(){
 
 
 jQuery(function ($) {
-   	
+    
 
     if (typeof(require) != 'undefined') {
 
@@ -83,22 +83,22 @@ jQuery(function ($) {
         require.register("side-comments/templates/section.html", function (exports, require, module) {
 
             module.exports = '<div class="side-comment <%= sectionClasses %>">\n  ' +
-            '                 	<a href="#" class="marker">\n    <span><%= comments.length %></span>\n  </a>\n  \n  ' +
+            '                   <a href="#" class="marker">\n    <span><%= comments.length %></span>\n  </a>\n  \n  ' +
             '                   <div class="comments-wrapper">\n    ' +
-            '                   	<i class="fa fa-times" onClick="document.body.click();"></i>' +
+            '                       <i class="fa fa-times" onClick="document.body.click();"></i>' +
             '                       <a href="#" class="add-comment" data-parent="0" data-comment="">Deixe sua opinião</a>\n    \n  ' +
             '                       <% if (currentUser && currentUser.id != 9999){ %>\n     ' +
-            '                       	<div class="comment-form" data-parent="0" data-comment="">\n        ' +
-            '                           	<div class="author-avatar">\n          ' +
-	        ' 	    	                      	<img src="<%= currentUser.avatarUrl %>">\n        ' +
-	        '		                       	</div>\n        ' +
-            '                           	<p class="author-name">\n          <%= currentUser.name %>\n        </p>\n        ' +
-            '                           	<p class="text-description">\n Escreva aqui seu comentário</p>\n        ' +
-            '                           	<div class="comment-box right-of-avatar" contenteditable="true" data-placeholder-content="Deixe sua opinião..."></div>\n        ' +
-            '                       		<div class="actions right-of-avatar">\n          ' +
-            '                           		<a href="#" class="action-link cancel" data-parent="0" data-comment="">Fechar</a>\n        ' +
-            '                           		<a href="#" class="action-link post" data-parent="0" data-comment="">Enviar</a>\n          ' +
-            '                       		</div>\n      ' +
+            '                           <div class="comment-form" data-parent="0" data-comment="">\n        ' +
+            '                               <div class="author-avatar">\n          ' +
+            '                                   <img src="<%= currentUser.avatarUrl %>">\n        ' +
+            '                               </div>\n        ' +
+            '                               <p class="author-name">\n          <%= currentUser.name %>\n        </p>\n        ' +
+            '                               <p class="text-description">\n Escreva aqui seu comentário</p>\n        ' +
+            '                               <div class="comment-box right-of-avatar" contenteditable="true" data-placeholder-content="Deixe sua opinião..."></div>\n        ' +
+            '                               <div class="actions right-of-avatar">\n          ' +
+            '                                   <a href="#" class="action-link cancel" data-parent="0" data-comment="">Fechar</a>\n        ' +
+            '                                   <a href="#" class="action-link post" data-parent="0" data-comment="">Enviar</a>\n          ' +
+            '                               </div>\n      ' +
             '                          </div>\n    ' +
             '                       <% } else { %>\n  ' +
             '                           <div class="comment-form" data-parent="0" data-comment=""><div class="comment-box register-login">' +
@@ -107,13 +107,13 @@ jQuery(function ($) {
             '                               <a href="<%= pna.signup_url %>" class="acess-link">Cadastrar</a>.</p>' +
             '                           </div></div>' +
             '                       <% } %>' +
-	        '                   		<ul class="comments" data-root-id="0">\n      ' +
-	        '             		   			<% _.each(comments, function( comment ){ %>\n        ' +
-	        '                       		    <%= _.template(commentTemplate, { comment: comment, currentUser: currentUser }) %>\n      ' +
-	        '               		        <% }) %>\n    ' +
-	        '       		          	</ul>\n    \n    ' +
+            '                           <ul class="comments" data-root-id="0">\n      ' +
+            '                               <% _.each(comments, function( comment ){ %>\n        ' +
+            '                                   <%= _.template(commentTemplate, { comment: comment, currentUser: currentUser }) %>\n      ' +
+            '                               <% }) %>\n    ' +
+            '                           </ul>\n    \n    ' +
             '                   </div>\n' +
-            '             	 </div>';
+            '                </div>';
         });
 
         
@@ -134,6 +134,9 @@ jQuery(function ($) {
             '                           <p class="text-description instituicao">Instituição: <%= comment.authorInstituicao %></p>\n' +
             '                        <% } %>' +
             '                       <p class="comment right-of-avatar">\n    <%= comment.comment %>\n  </p>\n  ' +
+            '                       <% if (pna.is_administrator){ %>\n  ' +
+            '                           <a href="#" class="action-link move">Mover</a>\n  ' +
+            '                       <% } %>\n' +
             '                       <a href="#" class="add-reply" data-parent="<%= comment.parentID%>" data-comment="<%= comment.commentID %>">Responder</a>\n    \n  ' +
             '                           <% if (currentUser && currentUser.id != 9999){ %>\n     ' +
             '                                <div class="comment-form" data-parent="<%= comment.parentID%>" data-comment="<%= comment.commentID %>">\n        ' +
@@ -157,6 +160,7 @@ jQuery(function ($) {
             '                           <% } %>' +
             '                       <% if (currentUser && comment.authorId === currentUser.id){ %>\n  ' +
             '                           <a href="#" class="action-link delete">Apagar</a>\n  ' +
+            '                           <a href="#" class="move">Mover</a>\n  ' +
             '                       <% } %>\n' +
             '                   </li>'; 
         });

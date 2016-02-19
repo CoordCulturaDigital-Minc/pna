@@ -311,7 +311,7 @@ function cdbr_send_email_register( $user_email, $user_login, $user_password ) {
     $from = get_option('admin_email');
     $headers = 'From: '.$from . "\r\n";
     $subject = "Cadastro " . get_bloginfo('name');
-    $redefine_pass = network_site_url(bp_get_members_slug() ."/" . $user_login . "/settings");
+    $redefine_pass = network_site_url("membros/" . $user_login . "/settings");
 
     $msg = "Você foi cadastrado com sucesso no site " . get_bloginfo('name')
      ."\nDetalhes para acesso"
@@ -382,3 +382,24 @@ function cdbr_admin_user_update_profile() {
     return false;
 }
 
+// mensagem que os comentários serão movidos
+// mostrar msg a cada dois dias
+function cdbr_ajax_current_user_guide_1() {
+
+    if( !is_user_logged_in() )
+        return true;
+
+    $user_ID = get_current_user_id();
+    $transient = 'guid_move_comments_user_id_' . $user_ID;
+    // echo get_transient($transient);
+    //verificar se o usuário leu a mensagem
+    if( get_transient($transient) == 1 ) {
+        echo true;
+    }else {
+        set_transient( $transient , true, 2 * DAY_IN_SECONDS  );
+        echo false;
+    }
+               
+    die;
+}
+add_action('wp_ajax_current_user_guide_1', 'cdbr_ajax_current_user_guide_1',2);
