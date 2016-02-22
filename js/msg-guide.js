@@ -11,7 +11,8 @@
         $.post(
             msg.ajaxurl, 
             {
-                action: 'current_user_guide_1'
+                action: 'current_user_guide_1',
+                confirm: 'false'
             },
             function(response) {
 
@@ -28,9 +29,19 @@
                         closeOnEscape: false,
                         buttons: {
                             "Entendi": function() {
+                                $.post(
+                                    msg.ajaxurl, 
+                                    {
+                                        action: 'current_user_guide_1',
+                                        confirm: 'true'
+                                    },
+                                    function(response) {
+                                        
+                                });
+
                                 $( this ).dialog( "close" );
                                 $('#cdbr_dialog').remove();
-                                return false;
+                                return false;     
                             }
                         }
                     });        

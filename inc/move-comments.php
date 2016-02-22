@@ -151,7 +151,7 @@ function cdbr_send_email_comment_moved( $comment ) {
 
     $msg = $msg_header . $msg_content . $msg_footer;
 
-    wp_mail( $user_email, $subject, $msg, $headers );
+   // wp_mail( $user_email, $subject, $msg, $headers );
 }
 
 

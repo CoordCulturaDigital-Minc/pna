@@ -395,8 +395,10 @@ function cdbr_ajax_current_user_guide_1() {
     //verificar se o usuário leu a mensagem
     if( get_transient($transient) == 1 ) {
         echo true;
-    }else {
+    }elseif ( isset( $_POST['confirm']) && $_POST['confirm'] == 'true' ) { 
         set_transient( $transient , true, 2 * DAY_IN_SECONDS  );
+        echo true;
+    } else {
         echo false;
     }
                
