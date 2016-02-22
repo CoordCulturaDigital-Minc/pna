@@ -1,9 +1,3 @@
-<?php
-/*
-Template Name: Full width template
-*/
-?>
-
 <?php get_header(); ?>
 
 <div class="wrapper section-inner">						

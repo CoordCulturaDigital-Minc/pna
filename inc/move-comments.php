@@ -117,16 +117,17 @@ function cdbr_send_email_comment_moved( $comment ) {
     if( empty( $comment ) )
         return false;
 
-    $user_name          = $comment->comment_author;
-    $user_email         = $comment->comment_author_email;
-    $comment_content    = $comment->comment_content;
-    $comment_date       = $comment->comment_date;
+    $user_name          = $comment['comment_author'];
+    $user_email         = $comment['comment_author_email'];
+    $comment_content    = $comment['comment_content'];
+    $comment_post_ID    = $comment['comment_post_ID'];
+    $comment_date       = $comment['comment_date'];
 
     $date = new DateTime($comment_date);
     $comment_date = $date->format('d/m/Y \à\s H:i:s');
 
     $link_termos_de_uso              = get_bloginfo('url') . "/termos-de-uso";
-    $link_commentarios_gerais        = get_permalink($comment->comment_post_ID) . "?comments=general";
+    $link_commentarios_gerais        = get_permalink($comment_post_ID) . "?comments=general";
     $link_entenda_mais               = get_bloginfo('url') . "/entenda-mais";
 
     $from = get_option('admin_email');
@@ -144,7 +145,6 @@ function cdbr_send_email_comment_moved( $comment ) {
             . "<p>Comentário movido: " . $comment_content . "</p>"
             . "<p>Data do comentário: " . $comment_date . "</p>"
             . "<p></p>";
-
     wp_mail( $user_email, $subject, $msg, $headers );
 }
 
