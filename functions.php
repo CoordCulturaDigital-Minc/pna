@@ -8,6 +8,7 @@ define( 'CHILD_URI', get_stylesheet_directory_uri() );
 include dirname(__FILE__).'/inc/custom-profile.php';
 include dirname(__FILE__).'/inc/move-comments.php';
 include dirname(__FILE__).'/inc/theme-options.class.php';
+include dirname(__FILE__).'/inc/widgets/widget-login.php';
 // include dirname(__FILE__).'/inc/general-comments.php';
 
 /**
