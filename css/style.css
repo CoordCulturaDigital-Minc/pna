@@ -28,11 +28,11 @@ body a,
 
 body a,
 .post-tags a::after {
-	-webkit-transition: none;
+	/*-webkit-transition: none;
 	 -moz-transition: none;
 	 -ms-transition: none;
 	 -o-transition: none;
-	 transition: none;
+	 transition: none;*/
 }
 
 
@@ -422,6 +422,8 @@ a.read-more:before {
 }
 
 #menu-abas.itens li a {
+	position: relative;
+
     color: #fff;
 	font-weight: bold;
 	background-color:  #242652;
@@ -437,6 +439,21 @@ a.read-more:before {
 	border-top-right-radius: 20px;
 	vertical-align: center;
 	float: left;
+}
+
+#menu-abas.itens li a span {
+	position: absolute;
+	top: -10px;
+	right: 0px;
+
+	background-color: #1fb3dd;
+    color: #fff;
+        text-shadow: none;
+    display: inline;
+    padding: 2px 5px;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 10px;
 }
 
 #menu-abas.itens li a:hover {
