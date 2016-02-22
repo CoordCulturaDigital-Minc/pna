@@ -25,7 +25,7 @@
 					'<p class="comment-notes">' . __( 'Your email address will not be published.', 'hemingway' ) . '</p>',
 
 				'comment_field' =>
-					'<p class="comment-form-comment"><textarea id="comment" name="comment" cols="45" rows="6" required>' . '</textarea></p>',
+					'<p class="comment-form-comment"><textarea id="comment" name="comment" cols="45" rows="6" required>' . '</textarea></p><input id="comment_form_type" name="comment_form_type" type="hidden" value="general-comment"/>',
 
 				'fields' => apply_filters( 'comment_form_default_fields', array(
 

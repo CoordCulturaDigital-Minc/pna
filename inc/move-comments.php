@@ -176,4 +176,27 @@ function cdbr_general_comments()
 }
 add_action('template_redirect', 'cdbr_general_comments', 5);
 
+
+function cdbr_check_comment_type($commentdata) {
+
+    if ( ( isset( $_POST['comment_form_type'] ) ) && ( $_POST['comment_form_type'] == 'general-comment') ) {
+        $commentdata['comment_type'] = 'general-comment';
+    }
+
+    return $commentdata;
+}
+add_filter('preprocess_comment','cdbr_check_comment_type');
+
+function cdbr_general_comment_redirect( $location, $comment ) {
+
+    if ( ( isset( $_POST['comment_form_type'] ) ) && ( $_POST['comment_form_type'] == 'general-comment') ) {
+        $pos = strpos($location, "#");
+        $location = substr($location, 0, $pos);
+        $location = $location . "?comments=general#comment-" . $comment->comment_ID;
+    }
+
+    return $location;
+}
+add_filter( 'comment_post_redirect', 'cdbr_general_comment_redirect', 10, 2 );
+
  ?>
