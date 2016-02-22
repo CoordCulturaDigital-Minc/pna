@@ -313,6 +313,7 @@ add_action( 'priorize_template_after', 'pna_social_priorize', 10, 2);
 if ( ! function_exists( 'cdbr_pna_comment' ) ) :
 function cdbr_pna_comment( $comment, $args, $depth ) {
     $GLOBALS['comment'] = $comment;
+
     switch ( $comment->comment_type ) :
         case 'pingback' :
         case 'trackback' :
@@ -328,13 +329,13 @@ function cdbr_pna_comment( $comment, $args, $depth ) {
         default :
         global $post;
     ?>
-    <li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
+    <li <?php comment_class("comment"); ?> id="li-comment-<?php comment_ID(); ?>">
     
         <div id="comment-<?php comment_ID(); ?>" class="comment">
         
             <div class="comment-meta comment-author vcard">
                             
-                <?php echo get_avatar( $comment, 120 ); ?>
+                <?php echo get_avatar( $comment->comment_author_email, 120 ); ?>
 
                 <div class="comment-meta-content">
                                             

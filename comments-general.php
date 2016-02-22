@@ -46,7 +46,6 @@
 			?>
 
 		<?php endif; ?>
-		
 
 		<?php if ( have_comments() ) : ?>
 
