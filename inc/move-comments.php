@@ -131,7 +131,7 @@ function cdbr_send_email_comment_moved( $comment ) {
     $link_entenda_mais               = get_bloginfo('url') . "/entenda-mais";
 
     $from = get_option('admin_email');
-    $headers = 'From: '.$from . "\r\n";
+    $headers = 'Content-type: text/html; From: '.$from . "\r\n";
     $subject = "Participação - " . get_bloginfo('name');
 
     $msg_header = "<html><body>";
