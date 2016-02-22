@@ -430,3 +430,10 @@ function modify_post_comment_data( $comment ) {
 
     return $comment;         
 }
+
+// Evita q a lixeira esvazie automaticamente.
+define( 'EMPTY_TRASH_DAYS', 9999999999 );
+function cdbr_remove_schedule_delete() {
+    remove_action( 'wp_scheduled_delete', 'wp_scheduled_delete' );
+}
+add_action( 'init', 'cdbr_remove_schedule_delete' );
