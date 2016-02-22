@@ -134,7 +134,8 @@ function cdbr_send_email_comment_moved( $comment ) {
     $headers = 'From: '.$from . "\r\n";
     $subject = "Participação - " . get_bloginfo('name');
 
-    $msg =  "<p>Prezado " . $user_name . ",</p>"
+    $msg_header = "<html><body>";
+    $msg_content =  "<p>Prezado " . $user_name . ",</p>"
             . "<p>Em observância ao disposto no item 7 dos <a href='" .  $link_termos_de_uso . "'>Termos de Uso</a>, as mensagens publicadas na plataforma " 
             . "da consulta devem obedecer ao escopo e ao objetivo da Consulta Pública, mantendo-se dentro do "
             . "assunto específico em que estão inseridas.</p>"
@@ -145,6 +146,10 @@ function cdbr_send_email_comment_moved( $comment ) {
             . "<p>Comentário movido: " . $comment_content . "</p>"
             . "<p>Data do comentário: " . $comment_date . "</p>"
             . "<p></p>";
+    $msg_footer = "</body></html>";
+
+    $msg = $msg_header . $msg_content . $msg_footer;
+
     wp_mail( $user_email, $subject, $msg, $headers );
 }
 
