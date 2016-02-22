@@ -29,7 +29,6 @@ function theme_enqueue_styles() {
 
     $var_pna['signup_url'] = get_bloginfo('url') . "/cadastro";
     $var_pna['login_url'] = wp_login_url( get_permalink() );
-    $var_pna['is_administrator'] = current_user_can('administrator');
     
     wp_localize_script( 'scripts', 'pna', $var_pna );
 

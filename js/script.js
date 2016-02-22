@@ -134,9 +134,6 @@ jQuery(function ($) {
             '                           <p class="text-description instituicao">Instituição: <%= comment.authorInstituicao %></p>\n' +
             '                        <% } %>' +
             '                       <p class="comment right-of-avatar">\n    <%= comment.comment %>\n  </p>\n  ' +
-            '                       <% if (pna.is_administrator){ %>\n  ' +
-            '                           <a href="#" class="action-link move">Mover</a>\n  ' +
-            '                       <% } %>\n' +
             '                       <a href="#" class="add-reply" data-parent="<%= comment.parentID%>" data-comment="<%= comment.commentID %>">Responder</a>\n    \n  ' +
             '                           <% if (currentUser && currentUser.id != 9999){ %>\n     ' +
             '                                <div class="comment-form" data-parent="<%= comment.parentID%>" data-comment="<%= comment.commentID %>">\n        ' +
@@ -160,7 +157,6 @@ jQuery(function ($) {
             '                           <% } %>' +
             '                       <% if (currentUser && comment.authorId === currentUser.id){ %>\n  ' +
             '                           <a href="#" class="action-link delete">Apagar</a>\n  ' +
-            '                           <a href="#" class="move">Mover</a>\n  ' +
             '                       <% } %>\n' +
             '                   </li>'; 
         });
