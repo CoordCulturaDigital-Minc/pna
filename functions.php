@@ -7,13 +7,15 @@ define( 'CHILD_URI', get_stylesheet_directory_uri() );
 // include( STYLESHEETPATH . '/inc/shortcode-menu-paginas.php' );
 include dirname(__FILE__).'/inc/custom-profile.php';
 include dirname(__FILE__).'/inc/move-comments.php';
-// include dirname(__FILE__).'/inc/theme-options.class.php';
+include dirname(__FILE__).'/inc/theme-options.class.php';
 // include dirname(__FILE__).'/inc/general-comments.php';
 
 /**
  *  Scripts and styles
  */
 function theme_enqueue_styles() {
+    
+    global $PNAThemeOptions;
 
     // styles
     wp_enqueue_style( 'parent-style', PARENT_URI . '/style.css');
@@ -41,16 +43,13 @@ function theme_enqueue_styles() {
                 wp_localize_script('msg-update-register', 'msg', array( 'ajaxurl' => admin_url('admin-ajax.php'), 'cadastro_url' =>  get_bloginfo('url') . "/cadastro"));
                 wp_deregister_script('terms-of-use');
             }else {
-                wp_enqueue_script('msg-guide-1', CHILD_URI . '/js/msg-guide.js');
-                wp_localize_script('msg-guide-1', 'msg', array( 'ajaxurl' => admin_url('admin-ajax.php'), 'termos_url' =>  get_bloginfo('url') . "/termos-de-uso", 'comments_gerais_url' => get_permalink() . "?comments=general"));
 
+                if( $PNAThemeOptions->isPopupMsgAllowed() ) {
+                    wp_enqueue_script('msg-guide-1', CHILD_URI . '/js/msg-guide.js');
+                    wp_localize_script('msg-guide-1', 'msg', array( 'ajaxurl' => admin_url('admin-ajax.php'), 'termos_url' =>  get_bloginfo('url') . "/termos-de-uso", 'comments_gerais_url' => get_permalink() . "?comments=general"));
+                }
             }
         }
-
-        
-
-
-       
 
     }
 }

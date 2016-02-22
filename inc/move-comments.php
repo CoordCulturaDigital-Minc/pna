@@ -22,7 +22,7 @@ function cdbr_comment_type_column( $column, $comment_ID )
                         echo 'Comentário por parágrafo';
                         break;
                     case 'general-comment':
-                        echo 'Comentário geral';
+                        echo 'Comentário Geral';
                         break;    
                     default:
                         echo $type;
