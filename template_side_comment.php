@@ -111,10 +111,14 @@ Template Name: Page comments
 			</div> <!-- /post -->
 			
 			<?php if ( comments_open() ) : ?>
-				<div class="general-comments">
-					<p>As mensagens que não digam respeito ao dispositivo comentado devem ser realizadas no campo <a href="<?php echo get_permalink() ?>?comments=general">“Comentários de caráter geral”</a></p>
-				</div>
-			
+
+				<?php global $PNAThemeOptions;
+				if( $PNAThemeOptions->isPopupMsgAllowed() ) : ?>
+					<div class="general-comments">
+						<p>As mensagens que não digam respeito ao dispositivo comentado devem ser realizadas no campo <a href="<?php echo get_permalink() ?>?comments=general">“Comentários de caráter geral”</a></p>
+					</div>
+				<?php endif; ?>
+
 				<?php comments_template( '/comments-page.php', true ); ?>
 			
 			<?php endif; ?>
