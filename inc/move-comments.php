@@ -164,7 +164,7 @@ function cdbr_general_comments()
     if(get_query_var('comments') == 'general' )
     {
              
-        include(dirname(__FILE__).'/inc/general-comments.php');
+        include(dirname(__FILE__).'/general-comments.php');
         exit();
     }
 }
