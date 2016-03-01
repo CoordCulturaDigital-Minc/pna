@@ -79,10 +79,10 @@ Template Name: Page comments
 								if ( $page->ID == get_the_ID() )
 									$class = "current"; ?>
 
-								<?php $count_comments = get_comments_number( $page->ID);  ?>
+								<?php //$count_comments = get_comments_number( $page->ID);  ?>
 
 								<li class='item <?php echo $class; ?>'>
-									<a href="<?php echo get_page_link( $page->ID ); ?><?php echo ($key==0) ? '?init=true' : ''; ?>"><?php echo $page->post_title; ?><?php echo ($count_comments > 0 ) ? "<span class='count_comments'>" . $count_comments . "</span>" : ""; ?></span></a>
+									<a href="<?php echo get_page_link( $page->ID ); ?><?php echo ($key==0) ? '?init=true' : ''; ?>"><?php echo $page->post_title; ?></a>
 			                    </li>  
 
 							<?php } ?>
