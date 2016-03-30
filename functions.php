@@ -29,6 +29,12 @@ function theme_enqueue_styles() {
 
     $var_pna['signup_url'] = get_bloginfo('url') . "/cadastro";
     $var_pna['login_url'] = wp_login_url( get_permalink() );
+
+    if(is_page()) {
+        $post = get_post();
+        $var_pna['comments_open'] = $post->comment_status == "closed" ? true : false; 
+
+    }
     
     wp_localize_script( 'scripts', 'pna', $var_pna );
 

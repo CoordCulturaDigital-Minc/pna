@@ -121,9 +121,10 @@ Template Name: Page comments
 					</div>
 				<?php endif; ?>
 
-				<?php comments_template( '/comments-page.php', true ); ?>
 			
 			<?php endif; ?>
+
+			<?php comments_template( '/comments-page.php', true ); ?>
 		
 		</div> <!-- /posts -->
 		

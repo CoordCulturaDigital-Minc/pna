@@ -87,7 +87,11 @@ jQuery(function ($) {
             '                   <div class="comments-wrapper">\n    ' +
             '                       <i class="fa fa-times" onClick="document.body.click();"></i>' +
             '                       <a href="#" class="add-comment" data-parent="0" data-comment="">Deixe sua opinião</a>\n    \n  ' +
-            '                       <% if (currentUser && currentUser.id != 9999){ %>\n     ' +
+            '                       <% if (pna.comments_open){ %>\n     ' +  
+            '                           <div class="comment-form" data-parent="0" data-comment=""><div class="comment-box register-login">' +
+            '                               <p class="author-name"><br>Comentários estão encerrados.</p>' +
+            '                           </div></div>' +          
+            '                       <% }else if (currentUser && currentUser.id != 9999){ %>\n     ' +
             '                           <div class="comment-form" data-parent="0" data-comment="">\n        ' +
             '                               <div class="author-avatar">\n          ' +
             '                                   <img src="<%= currentUser.avatarUrl %>">\n        ' +
