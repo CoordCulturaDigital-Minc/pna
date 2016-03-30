@@ -179,7 +179,7 @@ jQuery( function($){
 
     // limita a quantidade de caracteres nos comentários
     jQuery( '.comment-form-comment textarea, .logged-in .comment-box'   ).each( function() {
-        var limit       = 500;
+        var limit       = 1000;
         if( jQuery( this ).is('textarea') )
             var text        = jQuery( this ).val();
         else {
